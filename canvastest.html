@@ -1,16 +1,18 @@
-﻿<!-- CSS testing thing -->
+﻿<!-- This is a template document -->
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
-    <title>Sarah's Domain - CSS Test</title>
+    <title>Sarah's Domain - Canvas Test 1</title>
 	<link rel="stylesheet" href="./assets/default.css"/>
 	<link rel="shortcut icon" href="./assets/favicon.ico"/>
+	
+	 <script src="./assets/canvastest.js"></script> 
 </head>
-<body>
+<body onload="drawCanvas();">
 <!--Title text thing-->
-<h1>Sarah's Domain - CSS Test</h1>
+<h1>Sarah's Domain - Canvas Test 1</h1>
 
 <!--nav bar thing-->
 <div style="padding-bottom:8px;">
@@ -20,19 +22,9 @@
 <a href="https://github.com/Nullspeak">My GitHub Profile</a>
 </div>
 <hr/>
-<br/>
 
-<a>Link Button</a>
-<br/>
-<br/>
-
-<button>Button</button>
-<br/>
-<br/>
-
-<label>Text input</label>
-<br/>
-<input type="text"/>
+<!--content here-->
+<canvas id="themfcanvas" height="200" width="320">You need a browser that supports canvases for this to work.</canvas>
 
 </body>
 </html>
