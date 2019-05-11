@@ -1,6 +1,5 @@
 /* Canvas test - (c) Sarah 2019 */
 var ctx; // canvas context
-var raf; // the requestAnimationFrame's thing, i got no idea what this actually does
 
 // the bouncing ball, slightly stolen from mozilla's canvas reference
 var ball = {
@@ -12,7 +11,7 @@ var ball = {
 	color: '#FFBF00',
 
 	// how we should draw this object
-	draw: function()
+	draw: function ()
 	{
 		ctx.strokeStyle = this.color;
 		ctx.beginPath();
@@ -27,7 +26,7 @@ var ball = {
 	},
 
 	// how this object moves
-	phys: function()
+	phys: function ()
 	{
 		// change our position based on our velocity
 		this.x += this.vx;
@@ -66,11 +65,8 @@ function drawCanvas()
 	// if the canvas doesn't work don't use it
 	if (canvas.getContext)
 	{
-		// set ctx to the canvas's context and disable alpha for performace
-		ctx = canvas.getContext('2d',
-		{
-			alpha: false
-		});
+		// set ctx to the canvas's context
+		ctx = canvas.getContext('2d');
 
 		// handle a click
 		canvas.addEventListener('click', canvasClicked, false);
@@ -89,7 +85,7 @@ function drawCanvas()
 }
 
 // i dont know why but this helps with screen tearing issues
-window.requestAnimFrame = function(callback)
+window.requestAnimFrame = function (callback)
 {
 	window.setTimeout(callback, 16);
 };
@@ -104,7 +100,7 @@ function drawLoop()
 	ball.phys();
 	ball.draw();
 
-	raf = window.requestAnimationFrame(drawLoop);
+	window.requestAnimationFrame(drawLoop);
 }
 
 // draws static things like the caption bar thingy

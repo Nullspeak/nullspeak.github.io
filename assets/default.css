@@ -17,25 +17,24 @@ a, button {
 	border: 1px solid #FFBF00;
 	text-decoration: none;
 	box-shadow: 0px 0px 4px orange;
-	
 	transition: color 0.25s, border 0.25s, box-shadow 0.25s, text-shadow 0.25s;
 }
 
-a:hover, button:hover {
-	border: 1px solid #FF7F00;
-	color: #FF7F00;
-	text-decoration: none;
-	box-shadow: 0px 0px 4px #FF7F00;
-	text-shadow: 0px 0px 4px #FF7F00;
-}
+	a:hover, button:hover {
+		border: 1px solid #FF7F00;
+		color: #FF7F00;
+		text-decoration: none;
+		box-shadow: 0px 0px 4px #FF7F00;
+		text-shadow: 0px 0px 4px #FF7F00;
+	}
 
-a:active, button:active {
-	border: 1px solid #7F0F00;
-	color: #7F0F00;
-	text-decoration: none;
-	box-shadow: 0px 0px 4px #7F0F00;
-	text-shadow: 0px 0px 4px #7F0F00;
-}
+	a:active, button:active {
+		border: 1px solid #7F0F00;
+		color: #7F0F00;
+		text-decoration: none;
+		box-shadow: 0px 0px 4px #7F0F00;
+		text-shadow: 0px 0px 4px #7F0F00;
+	}
 
 input[type="text"] {
 	padding: 4px;
