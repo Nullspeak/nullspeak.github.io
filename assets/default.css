@@ -1,50 +1,67 @@
-/* The website's css theme */
+/* Bygone CSS Look-and-feel - (c) Sarah 2019 */
 * {
-	font-family: monospace;
-	color: #FFBF00;
-	background-color: black;
-	text-shadow: 0px 0px 4px orange;
+	font-family: sans-serif;
+	background-color: transparent; /* this is so we don't get big blue blocks around things */
+	margin: 6px;
+	font-family: sans-serif;
+}
+
+html {
+	background-image: linear-gradient(#7ea0bf, #6586a5);
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
 }
 
 hr {
-	border: 1px solid #FFBF00;
-}
-
-a, button {
-	height: 150%;
-	display: inline;
 	padding: 4px;
-	border: 1px solid #FFBF00;
-	text-decoration: none;
-	box-shadow: 0px 0px 4px orange;
-	transition: color 0.25s, border 0.25s, box-shadow 0.25s, text-shadow 0.25s;
+	border-radius: 8px;
+	border: 1px inset #7ea0bf;
+	background-image: linear-gradient(#6586a5, #7ea0bf);
 }
 
-	a:hover, button:hover {
-		border: 1px solid #FF7F00;
-		color: #FF7F00;
-		text-decoration: none;
-		box-shadow: 0px 0px 4px #FF7F00;
-		text-shadow: 0px 0px 4px #FF7F00;
+button, a {
+	color: black;
+	padding: 4px;
+	border-radius: 8px;
+	border: 1px outset #7ea0bf;
+	font-size: 10pt;
+	background-image: linear-gradient(#7ea0bf, #6586a5);
+	text-decoration: none;
+	cursor: default;
+}
+	button:hover, a:hover {
+		border: 1px outset #84a9c9;
+		background-color: #84a9c9;
+		background-image: linear-gradient(#84a9c9, #6e8fad);
 	}
 
-	a:active, button:active {
-		border: 1px solid #7F0F00;
-		color: #7F0F00;
-		text-decoration: none;
-		box-shadow: 0px 0px 4px #7F0F00;
-		text-shadow: 0px 0px 4px #7F0F00;
+	button:active, a:active {
+		border: 1px inset #708faa;
+		background-color: #708faa;
+		transform: translate(.5px,.5px);
+		background-image: linear-gradient(#6586a5, #7ea0bf);
 	}
 
 input[type="text"] {
 	padding: 4px;
-	border: 1px dotted #FFBF00;
-	color: #FFBF00;
-	text-decoration: none;
-	box-shadow: 0px 0px 4px orange;
+	border-radius: 8px;
+	border: 1px inset #7ea0bf;
+	background-image: linear-gradient(#708faa, #7ea0bf);
 }
 
 canvas {
-	border: 1px solid #FFBF00;
-	box-shadow: 0px 0px 4px orange;
+	padding: 4px;
+	background-color: #7ea0bf;
+	border-radius: 8px;
+	border: 1px inset #7ea0bf;
+}
+
+label {
+	font-size: 11pt;
+}
+
+h1 {
+	padding-bottom: 4px;
 }
