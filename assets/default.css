@@ -19,27 +19,27 @@ html {
 hr {
 	padding: 4px;
 	border-radius: 8px;
-	border: 1px inset #7ea0bf;
+	border: 1px inset #8eb1d1;
 	background-image: linear-gradient(#6586a5, #7ea0bf);
 }
 
 button, a {
 	padding: 4px;
 	border-radius: 8px;
-	border: 1px outset #7ea0bf;
+	border: 1px outset #8eb1d1;
 	font-size: 10pt;
 	background-image: linear-gradient(#7ea0bf, #6586a5);
 	text-decoration: none;
 	cursor: default;
 }
 	button:hover, a:hover {
-		border: 1px outset #84a9c9;
+		border: 1px outset #95badb;
 		background-color: #84a9c9;
 		background-image: linear-gradient(#84a9c9, #6e8fad);
 	}
 
 	button:active, a:active {
-		border: 1px inset #708faa;
+		border: 1px inset #99bad8;
 		background-color: #708faa;
 		transform: translate(.5px,.5px);
 		background-image: linear-gradient(#6586a5, #7ea0bf);
@@ -48,7 +48,7 @@ button, a {
 input[type="text"] {
 	padding: 4px;
 	border-radius: 8px;
-	border: 1px inset #7ea0bf;
+	border: 1px inset #8eb1d1;
 	background-image: linear-gradient(#708faa, #7ea0bf);
 }
 
@@ -56,7 +56,8 @@ canvas {
 	padding: 4px;
 	background-color: #7ea0bf;
 	border-radius: 8px;
-	border: 1px inset #7ea0bf;
+	border: 1px inset #8eb1d1;
+	background-image: linear-gradient(#6586a5, #7ea0bf);
 }
 
 label {
