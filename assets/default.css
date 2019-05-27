@@ -1,9 +1,11 @@
 /* Bygone CSS Look-and-feel - (c) Sarah 2019 */
 * {
+	color: white;
 	font-family: sans-serif;
 	background-color: transparent; /* this is so we don't get big blue blocks around things */
 	margin: 6px;
 	font-family: sans-serif;
+	text-shadow: 1px 1px 0px #466077;
 }
 
 html {
@@ -22,7 +24,6 @@ hr {
 }
 
 button, a {
-	color: black;
 	padding: 4px;
 	border-radius: 8px;
 	border: 1px outset #7ea0bf;
