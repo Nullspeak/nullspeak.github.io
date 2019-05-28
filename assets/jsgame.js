@@ -145,19 +145,31 @@ function initCanvas()
 
 		bgimg.src = "../assets/jsgame/bgimg.png";
 
+		// force the sound assets to load before we continue
+		new Audio("../assets/jsgame/swoosh.ogg").load();
+		new Audio("../assets/canvastest3/shot.ogg").load();
+		new Audio("../assets/jsgame/punch1.ogg").load();
+		new Audio("../assets/jsgame/punch2.ogg").load();
+		new Audio("../assets/jsgame/punch3.ogg").load();
+		new Audio("../assets/jsgame/punch4.ogg").load();
+
 		players[0].x = -256;
 		players[1].x = 256;
+
+		// set the averages
+		avgx = -((players[0].x + players[1].x)) / 2;
+		avgy = -(((players[0].y + players[1].y)) / 2) - 96;
 
 		// the actual loop
 		drawLoop();
 	}
 }
 
-// i dont know why but this helps with screen tearing issues
-window.requestAnimFrame = function (callback)
+// quick and dirty lerp function for smoothing out the camera
+function lerp(start, end, amt)
 {
-	window.setTimeout(callback, 16);
-};
+	return (1 - amt) * start + amt * end
+}
 
 // where everything is drawn
 function drawLoop()
@@ -173,8 +185,8 @@ function drawLoop()
 		players[i].draw();
 	}
 
-	avgx = -((players[0].x + players[1].x)) / 2;
-	avgy = -(((players[0].y + players[1].y)) / 2) - 96;
+	avgx = lerp(avgx, -((players[0].x + players[1].x)) / 2, 0.1);
+	avgy = lerp(avgy, -(((players[0].y + players[1].y)) / 2) - 96, 0.1);
 
 	resetDrawAttr();
 
@@ -234,6 +246,11 @@ function playPunchSound()
 			new Audio("../assets/jsgame/punch4.ogg").play();
 			break;
 	}
+}
+
+function clamp(v, min, max)
+{
+	return Math.max(min, Math.min(v, max));
 }
 
 // player class, a class because this is multiplayer and why should i write all of this twice
@@ -298,7 +315,10 @@ class Player
 		ctx.textAlign = "center";
 
 		ctx.shadowBlur = 8;
-		ctx.fillText("Player " + (this.id + 1), xoffset, yoffset - 64);
+
+		var nameofx = clamp(xoffset, 32, 992);
+		var nameofy = clamp(yoffset, 88, 496) - 64;
+		ctx.fillText("Player " + (this.id + 1), nameofx, nameofy);
 
 		// debug text
 		if (debugmode == true)
@@ -315,6 +335,10 @@ class Player
 		// health text
 		if (this.id == 0)
 		{
+			ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+			ctx.fillRect(32, (canvas.height - 80), 256, 64);
+
+			ctx.fillStyle = this.color;
 			ctx.textAlign = "left";
 			ctx.fillText("Player 1: " + Math.round(this.damage) + "%", 48 + shakex, (canvas.height - 48) + shakey);
 			ctx.font = "italic 16pt sans-serif";
@@ -336,6 +360,11 @@ class Player
 		// health text
 		if (this.id == 1)
 		{
+			ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+			ctx.fillRect((canvas.width - 32) - 256, (canvas.height - 80), 256, 64);
+
+			ctx.fillStyle = this.color;
+
 			ctx.textAlign = "right";
 			ctx.fillText("Player 2: " + Math.round(this.damage) + "%", (canvas.width - 48) + shakex, (canvas.height - 48) + shakey);
 			ctx.font = "italic 16pt sans-serif";
@@ -380,8 +409,8 @@ class Player
 			// if we're player 1, check for player 2
 			if (this.id == 0)
 			{
-				if ((this.x > players[1].x - 16) && (this.x < players[1].x + 16) &&
-					(this.y > players[1].y - 24) && (this.y < players[1].y + 24) )
+				if ((this.x > players[1].x - 24) && (this.x < players[1].x + 24) &&
+					(this.y > players[1].y - 24) && (this.y < players[1].y + 24))
 				{
 					// damage them and damage them more as they get weaker
 					players[1].damage += randomRange(5, 15) + (players[1].damage / 16);
@@ -399,7 +428,7 @@ class Player
 			// if we're player 2, check for player 1
 			if (this.id == 1)
 			{
-				if ((this.x > players[0].x - 16) && (this.x < players[0].x + 16) &&
+				if ((this.x > players[0].x - 24) && (this.x < players[0].x + 24) &&
 					(this.y > players[0].y - 24) && (this.y < players[0].y + 24))
 				{
 					// damage them and damage them more as they get weaker
@@ -422,6 +451,8 @@ class Player
 	// how this player handles physics
 	phys()
 	{
+		this.vy = clamp(this.vy, -8, 16);
+
 		this.x += this.vx;
 
 		// if the game's over, don't let anybody leave the arena
@@ -443,11 +474,14 @@ class Player
 		}
 		else
 		{
-			if (this.x < -632)
-				this.x = -632;
+			// if the game's over, let players bounce off walls
+			if (this.x < -631)
+				this.vx *= -1;
 
-			if (this.x > 632)
-				this.x = 632;
+			if (this.x > 631)
+				this.vx *= -1;
+
+			this.x = clamp(this.x, -631, 631);
 		}
 
 		if (this.lives <= 0)
@@ -474,8 +508,8 @@ class Player
 			this.vx *= .99;
 
 		// handling for the platform in the middle
-		// NOTE: there is 2 units of tolerance because just one seems to be too small to check for
-		if (this.vy < 0 && (this.y < -142 && this.y > -146))
+		// NOTE: there is 3 units of tolerance because just 1 and 2 seem to be too small to check for
+		if (this.vy < 0 && (this.y < -141 && this.y > -147))
 		{
 			if (this.x < 72 && this.x > -72)
 			{
@@ -485,7 +519,7 @@ class Player
 		}
 
 		// if we're no longer on the platform, fall off it
-		if ((this.y < -142 && this.y > -146) && !(this.x < 72 && this.x > -72))
+		if ((this.y < -141 && this.y > -147) && !(this.x < 72 && this.x > -72))
 			this.grounded = false;
 
 		// hud shake handler
@@ -500,6 +534,10 @@ class Player
 		{
 			this.hudshakex -= (this.hudshakex / 8);
 		}
+
+		// this fixes shimmering and weird pixel issues
+		this.x = Math.round(this.x);
+		this.y = Math.round(this.y);
 	}
 }
 
