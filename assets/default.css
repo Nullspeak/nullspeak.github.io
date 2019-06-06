@@ -1,69 +1,59 @@
-/* Bygone CSS Look-and-feel - (c) Sarah 2019 */
+/* Cobalt CSS Look-and-feel - (c) Sarah 2019 */
 * {
-	color: white;
 	font-family: sans-serif;
-	background-color: transparent; /* this is so we don't get big blue blocks around things */
-	margin: 6px;
-	font-family: sans-serif;
-	text-shadow: 1px 1px 0px #466077;
+	background-color: transparent;
+	color: ghostwhite;
+	margin: 8px;
 }
 
 html {
-	background-image: linear-gradient(#7ea0bf, #6586a5);
-	height: 100%;
-	width: 100%;
 	margin: 0px;
 	padding: 0px;
+	height: 100%;
+	width: 100%;
+	background: repeating-linear-gradient(#000000, #0F0F0F 4px);
 }
 
 hr {
-	padding: 4px;
-	border-radius: 8px;
-	border: 1px inset #8eb1d1;
-	background-image: linear-gradient(#6586a5, #7ea0bf);
+	border: 2px solid #2e356c;
+	border-radius: 2px;
 }
 
 button, a {
-	padding: 4px;
-	border-radius: 8px;
-	border: 1px outset #8eb1d1;
-	font-size: 10pt;
-	background-image: linear-gradient(#7ea0bf, #6586a5);
-	text-decoration: none;
 	cursor: default;
+	font-size: 9pt;
+	text-shadow: 0px 0px 2px black;
+	text-decoration: none;
+	padding: 6px;
+	border: 1px solid #2e356c;
+	background: linear-gradient(#090a0e, #2e356c, #090a0e);
 }
+
 	button:hover, a:hover {
-		border: 1px outset #95badb;
-		background-color: #84a9c9;
-		background-image: linear-gradient(#84a9c9, #6e8fad);
+		border-color: #37587a;
+		background: linear-gradient(#090a0e, #37587a, #090a0e);
 	}
 
 	button:active, a:active {
-		border: 1px inset #99bad8;
-		background-color: #708faa;
-		transform: translate(.5px,.5px);
-		background-image: linear-gradient(#6586a5, #7ea0bf);
+		border-color: #1f265e;
+		background: linear-gradient(#090a0e, #1f265e, #090a0e);
 	}
 
-input[type="text"] {
-	padding: 4px;
-	border-radius: 8px;
-	border: 1px inset #8eb1d1;
-	background-image: linear-gradient(#708faa, #7ea0bf);
-}
-
-canvas {
-	padding: 4px;
-	background-color: #7ea0bf;
-	border-radius: 8px;
-	border: 1px inset #8eb1d1;
-	background-image: linear-gradient(#6586a5, #7ea0bf);
+input {
+	font-size: 9pt;
+	text-shadow: 0px 0px 2px black;
+	text-decoration: none;
+	padding: 6px;
+	border: 1px solid #2e356c;
+	background: #090a0e;
+	box-shadow: #2e356c 0px 0px 8px inset;
 }
 
 label {
 	font-size: 11pt;
 }
 
-h1 {
-	padding-bottom: 4px;
+canvas {
+	border: 2px solid #2e356c;
+	box-shadow: black 4px 4px 8px;
 }

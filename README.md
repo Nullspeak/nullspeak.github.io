@@ -1,5 +1,5 @@
 # nullspeak.github.io
 This is my personal website.
-There isn't really much else to put here.
+I put HTML/CSS/JS tests here.
 
-Components of this project may be taken and used freely, derivative projects may be created with my permission.
+If you use anything from this that has a copyright notice, keep the copyright notice.
