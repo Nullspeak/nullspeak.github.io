@@ -10,10 +10,8 @@ var sndBullet = new Audio("../assets/canvastest3/shot.ogg");
 // var sndMusic = new Audio();
 
 // an enemy
-class Enemy
-{
-	constructor()
-	{
+class Enemy {
+	constructor() {
 		this.x = 0; // x position
 		this.y = 0; // y position
 		this.vx = 0; // x velocity
@@ -22,8 +20,7 @@ class Enemy
 
 	// how this thing's drawn
 	// TODO: maybe this should be some sorta bat or something
-	draw()
-	{
+	draw() {
 		ctx.strokeStyle = "white";
 		ctx.fillStyle = "purple";
 		ctx.lineWidth = 2;
@@ -37,10 +34,8 @@ class Enemy
 	}
 
 	// this checks if we've been clicked on
-	input(x, y)
-	{
-		if ((x > this.x - 8 && x < this.x + 8) && (y > this.y - 8 && y < this.y + 8))
-		{
+	input(x, y) {
+		if ((x > this.x - 8 && x < this.x + 8) && (y > this.y - 8 && y < this.y + 8)) {
 			this.x = canvas.width * Math.random();
 			this.y = 0;
 			player.score++;
@@ -52,8 +47,7 @@ class Enemy
 	}
 
 	// the really crappy AI
-	phys()
-	{
+	phys() {
 		// move us by our velocity
 		this.x += this.vx;
 		this.y += this.vy;
@@ -99,8 +93,7 @@ var player = {
 	shouldSpawnEnemy: false,
 
 	// how we should draw this object
-	draw: function ()
-	{
+	draw: function () {
 		ctx.strokeStyle = "white";
 		ctx.fillStyle = "black";
 		ctx.lineWidth = 2;
@@ -122,8 +115,7 @@ var player = {
 		ctx.stroke();
 
 		// taunt text
-		if (this.inAction == true)
-		{
+		if (this.inAction == true) {
 			ctx.fillStyle = "white";
 			ctx.strokeStyle = "black";
 			ctx.font = "16px sans-serif";
@@ -138,10 +130,8 @@ var player = {
 	},
 
 	// how this will handle input
-	input: function ()
-	{
-		if (this.inUp == true && this.grounded)
-		{
+	input: function () {
+		if (this.inUp == true && this.grounded) {
 			this.grounded = false;
 			this.vy -= 8;
 		}
@@ -154,8 +144,7 @@ var player = {
 	},
 
 	// how this object moves
-	phys: function ()
-	{
+	phys: function () {
 		// change our position based on our velocity
 		if (this.x > 8 || this.x < canvas.width - 8)
 			this.x += this.vx;
@@ -169,8 +158,7 @@ var player = {
 		if (this.x >= canvas.width - 9) this.vx -= 8;
 
 		// if we're at or below the arbitrary ground point, stop and say we're grounded
-		if (this.y >= 352 && this.vy > 0)
-		{
+		if (this.y >= 352 && this.vy > 0) {
 			this.vy = 0;
 			this.grounded = true;
 		}
@@ -179,8 +167,7 @@ var player = {
 		this.y = Math.min(this.y + this.vy, 352);
 
 		// gravity
-		if (this.grounded == false)
-		{
+		if (this.grounded == false) {
 			if (this.vy > 0.0)
 				this.vy += .2;
 			else
@@ -196,26 +183,22 @@ var player = {
 };
 
 // when a key is pressed down
-function procInputDown(event)
-{
+function procInputDown(event) {
 	// Do nothing if the event was already processed
 	if (event.defaultPrevented)
 		return;
 
-	switch (event.key)
-	{
+	switch (event.key) {
 		case "w":
 			player.inUp = true;
 			break;
 
 		// taunt for a little bit
 		case "s":
-			if (player.inAction == false)
-			{
+			if (player.inAction == false) {
 				sndTaunt.play();
 				player.inAction = true;
-				setTimeout(function ()
-				{
+				setTimeout(function () {
 					player.inAction = false;
 				}
 					, 1500);
@@ -239,14 +222,12 @@ function procInputDown(event)
 }
 
 // when a key is released
-function procInputUp(event)
-{
+function procInputUp(event) {
 	// Do nothing if the event was already processed
 	if (event.defaultPrevented)
 		return;
 
-	switch (event.key)
-	{
+	switch (event.key) {
 		case "w":
 			player.inUp = false;
 			break;
@@ -273,22 +254,18 @@ function procInputUp(event)
 }
 
 // when a key is released
-function procInputClick(event)
-{
+function procInputClick(event) {
 	var rect = canvas.getBoundingClientRect();
 	var mx = event.clientX - rect.left;
 	var my = event.clientY - rect.top;
 
 	// check if any enemies were clicked
-	for (var i = 0; i < arrEnemies.length; i++)
-	{
+	for (var i = 0; i < arrEnemies.length; i++) {
 		arrEnemies[i].input(mx, my);
 	}
 
-	if (player.score % 10 === 0 && player.score != 0)
-	{
-		if (shouldSpawnEnemy == false)
-		{
+	if (player.score % 10 === 0 && player.score != 0) {
+		if (shouldSpawnEnemy == false) {
 			shouldSpawnEnemy = true;
 			arrEnemies.push(new Enemy());
 		}
@@ -298,14 +275,12 @@ function procInputClick(event)
 }
 
 // what <body> calls on load
-function drawCanvas()
-{
+function drawCanvas() {
 	// find our canvas object
 	canvas = document.getElementById('themfcanvas');
 
 	// if the canvas doesn't work don't use it
-	if (canvas.getContext)
-	{
+	if (canvas.getContext) {
 		// set ctx to the canvas's context
 		ctx = canvas.getContext('2d');
 
@@ -324,14 +299,12 @@ function drawCanvas()
 }
 
 // i dont know why but this helps with screen tearing issues
-window.requestAnimFrame = function (callback)
-{
+window.requestAnimFrame = function (callback) {
 	window.setTimeout(callback, 16);
 };
 
 // where everything is drawn
-function drawLoop()
-{
+function drawLoop() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	drawStatic();
@@ -340,8 +313,7 @@ function drawLoop()
 	player.phys();
 	player.draw();
 
-	for (var i = 0; i < arrEnemies.length; i++)
-	{
+	for (var i = 0; i < arrEnemies.length; i++) {
 		arrEnemies[i].input();
 		arrEnemies[i].phys();
 		arrEnemies[i].draw();
@@ -351,8 +323,7 @@ function drawLoop()
 }
 
 // draws static things like the scenery
-function drawStatic()
-{
+function drawStatic() {
 	// player score counter
 	ctx.fillStyle = "black";
 	ctx.font = "bold 16px sans-serif";

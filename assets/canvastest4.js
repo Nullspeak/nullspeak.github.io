@@ -3,14 +3,12 @@ var canvas; // the canvas itself
 var ctx; // canvas context
 
 // when a key is pressed down
-function procInputDown(event)
-{
+function procInputDown(event) {
 	// Do nothing if the event was already processed
 	if (event.defaultPrevented)
 		return;
 
-	switch (event.key)
-	{
+	switch (event.key) {
 		case 'w':
 			player.inUp = true;
 			break;
@@ -32,14 +30,12 @@ function procInputDown(event)
 }
 
 // when a key is released
-function procInputUp(event)
-{
+function procInputUp(event) {
 	// Do nothing if the event was already processed
 	if (event.defaultPrevented)
 		return;
 
-	switch (event.key)
-	{
+	switch (event.key) {
 		case 'w':
 			player.inUp = false;
 			break;
@@ -61,8 +57,7 @@ function procInputUp(event)
 }
 
 // when a key is released
-function procInputClick(event)
-{
+function procInputClick(event) {
 	// click coordinates relative to canvas
 	var rect = canvas.getBoundingClientRect();
 	var mx = event.clientX - rect.left;
@@ -70,14 +65,12 @@ function procInputClick(event)
 }
 
 // what <body> calls on load
-function initCanvas()
-{
+function initCanvas() {
 	// find our canvas object
 	canvas = document.getElementById('canvas');
 
 	// if the canvas doesn't work don't use it
-	if (canvas.getContext)
-	{
+	if (canvas.getContext) {
 		// set ctx to the canvas's context
 		ctx = canvas.getContext('2d');
 
@@ -92,14 +85,12 @@ function initCanvas()
 }
 
 // i dont know why but this helps with screen tearing issues
-window.requestAnimFrame = function (callback)
-{
+window.requestAnimFrame = function (callback) {
 	window.setTimeout(callback, 16);
 };
 
 // where everything is drawn
-function drawLoop()
-{
+function drawLoop() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	drawStatic();
@@ -112,8 +103,7 @@ function drawLoop()
 }
 
 // draws static things like the scenery
-function drawStatic()
-{
+function drawStatic() {
 	// the sky gradient
 	var height = (canvas.height / 2) - floor.y;
 	var skygradient = ctx.createLinearGradient(0, -floor.y, 0, height);
@@ -135,8 +125,7 @@ function drawStatic()
 	resetDrawAttr();
 }
 
-function resetDrawAttr()
-{
+function resetDrawAttr() {
 	// reset everything
 	ctx.shadowColor = 'black';
 	ctx.shadowBlur = 0;
@@ -144,10 +133,8 @@ function resetDrawAttr()
 }
 
 // player class, a class because i might add multiplayer to this demo
-class Player
-{
-	constructor()
-	{
+class Player {
+	constructor() {
 		this.x = 0;
 		this.y = 0;
 		this.vx = 0;
@@ -160,11 +147,10 @@ class Player
 	}
 
 	// how the player is painted
-	draw()
-	{
+	draw() {
 		ctx.fillStyle = this.color;
 		ctx.beginPath();
-		ctx.arc(canvas.width / 2, (this.y + canvas.height * (2/3)) + 32, 16, 0, 2 * Math.PI);
+		ctx.arc(canvas.width / 2, (this.y + canvas.height * (2 / 3)) + 32, 16, 0, 2 * Math.PI);
 		ctx.closePath();
 		ctx.fill();
 
@@ -172,10 +158,8 @@ class Player
 	}
 
 	// how the player handles input
-	input()
-	{
-		if (this.inUp == true && this.grounded == true)
-		{
+	input() {
+		if (this.inUp == true && this.grounded == true) {
 			this.grounded = false;
 			this.vy += 8;
 		}
@@ -188,8 +172,7 @@ class Player
 	}
 
 	// how this player handles physics
-	phys()
-	{
+	phys() {
 		this.x += this.vx;
 
 		if (this.x > 7900)
@@ -198,8 +181,7 @@ class Player
 		if (this.x < -7900)
 			this.x = -7900;
 
-		if (this.grounded == false)
-		{
+		if (this.grounded == false) {
 			this.y -= this.vy;
 			this.vy -= 0.25;
 		}
@@ -230,8 +212,7 @@ var floor = {
 	x: 0,
 	y: 0,
 
-	draw: function ()
-	{
+	draw: function () {
 		// the floor gradient
 		var height = (canvas.height / 2) - this.y;
 		var gradient = ctx.createLinearGradient(0, height, 0, canvas.height);
@@ -243,8 +224,7 @@ var floor = {
 		ctx.fillRect(0, height, canvas.width, canvas.height);
 
 		// some depth lines
-		for (var i = -31; i < 32; i++)
-		{
+		for (var i = -31; i < 32; i++) {
 			ctx.strokeStyle = '#336b33';
 			ctx.lineWidth = 1;
 			ctx.beginPath();
@@ -255,8 +235,7 @@ var floor = {
 		}
 
 		// some horizontal lines
-		for (var i = 32; i > 0; i--)
-		{
+		for (var i = 32; i > 0; i--) {
 			// i hate this thing with every essence of my being
 			var y = (canvas.height / 2) - (this.y - Math.exp(i * 0.33));
 

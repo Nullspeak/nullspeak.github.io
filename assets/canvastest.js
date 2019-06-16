@@ -11,8 +11,7 @@ var ball = {
 	color: '#FFBF00',
 
 	// how we should draw this object
-	draw: function ()
-	{
+	draw: function () {
 		ctx.strokeStyle = this.color;
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
@@ -26,8 +25,7 @@ var ball = {
 	},
 
 	// how this object moves
-	phys: function ()
-	{
+	phys: function () {
 		// change our position based on our velocity
 		this.x += this.vx;
 		this.y += this.vy;
@@ -43,13 +41,11 @@ var ball = {
 			this.vx *= .8;
 
 		// don't go outside the boundaries
-		if (this.y + this.vy > (200 - this.radius) || this.y + this.vy < (this.radius + 18))
-		{
+		if (this.y + this.vy > (200 - this.radius) || this.y + this.vy < (this.radius + 18)) {
 			this.vy = -this.vy;
 		}
 
-		if (this.x + this.vx > (320 - this.radius) || this.x + this.vx < this.radius)
-		{
+		if (this.x + this.vx > (320 - this.radius) || this.x + this.vx < this.radius) {
 			this.vx = -this.vx;;
 		}
 	}
@@ -57,14 +53,12 @@ var ball = {
 };
 
 // what <body> calls on load
-function drawCanvas()
-{
+function drawCanvas() {
 	// find our canvas object
 	var canvas = document.getElementById('themfcanvas');
 
 	// if the canvas doesn't work don't use it
-	if (canvas.getContext)
-	{
+	if (canvas.getContext) {
 		// set ctx to the canvas's context
 		ctx = canvas.getContext('2d');
 
@@ -85,14 +79,12 @@ function drawCanvas()
 }
 
 // i dont know why but this helps with screen tearing issues
-window.requestAnimFrame = function (callback)
-{
+window.requestAnimFrame = function (callback) {
 	window.setTimeout(callback, 16);
 };
 
 // where everything is drawn
-function drawLoop()
-{
+function drawLoop() {
 	ctx.clearRect(0, 0, 320, 200);
 
 	drawStatic();
@@ -104,8 +96,7 @@ function drawLoop()
 }
 
 // draws static things like the caption bar thingy
-function drawStatic()
-{
+function drawStatic() {
 	ctx.fillText("Canvas Test - Click to kick ball", 2, 12);
 
 	ctx.beginPath();
@@ -124,8 +115,7 @@ function drawStatic()
 }
 
 // this adds a little bit of functionality and makes it less boring
-function canvasClicked(e)
-{
+function canvasClicked(e) {
 	ball.vx += 1;
 	ball.vy += -2;
 }

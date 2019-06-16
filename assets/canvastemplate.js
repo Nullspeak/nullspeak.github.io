@@ -3,14 +3,12 @@ var canvas; // the canvas itself
 var ctx; // canvas context
 
 // when a key is pressed down
-function procInputDown(event)
-{
+function procInputDown(event) {
 	// Do nothing if the event was already processed
 	if (event.defaultPrevented)
 		return;
 
-	switch (event.key)
-	{
+	switch (event.key) {
 		default:
 			return;
 	}
@@ -20,14 +18,12 @@ function procInputDown(event)
 }
 
 // when a key is released
-function procInputUp(event)
-{
+function procInputUp(event) {
 	// Do nothing if the event was already processed
 	if (event.defaultPrevented)
 		return;
 
-	switch (event.key)
-	{
+	switch (event.key) {
 		default:
 			return;
 	}
@@ -37,8 +33,7 @@ function procInputUp(event)
 }
 
 // when a key is released
-function procInputClick(event)
-{
+function procInputClick(event) {
 	// click coordinates relative to canvas
 	var rect = canvas.getBoundingClientRect();
 	var mx = event.clientX - rect.left;
@@ -46,14 +41,12 @@ function procInputClick(event)
 }
 
 // what <body> calls on load
-function initCanvas()
-{
+function initCanvas() {
 	// find our canvas object
 	canvas = document.getElementById('canvas');
 
 	// if the canvas doesn't work don't use it
-	if (canvas.getContext)
-	{
+	if (canvas.getContext) {
 		// set ctx to the canvas's context
 		ctx = canvas.getContext('2d');
 
@@ -68,14 +61,12 @@ function initCanvas()
 }
 
 // i dont know why but this helps with screen tearing issues
-window.requestAnimFrame = function (callback)
-{
+window.requestAnimFrame = function (callback) {
 	window.setTimeout(callback, 16);
 };
 
 // where everything is drawn
-function drawLoop()
-{
+function drawLoop() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	drawStatic();
@@ -84,15 +75,13 @@ function drawLoop()
 }
 
 // draws static things like the scenery
-function drawStatic()
-{
+function drawStatic() {
 	// actual drawing code here at some point
 
 	resetDrawAttr();
 }
 
-function resetDrawAttr()
-{
+function resetDrawAttr() {
 	// reset everything
 	ctx.shadowColor = 'black';
 	ctx.shadowBlur = 0;

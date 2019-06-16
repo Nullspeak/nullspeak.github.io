@@ -11,14 +11,12 @@ var bgimg = new Image();
 var gameover = false;
 
 // when a key is pressed down
-function procInputDown(event)
-{
+function procInputDown(event) {
 	// Do nothing if the event was already processed
 	if (event.defaultPrevented)
 		return;
 
-	switch (event.key)
-	{
+	switch (event.key) {
 		case 'w':
 			players[0].inUp = true;
 			break;
@@ -34,8 +32,7 @@ function procInputDown(event)
 			break;
 
 		case 's':
-			if (players[0].canAttack == true)
-			{
+			if (players[0].canAttack == true) {
 				players[0].inAttack = true;
 				players[0].canAttack = false;
 				setTimeout(function () { players[0].canAttack = true; }, 250);
@@ -57,8 +54,7 @@ function procInputDown(event)
 			break;
 
 		case "ArrowDown":
-			if (players[1].canAttack == true)
-			{
+			if (players[1].canAttack == true) {
 				players[1].inAttack = true;
 				players[1].canAttack = false;
 				setTimeout(function () { players[1].canAttack = true; }, 250);
@@ -74,14 +70,12 @@ function procInputDown(event)
 }
 
 // when a key is released
-function procInputUp(event)
-{
+function procInputUp(event) {
 	// Do nothing if the event was already processed
 	if (event.defaultPrevented)
 		return;
 
-	switch (event.key)
-	{
+	switch (event.key) {
 		case 'w':
 			players[0].inUp = false;
 			break;
@@ -115,8 +109,7 @@ function procInputUp(event)
 }
 
 // when a key is released
-function procInputClick(event)
-{
+function procInputClick(event) {
 	// click coordinates relative to canvas
 	var rect = canvas.getBoundingClientRect();
 	var mx = event.clientX - rect.left;
@@ -127,14 +120,12 @@ function procInputClick(event)
 }
 
 // what <body> calls on load
-function initCanvas()
-{
+function initCanvas() {
 	// find our canvas object
 	canvas = document.getElementById('canvas');
 
 	// if the canvas doesn't work don't use it
-	if (canvas.getContext)
-	{
+	if (canvas.getContext) {
 		// set ctx to the canvas's context
 		ctx = canvas.getContext('2d');
 
@@ -166,20 +157,17 @@ function initCanvas()
 }
 
 // quick and dirty lerp function for smoothing out the camera
-function lerp(start, end, amt)
-{
+function lerp(start, end, amt) {
 	return (1 - amt) * start + amt * end
 }
 
 // where everything is drawn
-function drawLoop()
-{
+function drawLoop() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	bg.draw();
 
-	for (var i = 0; i < players.length; i++)
-	{
+	for (var i = 0; i < players.length; i++) {
 		players[i].input();
 		players[i].phys();
 		players[i].draw();
@@ -193,8 +181,7 @@ function drawLoop()
 	window.requestAnimationFrame(drawLoop);
 }
 
-function resetDrawAttr()
-{
+function resetDrawAttr() {
 	// reset everything
 	ctx.shadowColor = 'black';
 	ctx.fillStyle = "black";
@@ -209,30 +196,25 @@ var fx;
 var fy;
 
 // because that mess is too long
-function randomRange(low, high)
-{
+function randomRange(low, high) {
 	return ((Math.random() % high) - low) + high;
 }
 
 // the jumping noise
-function playJumpSound()
-{
+function playJumpSound() {
 	new Audio("../assets/jsgame/swoosh.ogg").play();
 }
 
 // the jumping noise
-function playDeathSound()
-{
+function playDeathSound() {
 	// reusing sound file from canvas test 3
 	new Audio("../assets/canvastest3/shot.ogg").play();
 }
 
 // the punching noises
-function playPunchSound()
-{
+function playPunchSound() {
 	var num = Math.round(Math.random() * 3);
-	switch (num)
-	{
+	switch (num) {
 		case 0:
 			new Audio("../assets/jsgame/punch1.ogg").play();
 			break;
@@ -248,16 +230,13 @@ function playPunchSound()
 	}
 }
 
-function clamp(v, min, max)
-{
+function clamp(v, min, max) {
 	return Math.max(min, Math.min(v, max));
 }
 
 // player class, a class because this is multiplayer and why should i write all of this twice
-class Player
-{
-	constructor(id)
-	{
+class Player {
+	constructor(id) {
 		this.x = 0;
 		this.y = 0;
 		this.vx = 0;
@@ -287,8 +266,7 @@ class Player
 	}
 
 	// how the player is painted
-	draw()
-	{
+	draw() {
 		var xoffset = ((canvas.width / 2) + this.x) + fx;
 		var yoffset = (this.y + (canvas.height - 96)) + fy;
 
@@ -321,8 +299,7 @@ class Player
 		ctx.fillText("Player " + (this.id + 1), nameofx, nameofy);
 
 		// debug text
-		if (debugmode == true)
-		{
+		if (debugmode == true) {
 			ctx.fillText("X " + Math.round(this.x) + ": Y " + Math.round(this.y), xoffset, yoffset - 128);
 			ctx.fillText("VX " + Math.round(this.vx) + ": VY " + Math.round(this.vy), xoffset, yoffset - 96);
 		}
@@ -333,8 +310,7 @@ class Player
 		var shakey = Math.random() * this.hudshakex;
 
 		// health text
-		if (this.id == 0)
-		{
+		if (this.id == 0) {
 			ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
 			ctx.fillRect(32, (canvas.height - 80), 256, 64);
 
@@ -344,8 +320,7 @@ class Player
 			ctx.font = "italic 16pt sans-serif";
 			ctx.fillText("Lives: " + this.lives, 48 + shakey, (canvas.height - 24) + shakex);
 
-			if (this.lives <= 0)
-			{
+			if (this.lives <= 0) {
 				ctx.fillStyle = "#FFBF00";
 				ctx.textAlign = "center";
 
@@ -358,8 +333,7 @@ class Player
 		}
 
 		// health text
-		if (this.id == 1)
-		{
+		if (this.id == 1) {
 			ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
 			ctx.fillRect((canvas.width - 32) - 256, (canvas.height - 80), 256, 64);
 
@@ -370,8 +344,7 @@ class Player
 			ctx.font = "italic 16pt sans-serif";
 			ctx.fillText("Lives: " + this.lives, (canvas.width - 48) + shakey, (canvas.height - 24) + shakex);
 
-			if (this.lives <= 0)
-			{
+			if (this.lives <= 0) {
 				ctx.fillStyle = "#FFBF00";
 				ctx.textAlign = "center";
 
@@ -387,10 +360,8 @@ class Player
 	}
 
 	// how the player handles input
-	input()
-	{
-		if (this.inUp == true && this.grounded == true)
-		{
+	input() {
+		if (this.inUp == true && this.grounded == true) {
 			this.grounded = false;
 			this.vy += 12;
 
@@ -404,14 +375,11 @@ class Player
 			this.vx += 1;
 
 		// if we can attack
-		if (this.inAttack == true)
-		{
+		if (this.inAttack == true) {
 			// if we're player 1, check for player 2
-			if (this.id == 0)
-			{
+			if (this.id == 0) {
 				if ((this.x > players[1].x - 24) && (this.x < players[1].x + 24) &&
-					(this.y > players[1].y - 24) && (this.y < players[1].y + 24))
-				{
+					(this.y > players[1].y - 24) && (this.y < players[1].y + 24)) {
 					// damage them and damage them more as they get weaker
 					players[1].damage += randomRange(5, 15) + (players[1].damage / 16);
 
@@ -426,11 +394,9 @@ class Player
 			}
 
 			// if we're player 2, check for player 1
-			if (this.id == 1)
-			{
+			if (this.id == 1) {
 				if ((this.x > players[0].x - 24) && (this.x < players[0].x + 24) &&
-					(this.y > players[0].y - 24) && (this.y < players[0].y + 24))
-				{
+					(this.y > players[0].y - 24) && (this.y < players[0].y + 24)) {
 					// damage them and damage them more as they get weaker
 					players[0].damage += randomRange(5, 15) + (players[0].damage / 16);
 
@@ -449,18 +415,15 @@ class Player
 	}
 
 	// how this player handles physics
-	phys()
-	{
+	phys() {
 		this.vy = clamp(this.vy, -8, 16);
 
 		this.x += this.vx;
 
 		// if the game's over, don't let anybody leave the arena
 		// if the game's not over, kill players that leave the arena
-		if (!gameover)
-		{
-			if ((this.x < -648) || (this.x > 648))
-			{
+		if (!gameover) {
+			if ((this.x < -648) || (this.x > 648)) {
 				this.lives--;
 				playDeathSound();
 				this.x = 0;
@@ -472,8 +435,7 @@ class Player
 				this.lastdamage = 0;
 			}
 		}
-		else
-		{
+		else {
 			// if the game's over, let players bounce off walls
 			if (this.x < -631)
 				this.vx *= -1;
@@ -487,16 +449,14 @@ class Player
 		if (this.lives <= 0)
 			gameover = true;
 
-		if (this.grounded == false)
-		{
+		if (this.grounded == false) {
 			this.y -= this.vy;
 			this.vy -= 0.25;
 		}
 		else
 			this.vy = 0;
 
-		if (this.y >= 0)
-		{
+		if (this.y >= 0) {
 			this.grounded = true;
 			this.y = 0;
 		}
@@ -509,10 +469,8 @@ class Player
 
 		// handling for the platform in the middle
 		// NOTE: there is 3 units of tolerance because just 1 and 2 seem to be too small to check for
-		if (this.vy < 0 && (this.y < -141 && this.y > -147))
-		{
-			if (this.x < 72 && this.x > -72)
-			{
+		if (this.vy < 0 && (this.y < -141 && this.y > -147)) {
+			if (this.x < 72 && this.x > -72) {
 				this.grounded = true;
 				this.y = -144;
 			}
@@ -523,15 +481,13 @@ class Player
 			this.grounded = false;
 
 		// hud shake handler
-		if (this.damage > this.lastdamage)
-		{
+		if (this.damage > this.lastdamage) {
 			this.hudshakex = ((this.damage - this.lastdamage) / 2) + (this.damage / 16);
 			this.lastdamage = this.damage;
 		}
 
 		// gradually decrease the shake amount
-		if (this.hudshakex > 0)
-		{
+		if (this.hudshakex > 0) {
 			this.hudshakex -= (this.hudshakex / 8);
 		}
 
@@ -549,8 +505,7 @@ var bg = {
 	x: 0,
 	y: 0,
 
-	draw: function ()
-	{
+	draw: function () {
 		this.x = avgx;
 		this.y = avgy;
 
