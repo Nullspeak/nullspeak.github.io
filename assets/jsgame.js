@@ -10,10 +10,13 @@ var bgimg = new Image();
 // is the game in the "somebody won" state?
 var gameover = false;
 
+// if for some reason you want more than 2 jumps, set it here
+var maxJumps = 2;
+
 // when a key is pressed down
 function procInputDown(event) {
 	// Do nothing if the event was already processed
-	if (event.defaultPrevented)
+	if (event.defaultPrevented || event.repeat)
 		return;
 
 	switch (event.key) {
@@ -185,7 +188,6 @@ function resetDrawAttr() {
 	// reset everything
 	ctx.shadowColor = 'black';
 	ctx.fillStyle = "black";
-	ctx.shadowBlur = 0;
 }
 
 // the average position of both players
@@ -216,22 +218,37 @@ function playPunchSound() {
 	var num = Math.round(Math.random() * 3);
 	switch (num) {
 		case 0:
-			new Audio("../assets/jsgame/punch1.ogg").play();
+			var a = new Audio("../assets/jsgame/punch1.ogg");
+			a.volume = 0.25;
+			a.play();
 			break;
 		case 1:
-			new Audio("../assets/jsgame/punch2.ogg").play();
+			var a = new Audio("../assets/jsgame/punch2.ogg");
+			a.volume = 0.25;
+			a.play();
 			break;
 		case 2:
-			new Audio("../assets/jsgame/punch3.ogg").play();
+			var a = new Audio("../assets/jsgame/punch3.ogg");
+			a.volume = 0.25;
+			a.play();
 			break;
 		default:
-			new Audio("../assets/jsgame/punch4.ogg").play();
+			var a = new Audio("../assets/jsgame/punch4.ogg");
+			a.volume = 0.25;
+			a.play();
 			break;
 	}
 }
 
 function clamp(v, min, max) {
 	return Math.max(min, Math.min(v, max));
+}
+
+function textShadow(str, x, y) {
+	ctx.strokeStyle = "#0000007f";
+	ctx.lineWidth = 2;
+	ctx.strokeText(str, x+1, y+1);
+	ctx.fillText(str, x, y);
 }
 
 // player class, a class because this is multiplayer and why should i write all of this twice
@@ -245,6 +262,7 @@ class Player {
 		this.damage = 0;
 		this.lastdamage = 0;
 		this.lives = 3;
+		this.jumps = maxJumps;
 
 		this.hudshakex = 0;
 
@@ -271,37 +289,73 @@ class Player {
 		var yoffset = (this.y + (canvas.height - 96)) + fy;
 
 		ctx.strokeStyle = "black";
-		ctx.lineWidth = 1;
+		ctx.lineWidth = 2;
 
 		ctx.fillStyle = this.color;
-		ctx.beginPath();
-		ctx.arc(xoffset, yoffset - 40, 8, 0, Math.PI * 2);
-		ctx.closePath();
-		ctx.fill();
-		ctx.stroke();
 
-		ctx.beginPath();
-		ctx.moveTo(xoffset - 8, yoffset);
-		ctx.lineTo(xoffset, yoffset - 31);
-		ctx.lineTo(xoffset + 8, yoffset);
-		ctx.closePath();
-		ctx.fill();
-		ctx.stroke();
+		if(this.vx < 1 && this.vx > -1)
+		{
+			ctx.beginPath();
+			ctx.arc(xoffset, yoffset - 40, 8, 0, Math.PI * 2);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+		
+			ctx.beginPath();
+			ctx.moveTo(xoffset - 8, yoffset);
+			ctx.lineTo(xoffset, yoffset - 30);
+			ctx.lineTo(xoffset + 8, yoffset);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+		}
+		else if(this.vx > 1)
+		{
+			ctx.beginPath();
+			ctx.arc(xoffset + 4, yoffset - 40, 8, 0, Math.PI * 2);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+			
+			ctx.beginPath();
+			ctx.moveTo(xoffset - 8, yoffset);
+			ctx.lineTo(xoffset + 4, yoffset - 30);
+			ctx.lineTo(xoffset + 8, yoffset);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+		}
+		else if(this.vx < -1)
+		{
+			ctx.beginPath();
+			ctx.arc(xoffset - 4, yoffset - 40, 8, 0, Math.PI * 2);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+			
+			ctx.beginPath();
+			ctx.moveTo(xoffset + 8, yoffset);
+			ctx.lineTo(xoffset - 4, yoffset - 30);
+			ctx.lineTo(xoffset - 8, yoffset);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+		}
 
-		ctx.lineWidth = 2;
+		ctx.lineWidth = 4;
 		ctx.font = "12pt sans-serif";
 		ctx.textAlign = "center";
 
-		ctx.shadowBlur = 8;
-
 		var nameofx = clamp(xoffset, 32, 992);
 		var nameofy = clamp(yoffset, 88, 496) - 64;
-		ctx.fillText("Player " + (this.id + 1), nameofx, nameofy);
+		textShadow("Player " + (this.id + 1), nameofx, nameofy);
 
 		// debug text
 		if (debugmode == true) {
-			ctx.fillText("X " + Math.round(this.x) + ": Y " + Math.round(this.y), xoffset, yoffset - 128);
-			ctx.fillText("VX " + Math.round(this.vx) + ": VY " + Math.round(this.vy), xoffset, yoffset - 96);
+			var vx = this.vx;
+			var vy = this.vy;
+			textShadow("X " + this.x + ": Y " + this.y, xoffset, yoffset - 128);
+			textShadow("VX " + Math.round(vx) + ": VY " + Math.round(vy), xoffset, yoffset - 96);
 		}
 
 		ctx.font = "italic 24pt sans-serif";
@@ -316,19 +370,19 @@ class Player {
 
 			ctx.fillStyle = this.color;
 			ctx.textAlign = "left";
-			ctx.fillText("Player 1: " + Math.round(this.damage) + "%", 48 + shakex, (canvas.height - 48) + shakey);
+			textShadow("Player 1: " + Math.round(this.damage) + "%", 48 + shakex, (canvas.height - 48) + shakey);
 			ctx.font = "italic 16pt sans-serif";
-			ctx.fillText("Lives: " + this.lives, 48 + shakey, (canvas.height - 24) + shakex);
+			textShadow("Lives: " + this.lives, 48 + shakey, (canvas.height - 24) + shakex, this.color);
 
 			if (this.lives <= 0) {
 				ctx.fillStyle = "#FFBF00";
 				ctx.textAlign = "center";
 
 				ctx.font = "italic 24pt sans-serif";
-				ctx.fillText("Player 2 wins!", (canvas.width / 2), (canvas.height / 2) - 64);
+				textShadow("Player 2 wins!", (canvas.width / 2), (canvas.height / 2) - 64);
 
 				ctx.font = "italic 16pt sans-serif";
-				ctx.fillText("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
+				textShadow("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
 			}
 		}
 
@@ -340,19 +394,19 @@ class Player {
 			ctx.fillStyle = this.color;
 
 			ctx.textAlign = "right";
-			ctx.fillText("Player 2: " + Math.round(this.damage) + "%", (canvas.width - 48) + shakex, (canvas.height - 48) + shakey);
+			textShadow("Player 2: " + Math.round(this.damage) + "%", (canvas.width - 48) + shakex, (canvas.height - 48) + shakey);
 			ctx.font = "italic 16pt sans-serif";
-			ctx.fillText("Lives: " + this.lives, (canvas.width - 48) + shakey, (canvas.height - 24) + shakex);
+			textShadow("Lives: " + this.lives, (canvas.width - 48) + shakey, (canvas.height - 24) + shakex);
 
 			if (this.lives <= 0) {
 				ctx.fillStyle = "#FFBF00";
 				ctx.textAlign = "center";
 
 				ctx.font = "italic 24pt sans-serif";
-				ctx.fillText("Player 1 wins!", (canvas.width / 2), (canvas.height / 2) - 64);
+				textShadow("Player 1 wins!", (canvas.width / 2), (canvas.height / 2) - 64);
 
 				ctx.font = "italic 16pt sans-serif";
-				ctx.fillText("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
+				textShadow("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
 			}
 		}
 
@@ -361,18 +415,20 @@ class Player {
 
 	// how the player handles input
 	input() {
-		if (this.inUp == true && this.grounded == true) {
+		if (this.inUp == true && this.jumps > 0) {
+			this.inUp = false;
 			this.grounded = false;
-			this.vy += 12;
-
+			this.jumps--;
+			this.vy = 10;
+			
 			playJumpSound();
 		}
 
 		if (this.inLeft == true && this.vx > -8)
-			this.vx -= 1;
+			this.vx -= 1.5;
 
 		if (this.inRight == true && this.vx < 8)
-			this.vx += 1;
+			this.vx += 1.5;
 
 		// if we can attack
 		if (this.inAttack == true) {
@@ -459,11 +515,12 @@ class Player {
 		if (this.y >= 0) {
 			this.grounded = true;
 			this.y = 0;
+			this.jumps = 2;
 		}
 
 		// ground friction and air friction
 		if (this.grounded == true)
-			this.vx *= .9;
+			this.vx *= .8;
 		else
 			this.vx *= .99;
 
@@ -473,6 +530,7 @@ class Player {
 			if (this.x < 72 && this.x > -72) {
 				this.grounded = true;
 				this.y = -144;
+				this.jumps = 2;
 			}
 		}
 
