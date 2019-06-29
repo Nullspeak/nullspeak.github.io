@@ -7,8 +7,38 @@
 	<title>Sarah's Domain</title>
 	<link rel="stylesheet" href="./assets/default.css" />
 	<link rel="shortcut icon" href="./assets/favicon.ico" />
+
+	<style type="text/css">
+		#blog {
+			position: absolute;
+			padding: 4px;
+			font-family: monospace;
+			background-color: rgba(0,0,0,0.5);
+			border: 2px solid gray;
+			width: 512px;
+			height: 256px;
+			white-space: pre-line;
+			overflow-y: scroll;
+		}
+	</style>
+
+	<script>
+		// load the blog content
+		function loadBlog() {
+			var req = new XMLHttpRequest();
+			req.open('GET', 'https://dl.dropboxusercontent.com/s/wfdjxpu8npj1f4q/blog.txt', true);
+			req.responseType = 'text';
+			req.send();
+			req.onreadystatechange = function () {
+				if (req.readyState === req.DONE && req.status === 200) {
+					document.getElementById("blog").innerHTML = req.responseText;
+				}
+			}
+		}
+
+	</script>
 </head>
-<body>
+<body onload="loadBlog()">
 	<!--Title text thing-->
 	<h1>Sarah's Domain</h1>
 
@@ -23,6 +53,8 @@
 
 	<p>Hi, this is my website</p>
 	<p>I host things here like my projects and HTML experiements</p>
+
+	<code id="blog">Loading..</code>
 
 </body>
 </html>
