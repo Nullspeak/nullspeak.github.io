@@ -13,6 +13,14 @@ var gameover = false;
 // if for some reason you want more than 2 jumps, set it here
 var maxJumps = 2;
 
+var sfxenabled = true;
+function checkboxSfx_clicked() {
+	if (document.getElementById("checkboxSfx").checked)
+		sfxenabled = true;
+	else
+		sfxenabled = false;
+}
+
 // when a key is pressed down
 function procInputDown(event) {
 	// Do nothing if the event was already processed
@@ -111,6 +119,13 @@ function procInputUp(event) {
 	event.preventDefault();
 }
 
+function event_musicCheckboxClicked() {
+	if (music.paused)
+		music.play();
+	else
+		music.pause();
+}
+
 // when a key is released
 function procInputClick(event) {
 	// click coordinates relative to canvas
@@ -138,6 +153,9 @@ function initCanvas() {
 		canvas.addEventListener('click', procInputClick, true);
 
 		bgimg.src = "../assets/jsgame/bgimg.png";
+
+		// make sure we get the value
+		checkboxSfx_clicked();
 
 		// force the sound assets to load before we continue
 		new Audio("../assets/jsgame/swoosh.ogg").load();
@@ -204,39 +222,43 @@ function randomRange(low, high) {
 
 // the jumping noise
 function playJumpSound() {
-	new Audio("../assets/jsgame/swoosh.ogg").play();
+	if (sfxenabled)
+		new Audio("../assets/jsgame/swoosh.ogg").play();
 }
 
 // the jumping noise
 function playDeathSound() {
 	// reusing sound file from canvas test 3
-	new Audio("../assets/canvastest3/shot.ogg").play();
+	if (sfxenabled)
+		new Audio("../assets/canvastest3/shot.ogg").play();
 }
 
 // the punching noises
 function playPunchSound() {
-	var num = Math.round(Math.random() * 3);
-	switch (num) {
-		case 0:
-			var a = new Audio("../assets/jsgame/punch1.ogg");
-			a.volume = 0.25;
-			a.play();
-			break;
-		case 1:
-			var a = new Audio("../assets/jsgame/punch2.ogg");
-			a.volume = 0.25;
-			a.play();
-			break;
-		case 2:
-			var a = new Audio("../assets/jsgame/punch3.ogg");
-			a.volume = 0.25;
-			a.play();
-			break;
-		default:
-			var a = new Audio("../assets/jsgame/punch4.ogg");
-			a.volume = 0.25;
-			a.play();
-			break;
+	if (sfxenabled) {
+		var num = Math.round(Math.random() * 3);
+		switch (num) {
+			case 0:
+				var a = new Audio("../assets/jsgame/punch1.ogg");
+				a.volume = 0.25;
+				a.play();
+				break;
+			case 1:
+				var a = new Audio("../assets/jsgame/punch2.ogg");
+				a.volume = 0.25;
+				a.play();
+				break;
+			case 2:
+				var a = new Audio("../assets/jsgame/punch3.ogg");
+				a.volume = 0.25;
+				a.play();
+				break;
+			default:
+				var a = new Audio("../assets/jsgame/punch4.ogg");
+				a.volume = 0.25;
+				a.play();
+				break;
+		}
 	}
 }
 
@@ -245,10 +267,65 @@ function clamp(v, min, max) {
 }
 
 function textShadow(str, x, y) {
-	ctx.strokeStyle = "#0000007f";
-	ctx.lineWidth = 2;
-	ctx.strokeText(str, x+1, y+1);
+	var col = ctx.fillStyle;
+
+	ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+	ctx.fillText(str, x + 1, y + 1);
+
+	ctx.fillStyle = col;
 	ctx.fillText(str, x, y);
+}
+
+// a little bit of player customization
+class PlayerAttr {
+	// set up some defaults
+	constructor(id) {
+		this.name = "Player " + (id + 1);
+
+		if (id == 0)
+			this.color = "#f44242";
+		else if (id == 1)
+			this.color = "#41b5f4";
+		else
+			this.color = "white";
+	}
+}
+
+var playerAttrs = [new PlayerAttr(0), new PlayerAttr(1)];
+
+// get a file and parse it into the player's style thing
+function importPlayerAttr(id) {
+	var i = document.getElementById("player1Import");
+
+	if (id > 0)
+		i = document.getElementById("player2Import");
+
+	if (i.files.length == 1) {
+		var fr = new FileReader();
+		var file = i.files[0];
+		fr.readAsText(file);
+
+		fr.onloadend = function () {
+			playerAttrs[id] = JSON.parse(fr.result);
+			players[id].attr = playerAttrs[id];
+		};
+	}
+}
+
+// export a blank template player style
+function exportPlayerAttrTemplate() {
+	var str = JSON.stringify(new PlayerAttr(2));
+	var blob = new Blob([str], { type: "application/json" });
+	var url = window.URL.createObjectURL(blob);
+
+	var a = document.getElementById("playerExportLink");
+	a.download = "PlayerTemplate.json";
+
+	// this is a bit cheaty but it makes it less clunky
+	a.href = url;
+	a.click();
+
+	window.URL.revokeObjectURL(url);
 }
 
 // player class, a class because this is multiplayer and why should i write all of this twice
@@ -275,12 +352,7 @@ class Player {
 		this.inAttack = false;
 		this.canAttack = true;
 
-		if (this.id == 0)
-			this.color = '#f44242';
-		else if (this.id == 1)
-			this.color = '#41b5f4';
-		else
-			this.color = 'black';
+		this.attr = playerAttrs[id];
 	}
 
 	// how the player is painted
@@ -288,19 +360,25 @@ class Player {
 		var xoffset = ((canvas.width / 2) + this.x) + fx;
 		var yoffset = (this.y + (canvas.height - 96)) + fy;
 
+		ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+		var shadowpos = (canvas.height - 96) + fy;
+		ctx.beginPath();
+		ctx.ellipse(xoffset, shadowpos, 16, 3, 0, 0, Math.PI * 2);
+		ctx.closePath();
+		ctx.fill();
+
 		ctx.strokeStyle = "black";
 		ctx.lineWidth = 2;
 
-		ctx.fillStyle = this.color;
+		ctx.fillStyle = this.attr.color;
 
-		if(this.vx < 1 && this.vx > -1)
-		{
+		if (this.vx < 1 && this.vx > -1) {
 			ctx.beginPath();
 			ctx.arc(xoffset, yoffset - 40, 8, 0, Math.PI * 2);
 			ctx.closePath();
 			ctx.fill();
 			ctx.stroke();
-		
+
 			ctx.beginPath();
 			ctx.moveTo(xoffset - 8, yoffset);
 			ctx.lineTo(xoffset, yoffset - 30);
@@ -309,14 +387,13 @@ class Player {
 			ctx.fill();
 			ctx.stroke();
 		}
-		else if(this.vx > 1)
-		{
+		else if (this.vx > 1) {
 			ctx.beginPath();
 			ctx.arc(xoffset + 4, yoffset - 40, 8, 0, Math.PI * 2);
 			ctx.closePath();
 			ctx.fill();
 			ctx.stroke();
-			
+
 			ctx.beginPath();
 			ctx.moveTo(xoffset - 8, yoffset);
 			ctx.lineTo(xoffset + 4, yoffset - 30);
@@ -325,14 +402,13 @@ class Player {
 			ctx.fill();
 			ctx.stroke();
 		}
-		else if(this.vx < -1)
-		{
+		else if (this.vx < -1) {
 			ctx.beginPath();
 			ctx.arc(xoffset - 4, yoffset - 40, 8, 0, Math.PI * 2);
 			ctx.closePath();
 			ctx.fill();
 			ctx.stroke();
-			
+
 			ctx.beginPath();
 			ctx.moveTo(xoffset + 8, yoffset);
 			ctx.lineTo(xoffset - 4, yoffset - 30);
@@ -348,7 +424,7 @@ class Player {
 
 		var nameofx = clamp(xoffset, 32, 992);
 		var nameofy = clamp(yoffset, 88, 496) - 64;
-		textShadow("Player " + (this.id + 1), nameofx, nameofy);
+		textShadow(this.attr.name, nameofx, nameofy);
 
 		// debug text
 		if (debugmode == true) {
@@ -368,9 +444,9 @@ class Player {
 			ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
 			ctx.fillRect(32, (canvas.height - 80), 256, 64);
 
-			ctx.fillStyle = this.color;
+			ctx.fillStyle = this.attr.color;
 			ctx.textAlign = "left";
-			textShadow("Player 1: " + Math.round(this.damage) + "%", 48 + shakex, (canvas.height - 48) + shakey);
+			textShadow(players[0].attr.name + ": " + Math.round(this.damage) + "%", 48 + shakex, (canvas.height - 48) + shakey);
 			ctx.font = "italic 16pt sans-serif";
 			textShadow("Lives: " + this.lives, 48 + shakey, (canvas.height - 24) + shakex, this.color);
 
@@ -379,7 +455,7 @@ class Player {
 				ctx.textAlign = "center";
 
 				ctx.font = "italic 24pt sans-serif";
-				textShadow("Player 2 wins!", (canvas.width / 2), (canvas.height / 2) - 64);
+				textShadow(players[0].attr.name + " wins!", (canvas.width / 2), (canvas.height / 2) - 64);
 
 				ctx.font = "italic 16pt sans-serif";
 				textShadow("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
@@ -391,10 +467,10 @@ class Player {
 			ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
 			ctx.fillRect((canvas.width - 32) - 256, (canvas.height - 80), 256, 64);
 
-			ctx.fillStyle = this.color;
+			ctx.fillStyle = this.attr.color;
 
 			ctx.textAlign = "right";
-			textShadow("Player 2: " + Math.round(this.damage) + "%", (canvas.width - 48) + shakex, (canvas.height - 48) + shakey);
+			textShadow(players[1].attr.name + ": " + Math.round(this.damage) + "%", (canvas.width - 48) + shakex, (canvas.height - 48) + shakey);
 			ctx.font = "italic 16pt sans-serif";
 			textShadow("Lives: " + this.lives, (canvas.width - 48) + shakey, (canvas.height - 24) + shakex);
 
@@ -403,7 +479,7 @@ class Player {
 				ctx.textAlign = "center";
 
 				ctx.font = "italic 24pt sans-serif";
-				textShadow("Player 1 wins!", (canvas.width / 2), (canvas.height / 2) - 64);
+				textShadow(players[1].attr.name + " wins!", (canvas.width / 2), (canvas.height / 2) - 64);
 
 				ctx.font = "italic 16pt sans-serif";
 				textShadow("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
@@ -420,7 +496,7 @@ class Player {
 			this.grounded = false;
 			this.jumps--;
 			this.vy = 10;
-			
+
 			playJumpSound();
 		}
 

@@ -23,9 +23,24 @@
 	</div>
 	<hr />
 
+	<input type="checkbox" id="checkboxSfx" checked onclick="checkboxSfx_clicked();" />
+	<label>Sound FX</label>
+
+	<br />
 	<canvas id="canvas" width="1024" height="512">You need a browser that supports canvases for this to work.</canvas>
 	<br />
 	<p>WSAD to move player 1, Arrow keys to move player 2</p>
+
+	<input type="button" id="playerExport" value="Export Player Style Template" onclick="exportPlayerAttrTemplate();" />
+	<label>Use a text editor to change the name and color.</label>
+	<a id="playerExportLink" style="display: none;"></a>
+	<br />
+
+	<input type="button" value="Import Player 1 Style" onclick="document.getElementById('player1Import').click();" />
+	<input type="button" value="Import Player 2 Style" onclick="document.getElementById('player2Import').click();" />
+
+	<input type="file" id="player1Import" onchange="importPlayerAttr(0);" accept=".json" style="display:none;" />
+	<input type="file" id="player2Import" onchange="importPlayerAttr(1);" accept=".json" style="display:none;" />
 
 </body>
 </html>
