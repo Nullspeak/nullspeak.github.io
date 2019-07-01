@@ -475,7 +475,7 @@ class Player {
 				ctx.textAlign = "center";
 
 				ctx.font = "italic 24pt sans-serif";
-				textShadow(players[0].attr.name + " wins!", (canvas.width / 2), (canvas.height / 2) - 64);
+				textShadow(players[1].attr.name + " wins!", (canvas.width / 2), (canvas.height / 2) - 64);
 
 				ctx.font = "italic 16pt sans-serif";
 				textShadow("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
@@ -495,7 +495,7 @@ class Player {
 				ctx.textAlign = "center";
 
 				ctx.font = "italic 24pt sans-serif";
-				textShadow(players[1].attr.name + " wins!", (canvas.width / 2), (canvas.height / 2) - 64);
+				textShadow(players[0].attr.name + " wins!", (canvas.width / 2), (canvas.height / 2) - 64);
 
 				ctx.font = "italic 16pt sans-serif";
 				textShadow("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
