@@ -182,11 +182,31 @@ function lerp(start, end, amt) {
 	return (1 - amt) * start + amt * end
 }
 
+function hex2rgba(h, a) {
+	var hx = h.replace('#', '');
+	var r = parseInt(hx.substring(0, 2), 16);
+	var g = parseInt(hx.substring(2, 4), 16);
+	var b = parseInt(hx.substring(4, 6), 16);
+
+	result = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+	return result;
+}
+
 // where everything is drawn
 function drawLoop() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	bg.draw();
+
+	var g = ctx.createLinearGradient(0, 0, canvas.width, 0);
+
+	g.addColorStop(.3, hex2rgba(players[0].attr.color, 0.25));
+	g.addColorStop(.33, hex2rgba(players[0].attr.color, 0));
+	g.addColorStop(.6, hex2rgba(players[1].attr.color, 0));
+	g.addColorStop(.66, hex2rgba(players[1].attr.color, 0.25));
+
+	ctx.fillStyle = g;
+	ctx.fillRect(0, (canvas.height - 64), canvas.width, 64);
 
 	for (var i = 0; i < players.length; i++) {
 		players[i].input();
@@ -266,16 +286,6 @@ function clamp(v, min, max) {
 	return Math.max(min, Math.min(v, max));
 }
 
-function textShadow(str, x, y) {
-	var col = ctx.fillStyle;
-
-	ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-	ctx.fillText(str, x + 1, y + 1);
-
-	ctx.fillStyle = col;
-	ctx.fillText(str, x, y);
-}
-
 // a little bit of player customization
 class PlayerAttr {
 	// set up some defaults
@@ -326,6 +336,19 @@ function exportPlayerAttrTemplate() {
 	a.click();
 
 	window.URL.revokeObjectURL(url);
+}
+
+function textShadow(str, x, y) {
+	var col = ctx.fillStyle;
+
+	ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+	ctx.fillText(str, x - 1, y - 1);
+	ctx.fillText(str, x + 1, y + 1);
+	ctx.fillText(str, x - 1, y + 1);
+	ctx.fillText(str, x + 1, y - 1);
+
+	ctx.fillStyle = col;
+	ctx.fillText(str, x, y);
 }
 
 // player class, a class because this is multiplayer and why should i write all of this twice
@@ -419,7 +442,7 @@ class Player {
 		}
 
 		ctx.lineWidth = 4;
-		ctx.font = "12pt sans-serif";
+		ctx.font = "bold 12pt sans-serif";
 		ctx.textAlign = "center";
 
 		var nameofx = clamp(xoffset, 32, 992);
@@ -441,14 +464,11 @@ class Player {
 
 		// health text
 		if (this.id == 0) {
-			ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
-			ctx.fillRect(32, (canvas.height - 80), 256, 64);
-
 			ctx.fillStyle = this.attr.color;
 			ctx.textAlign = "left";
-			textShadow(players[0].attr.name + ": " + Math.round(this.damage) + "%", 48 + shakex, (canvas.height - 48) + shakey);
+			textShadow(players[0].attr.name + ": " + Math.round(this.damage) + "%", 16 + shakex, (canvas.height - 32) + shakey);
 			ctx.font = "italic 16pt sans-serif";
-			textShadow("Lives: " + this.lives, 48 + shakey, (canvas.height - 24) + shakex, this.color);
+			textShadow("Lives: " + this.lives, 16 + shakey, (canvas.height - 8) + shakex, this.color);
 
 			if (this.lives <= 0) {
 				ctx.fillStyle = "#FFBF00";
@@ -464,15 +484,11 @@ class Player {
 
 		// health text
 		if (this.id == 1) {
-			ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
-			ctx.fillRect((canvas.width - 32) - 256, (canvas.height - 80), 256, 64);
-
 			ctx.fillStyle = this.attr.color;
-
 			ctx.textAlign = "right";
-			textShadow(players[1].attr.name + ": " + Math.round(this.damage) + "%", (canvas.width - 48) + shakex, (canvas.height - 48) + shakey);
+			textShadow(players[1].attr.name + ": " + Math.round(this.damage) + "%", (canvas.width - 16) + shakex, (canvas.height - 32) + shakey);
 			ctx.font = "italic 16pt sans-serif";
-			textShadow("Lives: " + this.lives, (canvas.width - 48) + shakey, (canvas.height - 24) + shakex);
+			textShadow("Lives: " + this.lives, (canvas.width - 16) + shakey, (canvas.height - 8) + shakex);
 
 			if (this.lives <= 0) {
 				ctx.fillStyle = "#FFBF00";
