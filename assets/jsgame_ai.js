@@ -10,6 +10,9 @@ var bgimg = new Image();
 // is the game in the "somebody won" state?
 var gameover = false;
 
+// wait for someone to click to start
+var waitingToStart = true;
+
 // if for some reason you want more than 2 jumps, set it here
 var maxJumps = 2;
 
@@ -21,104 +24,6 @@ function checkboxSfx_clicked() {
 		sfxenabled = false;
 }
 
-// when a key is pressed down
-function procInputDown(event) {
-	// Do nothing if the event was already processed
-	if (event.defaultPrevented || event.repeat)
-		return;
-
-	switch (event.key) {
-		case 'w':
-			players[0].inUp = true;
-			break;
-
-		case 'a':
-			players[0].inLeft = true;
-			players[0].direction = -1;
-			break;
-
-		case 'd':
-			players[0].inRight = true;
-			players[0].direction = 1;
-			break;
-
-		case 's':
-			if (players[0].canAttack == true) {
-				players[0].inAttack = true;
-				players[0].canAttack = false;
-				setTimeout(function () { players[0].canAttack = true; }, 250);
-			}
-			break;
-
-		case "ArrowUp":
-			players[1].inUp = true;
-			break;
-
-		case "ArrowLeft":
-			players[1].inLeft = true;
-			players[1].direction = -1;
-			break;
-
-		case "ArrowRight":
-			players[1].inRight = true;
-			players[1].direction = 1;
-			break;
-
-		case "ArrowDown":
-			if (players[1].canAttack == true) {
-				players[1].inAttack = true;
-				players[1].canAttack = false;
-				setTimeout(function () { players[1].canAttack = true; }, 250);
-			}
-			break;
-
-		default:
-			return;
-	}
-
-	// Cancel the default action to avoid it being handled twice
-	event.preventDefault();
-}
-
-// when a key is released
-function procInputUp(event) {
-	// Do nothing if the event was already processed
-	if (event.defaultPrevented)
-		return;
-
-	switch (event.key) {
-		case 'w':
-			players[0].inUp = false;
-			break;
-
-		case 'a':
-			players[0].inLeft = false;
-			break;
-
-		case 'd':
-			players[0].inRight = false;
-			break;
-
-		case "ArrowUp":
-			players[1].inUp = false;
-			break;
-
-		case "ArrowLeft":
-			players[1].inLeft = false;
-			break;
-
-		case "ArrowRight":
-			players[1].inRight = false;
-			break;
-
-		default:
-			return;
-	}
-
-	// Cancel the default action to avoid it being handled twice
-	event.preventDefault();
-}
-
 // when a key is released
 function procInputClick(event) {
 	// click coordinates relative to canvas
@@ -128,6 +33,9 @@ function procInputClick(event) {
 
 	if (gameover == true)
 		location.reload();
+
+	if (waitingToStart == true)
+		waitingToStart = false;
 }
 
 // what <body> calls on load
@@ -141,8 +49,6 @@ function initCanvas() {
 		ctx = canvas.getContext('2d');
 
 		// handle key presses
-		window.addEventListener("keydown", procInputDown, true);
-		window.addEventListener("keyup", procInputUp, true);
 		canvas.addEventListener('click', procInputClick, true);
 
 		bgimg.src = "../assets/jsgame/bgimg.png";
@@ -158,8 +64,10 @@ function initCanvas() {
 		new Audio("../assets/jsgame/punch3.ogg").load();
 		new Audio("../assets/jsgame/punch4.ogg").load();
 
-		players[0].x = -256;
-		players[1].x = 256;
+		players[0].x = Math.random() * -256;
+		players[1].x = Math.random() * 256;
+		players[0].y = Math.random() * -256;
+		players[1].y = Math.random() * -256;
 
 		// set the averages
 		avgx = -((players[0].x + players[1].x)) / 2;
@@ -191,28 +99,56 @@ function drawLoop() {
 
 	bg.draw();
 
-	var g = ctx.createLinearGradient(0, 0, canvas.width, 0);
+	if (!waitingToStart) {
+		var g = ctx.createLinearGradient(0, 0, canvas.width, 0);
 
-	g.addColorStop(.3, hex2rgba(players[0].attr.color, 0.25));
-	g.addColorStop(.33, hex2rgba(players[0].attr.color, 0));
-	g.addColorStop(.6, hex2rgba(players[1].attr.color, 0));
-	g.addColorStop(.66, hex2rgba(players[1].attr.color, 0.25));
+		g.addColorStop(.3, hex2rgba(players[0].attr.color, 0.25));
+		g.addColorStop(.33, hex2rgba(players[0].attr.color, 0));
+		g.addColorStop(.6, hex2rgba(players[1].attr.color, 0));
+		g.addColorStop(.66, hex2rgba(players[1].attr.color, 0.25));
 
-	ctx.fillStyle = g;
-	ctx.fillRect(0, (canvas.height - 64), canvas.width, 64);
+		ctx.fillStyle = g;
+		ctx.fillRect(0, (canvas.height - 64), canvas.width, 64);
 
-	for (var i = 0; i < players.length; i++) {
-		players[i].input();
-		players[i].phys();
-		players[i].draw();
+		for (var i = 0; i < players.length; i++) {
+			players[i].ai();
+			players[i].input();
+			players[i].phys();
+			players[i].draw();
+		}
+
+		avgx = lerp(avgx, -((players[0].x + players[1].x)) / 2, 0.1);
+		avgy = lerp(avgy, -(((players[0].y + players[1].y)) / 2) - 96, 0.1);
 	}
+	else {
+		var g = ctx.createLinearGradient(0, 0, canvas.width, 0);
 
-	avgx = lerp(avgx, -((players[0].x + players[1].x)) / 2, 0.1);
-	avgy = lerp(avgy, -(((players[0].y + players[1].y)) / 2) - 96, 0.1);
+		g.addColorStop(.3, hex2rgba(players[0].attr.color, 0.25));
+		g.addColorStop(.33, hex2rgba(players[0].attr.color, 0));
+		g.addColorStop(.6, hex2rgba(players[1].attr.color, 0));
+		g.addColorStop(.66, hex2rgba(players[1].attr.color, 0.25));
+
+		ctx.fillStyle = g;
+		ctx.fillRect(0, (canvas.height - 64), canvas.width, 64);
+
+		for (var i = 0; i < players.length; i++) {
+			players[i].draw();
+		}
+
+		ctx.fillStyle = "#FFBF00";
+		ctx.textAlign = "center";
+
+		ctx.font = "italic 24pt sans-serif";
+		textShadow("JS Game AI Test", (canvas.width / 2), (canvas.height / 2) - 64);
+
+		ctx.font = "italic 16pt sans-serif";
+		textShadow("Click to begin", (canvas.width / 2), (canvas.height / 2) - 32);
+	}
 
 	resetDrawAttr();
 
-	window.requestAnimationFrame(drawLoop);
+	// window.requestAnimationFrame(drawLoop);
+	setTimeout(function () { window.requestAnimationFrame(drawLoop); }, 16);
 }
 
 function resetDrawAttr() {
@@ -283,53 +219,22 @@ function clamp(v, min, max) {
 class PlayerAttr {
 	// set up some defaults
 	constructor(id) {
-		this.name = "Player " + (id + 1);
-
-		if (id == 0)
+		if (id == 0) {
+			this.name = "Red CPU";
 			this.color = "#f44242";
-		else if (id == 1)
+		}
+		else if (id == 1) {
+			this.name = "Blue CPU";
 			this.color = "#41b5f4";
-		else
+		}
+		else {
+			this.name = "INVALID";
 			this.color = "white";
+		}
 	}
 }
 
 var playerAttrs = [new PlayerAttr(0), new PlayerAttr(1)];
-
-// get a file and parse it into the player's style thing
-function importPlayerAttr(id) {
-	var i = document.getElementById("player1Import");
-
-	if (id > 0)
-		i = document.getElementById("player2Import");
-
-	if (i.files.length == 1) {
-		var fr = new FileReader();
-		var file = i.files[0];
-		fr.readAsText(file);
-
-		fr.onloadend = function () {
-			playerAttrs[id] = JSON.parse(fr.result);
-			players[id].attr = playerAttrs[id];
-		};
-	}
-}
-
-// export a blank template player style
-function exportPlayerAttrTemplate() {
-	var str = JSON.stringify(new PlayerAttr(2));
-	var blob = new Blob([str], { type: "application/json" });
-	var url = window.URL.createObjectURL(blob);
-
-	var a = document.getElementById("playerExportLink");
-	a.download = "PlayerTemplate.json";
-
-	// this is a bit cheaty but it makes it less clunky
-	a.href = url;
-	a.click();
-
-	window.URL.revokeObjectURL(url);
-}
 
 function textShadow(str, x, y) {
 	var col = ctx.fillStyle;
@@ -369,6 +274,8 @@ class Player {
 		this.canAttack = true;
 
 		this.attr = playerAttrs[id];
+
+		this.wantsFlee = false;
 	}
 
 	// how the player is painted
@@ -637,6 +544,89 @@ class Player {
 		// this fixes shimmering and weird pixel issues
 		this.x = Math.round(this.x);
 		this.y = Math.round(this.y);
+	}
+
+	ai() {
+		const tol = 8;
+		// which player should we target
+		var tid;
+
+		if (this.id == 0)
+			tid = 1;
+		else
+			tid = 0;
+
+		// 1/32th chance every frame to randomly jump for variety
+		if (Math.random() > 0.03125)
+			this.inJump = true;
+
+		if (!this.wantsFlee) {
+			// if we're close enough, attack
+			if ((players[tid].x >= this.x - tol) && (players[tid].x <= this.x + tol)) {
+				this.inAttack = true;
+
+				// if they get hit, scare them off
+				players[tid].wantsFlee = true;
+				setTimeout(function () { players[tid].wantsFlee = false; }, randomRange(125, 500));
+			}
+
+			if (players[tid].x > this.x + tol) {
+				// don't go out of bounds voluntarily
+				if (this.x < -598) {
+					this.inLeft = true;
+					this.inRight = false;
+				}
+				else {
+					this.inLeft = false;
+					this.inRight = true;
+				}
+			}
+
+			if (players[tid].x < this.x - tol) {
+				// don't go out of bounds voluntarily
+				if (this.x > 598) {
+					this.inLeft = false;
+					this.inRight = true;
+				}
+				else {
+					this.inLeft = true;
+					this.inRight = false;
+				}
+			}
+
+			if (players[tid].y > this.y + tol) {
+				this.inUp = true;
+			}
+		}
+		else {
+			if (players[tid].x > this.x + tol) {
+				// don't go out of bounds voluntarily
+				if (this.x < -598) {
+					this.inLeft = false;
+					this.inRight = true;
+				}
+				else {
+					this.inLeft = true;
+					this.inRight = false;
+				}
+			}
+
+			if (players[tid].x < this.x - tol) {
+				// don't go out of bounds voluntarily
+				if (this.x > 598) {
+					this.inLeft = true;
+					this.inRight = false;
+				}
+				else {
+					this.inLeft = false;
+					this.inRight = true;
+				}
+			}
+
+			if (players[tid].y <= this.y) {
+				this.inUp = true;
+			}
+		}
 	}
 }
 

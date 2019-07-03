@@ -19,6 +19,12 @@ hr {
 	border-radius: 2px;
 }
 
+br {
+	display: block;
+	content: " "; /* crappy webkit fix */
+	margin-top: 12px;
+}
+
 button, a {
 	cursor: default;
 	font-size: 9pt;
