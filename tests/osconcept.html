@@ -1,0 +1,52 @@
+﻿<!-- a concept thing using canvas -->
+<!-- NOTE: this isn't linked to anywhere because i don't think it's entirely ready yet -->
+<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+	<meta charset='utf-8' />
+	<title>Sarah's Domain - OS Concept</title>
+	<link rel='stylesheet' href='../assets/default.css' />
+	<link rel='shortcut icon' href='../assets/favicon.ico' />
+
+	<script src='../assets/osconcept.js'></script>
+
+	<style>
+		.canvasholder {
+			padding: 0px;
+			margin: 0px;
+			background: none;
+			background-color: black;
+			align-content: center;
+			text-align: center;
+		}
+
+		canvas {
+			margin: 0px;
+			background-color: black;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			cursor: none;
+			/* cursor: url('../assets/cursor.png'), pointer; */
+		}
+	</style>
+</head>
+<body onload='initCanvas();'>
+	<!--Title text thing-->
+	<h1>Sarah's Domain - OS Concept</h1>
+
+	<!--nav bar thing-->
+	<div style='padding-bottom:8px;'>
+		<a href='../index.html'>Home</a>
+		<a href='../projects.html'>Projects</a>
+		<a href='../tests.html'>Experiments</a>
+		<a href='https://github.com/Nullspeak'>My GitHub Profile</a>
+	</div>
+	<hr />
+	<div id="canvasholder">
+		<canvas id='canvas' width='640' height='480'>You need a browser that supports canvases for this to work.</canvas>
+	</div>
+</body>
+</html>
