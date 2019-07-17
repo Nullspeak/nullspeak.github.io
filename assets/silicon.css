@@ -1,0 +1,70 @@
+/* Silicon CSS look-and-feel - (c) Sarah 2019 */
+html {
+	width: 100%;
+	height: 100%;
+	background-color: #CCC;
+}
+
+body {
+	font-family: sans-serif;
+	border: 1px outset #EEE;
+	padding: 8px;
+	line-height: 22px;
+	cursor: default;
+	font-size: 10pt;
+}
+
+.title {
+	margin: 0px;
+	font-size: 21pt;
+}
+
+.navbar {
+	margin-top: 4px;
+}
+
+hr {
+	border-style: outset;
+	border-color: #EEE;
+	margin: 4px 0px;
+}
+
+label {
+	font-size: 10pt;
+}
+
+::selection {
+	background-color: none;
+}
+
+button, input[type=button], a {
+	background-image: linear-gradient(#EEE, #BBB);
+	text-decoration: none;
+	color: black;
+	padding: 1px 4px;
+	border: 1px solid #777;
+	border-radius: 2px;
+}
+
+	button:active, input[type=button]:active, a:active {
+		background-image: linear-gradient(#BBB, #DDD);
+		color: transparent;
+		text-shadow: 1px 1px 0px black;
+	}
+
+input[type=text] {
+	background-image: linear-gradient(#BBB, #EEE);
+	text-decoration: none;
+	color: black;
+	padding: 1px 4px;
+	border: 1px solid #777;
+	border-radius: 2px;
+}
+
+input[type=checkbox] {
+	margin: 0px;
+}
+
+canvas {
+	border: 1px inset #EEE;
+}
