@@ -3,60 +3,25 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="utf-8" />
-	<title>Sarah's Domain</title>
-	<link rel="stylesheet" href="./assets/default.css" />
-	<link rel="shortcut icon" href="./assets/favicon.ico" />
-
-	<style type="text/css">
-		#blog {
-			padding: 4px;
-			font-family: monospace;
-			background-color: black;
-			color: white;
-			border: 1px inset;
-			width: 512px;
-			height: 256px;
-			white-space: pre-line;
-			overflow-y: scroll;
-			resize: none;
-			cursor: default;
-		}
-	</style>
-
-	<script>
-		// load the blog content
-		function loadBlog() {
-			var req = new XMLHttpRequest();
-			req.open('GET', 'https://dl.dropboxusercontent.com/s/wfdjxpu8npj1f4q/blog.txt', true);
-			req.responseType = 'text';
-			req.send();
-			req.onreadystatechange = function () {
-				if (req.readyState === req.DONE && req.status === 200) {
-					document.getElementById("blog").innerHTML = req.responseText;
-				}
-			}
-		}
-
-	</script>
+    <meta charset="utf-8" />
+    <title>Sarah's Domain</title>
+    <link rel="stylesheet" href="./assets/default.css" />
+    <link rel="shortcut icon" href="./assets/favicon.png" />
 </head>
-<body onload="loadBlog()">
-	<!--Title text thing-->
-	<h1 class="title">Sarah's Domain</h1>
+<body>
+    <!--Title text thing-->
+    <h1 class="title">Sarah's Domain</h1>
 
-	<!--nav bar thing-->
-	<div class="navbar">
-		<a href="index.html">Home</a>
-		<a href="projects.html">Projects</a>
-		<a href="tests.html">Experiments</a>
-		<a href="https://github.com/Nullspeak">My GitHub Profile</a>
-	</div>
-	<hr />
+    <!--nav bar thing-->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="tests.html">Experiments</a>
+        <a href="https://github.com/Nullspeak">My GitHub Profile</a>
+    </div>
+    <hr />
 
-	Hi, this is my website <br />
-	I host things here like my projects and HTML experiements <br />
-
-	<textarea id="blog" readonly>Loading..</textarea>
-
+    Hi, this is my website <br />
+    I host things here like my projects and HTML experiements <br />
 </body>
 </html>

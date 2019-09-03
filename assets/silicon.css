@@ -7,15 +7,17 @@ html {
 
 body {
     font-family: sans-serif;
-    border: 1px outset #EEE;
-    outline: 1px solid #777;
-    padding: 4px 8px 4px 8px;
+    border: outset #EEE;
+    padding: 8px;
     line-height: 22px;
     font-size: 10pt;
     line-height: 18pt;
     background-color: #CCC;
-    overflow: auto;
-    resize: both;
+    overflow: visible auto;
+    position: absolute;
+    border-width: 22px 6px 6px 6px;
+    border-image: url('silicon-body.png') 22 6 6 6 fill;
+    image-rendering: crisp-edges;
 }
 
 .title {
@@ -42,20 +44,21 @@ label {
 }
 
 button, input[type=button], a {
-    background-image: linear-gradient(#DDD, #BBB);
+    background-color: #CCC;
     text-decoration: none;
     color: black;
     padding: 1px 4px;
-    border: 1px outset #EEE;
-    outline: 1px solid #777;
     cursor: default;
     font-family: sans-serif;
+    border: 2px outset #EEE;
+    border-image: url('silicon-out.png') 2 fill;
 }
 
     button:active, input[type=button]:active, a:active {
-        background-image: linear-gradient(#BBB, #DDD);
         color: transparent;
         text-shadow: 1px 1px 0px black;
+        border: 2px inset #EEE;
+        border-image: url('silicon-in.png') 2 fill;
     }
 
     button::selection, input[type=button]::selection, a::selection {
@@ -69,12 +72,12 @@ button, input[type=button], a {
     }
 
 input[type=text] {
-    background-image: linear-gradient(#BBB, #DDD);
+    background-color: #CCC;
     text-decoration: none;
     color: black;
     padding: 0px 2px;
-    border: 1px solid #EEE;
-    outline: 1px solid #777;
+    border: 2px inset #EEE;
+    border-image: url('silicon-in.png') 2 fill;
 }
 
 input[type=checkbox] {
@@ -82,6 +85,6 @@ input[type=checkbox] {
 }
 
 canvas {
-    border: 1px outset #EEE;
-    outline: 1px solid #777;
+    border: 2px inset #EEE;
+    border-image: url('silicon-in.png') 2 fill;
 }

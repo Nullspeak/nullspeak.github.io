@@ -170,8 +170,7 @@ function initCanvas() {
 // where everything is drawn
 function drawLoop() {
 	resetDrawAttr();
-	//ctx.fillRect(0, 0, canvas.width, canvas.height);
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 	drawMenuBar();
 
