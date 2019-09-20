@@ -1,0 +1,117 @@
+﻿<!-- a test of rendering text with images as characters -->
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Sarah's Domain</title>
+    <link rel="stylesheet" href="../assets/default.css" />
+    <link rel="shortcut icon" href="../assets/favicon.png" />
+
+    <script type="text/javascript">
+        const LfImplicitCr = true; /* unixlike LF handling where LFs also have an implicit CR */
+        const CharSize = 8; /* the size of each char in the font */
+        var c; /* the canvas context */
+        var font = new Image(); /* the font image */
+        font.src = '../assets/ascii8x8.png';
+
+        /* render the char from a portion of the font
+           NOTE: originally i was going to make the image cover
+           multiple lines, but this is far easier to calculate */
+        function r_Char(x, y, ch, effect = 'none') {
+            // c.drawImage(font, ch * 8, 0, 8, 8, x, y, 8, 8);
+
+            /* TODO: figure out a way of doing shadows that aren't laggy as balls */
+            if(false) {
+                c.filter = 'invert(100)';
+                c.drawImage(font, ch * CharSize, 0, CharSize, CharSize, x + 1, y + 1, CharSize, CharSize);
+                c.filter = 'none';
+            }
+
+            var effx = 0;
+            var effy = 0;
+            if(effect == 'float') {
+                effy = Math.floor((Math.sin((new Date().getTime() + x) / 96) + 1) * 2);
+            }
+            else if(effect == 'shake') {
+                effx = Math.floor(Math.random() * 2);
+                effy = Math.floor(Math.random() * 2);
+            }
+            else if(effect == 'circle') {
+                effx = Math.floor((Math.cos((new Date().getTime() + x) / 96) + 1) * 2);
+                effy = Math.floor((Math.sin((new Date().getTime() + x) / 96) + 1) * 2);
+            }
+            else if(effect == 'hbounce') {
+                effx = Math.floor((Math.sin((new Date().getTime() + x) / 128) + 1) * 2);
+            }
+            else if(effect == 'vbounce') {
+                effy = Math.floor((Math.sin((new Date().getTime() + y) / 128) + 1) * 2);
+            }
+
+            c.drawImage(font, ch * CharSize, 0, CharSize, CharSize, x + effx, y + effy, CharSize, CharSize);
+        }
+
+        /* render out a string of chars */
+        function r_Str(x, y, str, effect = 'none') {
+            var cx = 0;
+            var cy = 0;
+            for(var i = 0; i < str.length; i++) {
+                switch(str.charAt(i)) {
+                    case '\n':
+                        /* unixlike LF handling where LFs also have an implicit CR */
+                        if(LfImplicitCr)
+                            cx = 0;
+                        cy++;
+                        break;
+
+                    case '\r':
+                        cx = 0;
+                        break;
+
+                    default:
+                        r_Char((cx * CharSize) + x, (cy * CharSize) + y, str.charCodeAt(i) - 32, effect);
+                        cx++;
+                        break;
+                }
+            }
+        }
+
+        function c_Init() {
+            c = document.getElementById('canvas').getContext('2d');
+            c_Render();
+        }
+
+        function c_Render() {
+            c.fillStyle = '#000';
+            c.fillRect(0, 0, 384, 192);
+
+            r_Str(0, 0, 'Hello world! This is a demo of an experimental\nbitmap font renderer. It currently only handles\nmonospaced characters in a flat, linear');
+            r_Str(0, 24, 'image of however many characters you can fit.\nThe image does not contain control characters,\nalthough some are processed internally.');
+            r_Str(0, 56, 'This system can also be easily modified to use\ndifferently sized chars. In fact, it\'s\ncontrollable with one variable.');
+            r_Str(0, 88, 'By the way, if you were wondering where this\nfont is from and why it looks so bad, I made it.');
+            r_Str(0, 112, 'You\'re free to use it if you for some reason\nwant or need to.');
+            r_Str(0, 136, 'This is the \'circle\' text effect. Waaah!', 'circle');
+            r_Str(0, 152, 'This is the \'shake\' text effect. Boo!', 'shake');
+            r_Str(0, 168, 'This is the \'float\' text effect. Weee!', 'float');
+
+            setTimeout(function() { requestAnimationFrame(c_Render) }, 16);
+        }
+    </script>
+</head>
+<body onload="c_Init();">
+    <!--Title text thing-->
+    <h1 class="title">Sarah's Domain</h1>
+
+    <!--nav bar thing-->
+    <div class="navbar">
+        <a href="../index.html">Home</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../tests.html">Experiments</a>
+        <a href="https://github.com/Nullspeak">My GitHub Profile</a>
+    </div>
+    <hr />
+
+    <canvas id="canvas" width="384" height="192">If you're seeing this text, you might need to upgrade your browser.</canvas>
+
+</body>
+</html>
