@@ -31,21 +31,21 @@
             var effx = 0;
             var effy = 0;
             if(effect == 'float') {
-                effy = Math.floor((Math.sin((new Date().getTime() + x) / 96) + 1) * 2);
+                effy = Math.floor((Math.sin((Date.now() + x) / 96) + 1) * 2);
             }
             else if(effect == 'shake') {
                 effx = Math.floor(Math.random() * 2);
                 effy = Math.floor(Math.random() * 2);
             }
             else if(effect == 'circle') {
-                effx = Math.floor((Math.cos((new Date().getTime() + x) / 96) + 1) * 2);
-                effy = Math.floor((Math.sin((new Date().getTime() + x) / 96) + 1) * 2);
+                effx = Math.floor((Math.cos((Date.now() + x) / 96) + 1) * 2);
+                effy = Math.floor((Math.sin((Date.now() + x) / 96) + 1) * 2);
             }
             else if(effect == 'hbounce') {
-                effx = Math.floor((Math.sin((new Date().getTime() + x) / 128) + 1) * 2);
+                effx = Math.floor((Math.sin((Date.now() + x) / 128) + 1) * 2);
             }
             else if(effect == 'vbounce') {
-                effy = Math.floor((Math.sin((new Date().getTime() + y) / 128) + 1) * 2);
+                effy = Math.floor((Math.sin((Date.now() + y) / 128) + 1) * 2);
             }
 
             c.drawImage(font, ch * CharSize, 0, CharSize, CharSize, x + effx, y + effy, CharSize, CharSize);
@@ -94,7 +94,7 @@
             r_Str(0, 152, 'This is the \'shake\' text effect. Boo!', 'shake');
             r_Str(0, 168, 'This is the \'float\' text effect. Weee!', 'float');
 
-            setTimeout(function() { requestAnimationFrame(c_Render) }, 16);
+            setTimeout(function() { requestAnimationFrame(c_Render) }, 33);
         }
     </script>
 </head>
@@ -111,7 +111,7 @@
     </div>
     <hr />
 
-    <canvas id="canvas" width="384" height="192">If you're seeing this text, you might need to upgrade your browser.</canvas>
+    <canvas id="canvas" width="384" height="192">If you're seeing this text, your browser is old or using some weird rendering engine.</canvas>
 
 </body>
 </html>
