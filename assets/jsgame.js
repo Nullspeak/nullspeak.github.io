@@ -7,7 +7,7 @@ var debugmode = false;
 
 var bgimg = new Image();
 
-// is the game in the "somebody won" state?
+// is the game in the 'somebody won' state?
 var gameover = false;
 
 // if for some reason you want more than 2 jumps, set it here
@@ -15,7 +15,7 @@ var maxJumps = 2;
 
 var sfxenabled = true;
 function checkboxSfx_clicked() {
-	if (document.getElementById("checkboxSfx").checked)
+	if (document.getElementById('checkboxSfx').checked)
 		sfxenabled = true;
 	else
 		sfxenabled = false;
@@ -50,21 +50,21 @@ function procInputDown(event) {
 			}
 			break;
 
-		case "ArrowUp":
+		case 'ArrowUp':
 			players[1].inUp = true;
 			break;
 
-		case "ArrowLeft":
+		case 'ArrowLeft':
 			players[1].inLeft = true;
 			players[1].direction = -1;
 			break;
 
-		case "ArrowRight":
+		case 'ArrowRight':
 			players[1].inRight = true;
 			players[1].direction = 1;
 			break;
 
-		case "ArrowDown":
+		case 'ArrowDown':
 			if (players[1].canAttack == true) {
 				players[1].inAttack = true;
 				players[1].canAttack = false;
@@ -99,15 +99,15 @@ function procInputUp(event) {
 			players[0].inRight = false;
 			break;
 
-		case "ArrowUp":
+		case 'ArrowUp':
 			players[1].inUp = false;
 			break;
 
-		case "ArrowLeft":
+		case 'ArrowLeft':
 			players[1].inLeft = false;
 			break;
 
-		case "ArrowRight":
+		case 'ArrowRight':
 			players[1].inRight = false;
 			break;
 
@@ -141,22 +141,22 @@ function initCanvas() {
 		ctx = canvas.getContext('2d');
 
 		// handle key presses
-		window.addEventListener("keydown", procInputDown, true);
-		window.addEventListener("keyup", procInputUp, true);
+		window.addEventListener('keydown', procInputDown, true);
+		window.addEventListener('keyup', procInputUp, true);
 		canvas.addEventListener('click', procInputClick, true);
 
-		bgimg.src = "../assets/jsgame/bgimg.png";
+		bgimg.src = '../assets/jsgame/bgimg.png';
 
 		// make sure we get the value
 		checkboxSfx_clicked();
 
 		// force the sound assets to load before we continue
-		new Audio("../assets/jsgame/swoosh.ogg").load();
-		new Audio("../assets/canvastest3/shot.ogg").load();
-		new Audio("../assets/jsgame/punch1.ogg").load();
-		new Audio("../assets/jsgame/punch2.ogg").load();
-		new Audio("../assets/jsgame/punch3.ogg").load();
-		new Audio("../assets/jsgame/punch4.ogg").load();
+		new Audio('../assets/jsgame/swoosh.ogg').load();
+		new Audio('../assets/canvastest3/shot.ogg').load();
+		new Audio('../assets/jsgame/punch1.ogg').load();
+		new Audio('../assets/jsgame/punch2.ogg').load();
+		new Audio('../assets/jsgame/punch3.ogg').load();
+		new Audio('../assets/jsgame/punch4.ogg').load();
 
 		players[0].x = -256;
 		players[1].x = 256;
@@ -175,16 +175,6 @@ function lerp(start, end, amt) {
 	return (1 - amt) * start + amt * end
 }
 
-function hex2rgba(h, a) {
-	var hx = h.replace('#', '');
-	var r = parseInt(hx.substring(0, 2), 16);
-	var g = parseInt(hx.substring(2, 4), 16);
-	var b = parseInt(hx.substring(4, 6), 16);
-
-	result = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-	return result;
-}
-
 // where everything is drawn
 function drawLoop() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -193,10 +183,10 @@ function drawLoop() {
 
 	var g = ctx.createLinearGradient(0, 0, canvas.width, 0);
 
-	g.addColorStop(.3, hex2rgba(players[0].attr.color, 0.25));
-	g.addColorStop(.33, hex2rgba(players[0].attr.color, 0));
-	g.addColorStop(.6, hex2rgba(players[1].attr.color, 0));
-	g.addColorStop(.66, hex2rgba(players[1].attr.color, 0.25));
+    g.addColorStop(0, players[0].attr.color);
+    g.addColorStop(.25, 'rgba(0,0,0,0)');
+    g.addColorStop(.75, 'rgba(0,0,0,0)');
+    g.addColorStop(1, players[1].attr.color, 0.25);
 
 	ctx.fillStyle = g;
 	ctx.fillRect(0, (canvas.height - 64), canvas.width, 64);
@@ -212,13 +202,14 @@ function drawLoop() {
 
 	resetDrawAttr();
 
-	window.requestAnimationFrame(drawLoop);
+	// window.requestAnimationFrame(drawLoop);
+    setTimeout(function() { requestAnimationFrame(drawLoop); }, 10);
 }
 
 function resetDrawAttr() {
 	// reset everything
 	ctx.shadowColor = 'black';
-	ctx.fillStyle = "black";
+	ctx.fillStyle = 'black';
 }
 
 // the average position of both players
@@ -236,14 +227,14 @@ function randomRange(low, high) {
 // the jumping noise
 function playJumpSound() {
 	if (sfxenabled)
-		new Audio("../assets/jsgame/swoosh.ogg").play();
+		new Audio('../assets/jsgame/swoosh.ogg').play();
 }
 
 // the jumping noise
 function playDeathSound() {
 	// reusing sound file from canvas test 3
 	if (sfxenabled)
-		new Audio("../assets/canvastest3/shot.ogg").play();
+		new Audio('../assets/canvastest3/shot.ogg').play();
 }
 
 // the punching noises
@@ -252,22 +243,22 @@ function playPunchSound() {
 		var num = Math.round(Math.random() * 3);
 		switch (num) {
 			case 0:
-				var a = new Audio("../assets/jsgame/punch1.ogg");
+				var a = new Audio('../assets/jsgame/punch1.ogg');
 				a.volume = 0.25;
 				a.play();
 				break;
 			case 1:
-				var a = new Audio("../assets/jsgame/punch2.ogg");
+				var a = new Audio('../assets/jsgame/punch2.ogg');
 				a.volume = 0.25;
 				a.play();
 				break;
 			case 2:
-				var a = new Audio("../assets/jsgame/punch3.ogg");
+				var a = new Audio('../assets/jsgame/punch3.ogg');
 				a.volume = 0.25;
 				a.play();
 				break;
 			default:
-				var a = new Audio("../assets/jsgame/punch4.ogg");
+				var a = new Audio('../assets/jsgame/punch4.ogg');
 				a.volume = 0.25;
 				a.play();
 				break;
@@ -283,14 +274,14 @@ function clamp(v, min, max) {
 class PlayerAttr {
 	// set up some defaults
 	constructor(id) {
-		this.name = "Player " + (id + 1);
+		this.name = 'Player ' + (id + 1);
 
 		if (id == 0)
-			this.color = "#f44242";
+			this.color = '#f44242';
 		else if (id == 1)
-			this.color = "#41b5f4";
+			this.color = '#41b5f4';
 		else
-			this.color = "white";
+			this.color = 'white';
 	}
 }
 
@@ -298,10 +289,10 @@ var playerAttrs = [new PlayerAttr(0), new PlayerAttr(1)];
 
 // get a file and parse it into the player's style thing
 function importPlayerAttr(id) {
-	var i = document.getElementById("player1Import");
+	var i = document.getElementById('player1Import');
 
 	if (id > 0)
-		i = document.getElementById("player2Import");
+		i = document.getElementById('player2Import');
 
 	if (i.files.length == 1) {
 		var fr = new FileReader();
@@ -318,11 +309,11 @@ function importPlayerAttr(id) {
 // export a blank template player style
 function exportPlayerAttrTemplate() {
 	var str = JSON.stringify(new PlayerAttr(2));
-	var blob = new Blob([str], { type: "application/json" });
+	var blob = new Blob([str], { type: 'application/json' });
 	var url = window.URL.createObjectURL(blob);
 
-	var a = document.getElementById("playerExportLink");
-	a.download = "PlayerTemplate.json";
+	var a = document.getElementById('playerExportLink');
+	a.download = 'PlayerTemplate.json';
 
 	// this is a bit cheaty but it makes it less clunky
 	a.href = url;
@@ -334,7 +325,7 @@ function exportPlayerAttrTemplate() {
 function textShadow(str, x, y) {
 	var col = ctx.fillStyle;
 
-	ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+	ctx.fillStyle = 'black';
 	ctx.fillText(str, x - 1, y - 1);
 	ctx.fillText(str, x + 1, y + 1);
 	ctx.fillText(str, x - 1, y + 1);
@@ -376,14 +367,14 @@ class Player {
 		var xoffset = ((canvas.width / 2) + this.x) + fx;
 		var yoffset = (this.y + (canvas.height - 96)) + fy;
 
-		ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+		ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
 		var shadowpos = (canvas.height - 96) + fy;
 		ctx.beginPath();
 		ctx.ellipse(xoffset, shadowpos, 16, 3, 0, 0, Math.PI * 2);
 		ctx.closePath();
 		ctx.fill();
 
-		ctx.strokeStyle = "black";
+		ctx.strokeStyle = 'black';
 		ctx.lineWidth = 2;
 
 		ctx.fillStyle = this.attr.color;
@@ -435,8 +426,8 @@ class Player {
 		}
 
 		ctx.lineWidth = 4;
-		ctx.font = "bold 12pt sans-serif";
-		ctx.textAlign = "center";
+		ctx.font = 'bold 12pt sans-serif';
+		ctx.textAlign = 'center';
 
 		var nameofx = clamp(xoffset, 32, 992);
 		var nameofy = clamp(yoffset, 88, 496) - 64;
@@ -446,11 +437,11 @@ class Player {
 		if (debugmode == true) {
 			var vx = this.vx;
 			var vy = this.vy;
-			textShadow("X " + this.x + ": Y " + this.y, xoffset, yoffset - 128);
-			textShadow("VX " + Math.round(vx) + ": VY " + Math.round(vy), xoffset, yoffset - 96);
+			textShadow('X ' + this.x + ': Y ' + this.y, xoffset, yoffset - 128);
+			textShadow('VX ' + Math.round(vx) + ': VY ' + Math.round(vy), xoffset, yoffset - 96);
 		}
 
-		ctx.font = "italic 24pt sans-serif";
+		ctx.font = 'italic 24pt sans-serif';
 
 		var shakex = Math.random() * this.hudshakex;
 		var shakey = Math.random() * this.hudshakex;
@@ -458,40 +449,40 @@ class Player {
 		// health text
 		if (this.id == 0) {
 			ctx.fillStyle = this.attr.color;
-			ctx.textAlign = "left";
-			textShadow(players[0].attr.name + ": " + Math.round(this.damage) + "%", 16 + shakex, (canvas.height - 32) + shakey);
-			ctx.font = "italic 16pt sans-serif";
-			textShadow("Lives: " + this.lives, 16 + shakey, (canvas.height - 8) + shakex, this.color);
+			ctx.textAlign = 'left';
+			textShadow(players[0].attr.name + ': ' + Math.round(this.damage) + '%', 16 + shakex, (canvas.height - 32) + shakey);
+			ctx.font = 'italic 16pt sans-serif';
+			textShadow('Lives: ' + this.lives, 16 + shakey, (canvas.height - 8) + shakex, this.color);
 
 			if (this.lives <= 0) {
-				ctx.fillStyle = "#FFBF00";
-				ctx.textAlign = "center";
+				ctx.fillStyle = '#FFBF00';
+				ctx.textAlign = 'center';
 
-				ctx.font = "italic 24pt sans-serif";
-				textShadow(players[1].attr.name + " wins!", (canvas.width / 2), (canvas.height / 2) - 64);
+				ctx.font = 'italic 24pt sans-serif';
+				textShadow(players[1].attr.name + ' wins!', (canvas.width / 2), (canvas.height / 2) - 64);
 
-				ctx.font = "italic 16pt sans-serif";
-				textShadow("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
+				ctx.font = 'italic 16pt sans-serif';
+				textShadow('Click to replay', (canvas.width / 2), (canvas.height / 2) - 32);
 			}
 		}
 
 		// health text
 		if (this.id == 1) {
 			ctx.fillStyle = this.attr.color;
-			ctx.textAlign = "right";
-			textShadow(players[1].attr.name + ": " + Math.round(this.damage) + "%", (canvas.width - 16) + shakex, (canvas.height - 32) + shakey);
-			ctx.font = "italic 16pt sans-serif";
-			textShadow("Lives: " + this.lives, (canvas.width - 16) + shakey, (canvas.height - 8) + shakex);
+			ctx.textAlign = 'right';
+			textShadow(players[1].attr.name + ': ' + Math.round(this.damage) + '%', (canvas.width - 16) + shakex, (canvas.height - 32) + shakey);
+			ctx.font = 'italic 16pt sans-serif';
+			textShadow('Lives: ' + this.lives, (canvas.width - 16) + shakey, (canvas.height - 8) + shakex);
 
 			if (this.lives <= 0) {
-				ctx.fillStyle = "#FFBF00";
-				ctx.textAlign = "center";
+				ctx.fillStyle = '#FFBF00';
+				ctx.textAlign = 'center';
 
-				ctx.font = "italic 24pt sans-serif";
-				textShadow(players[0].attr.name + " wins!", (canvas.width / 2), (canvas.height / 2) - 64);
+				ctx.font = 'italic 24pt sans-serif';
+				textShadow(players[0].attr.name + ' wins!', (canvas.width / 2), (canvas.height / 2) - 64);
 
-				ctx.font = "italic 16pt sans-serif";
-				textShadow("Click to replay", (canvas.width / 2), (canvas.height / 2) - 32);
+				ctx.font = 'italic 16pt sans-serif';
+				textShadow('Click to replay', (canvas.width / 2), (canvas.height / 2) - 32);
 			}
 		}
 

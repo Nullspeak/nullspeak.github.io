@@ -18,7 +18,7 @@
         /* render the char from a portion of the font
            NOTE: originally i was going to make the image cover
            multiple lines, but this is far easier to calculate */
-        function r_Char(x, y, ch, effect = 'none') {
+        function r_Char(x, y, ch, effect = 'none', bold = false) {
             // c.drawImage(font, ch * 8, 0, 8, 8, x, y, 8, 8);
 
             /* TODO: figure out a way of doing shadows that aren't laggy as balls */
@@ -49,10 +49,13 @@
             }
 
             c.drawImage(font, ch * CharSize, 0, CharSize, CharSize, x + effx, y + effy, CharSize, CharSize);
+
+            if(bold)
+                c.drawImage(font, ch * CharSize, 0, CharSize, CharSize, x + effx + 1, y + effy, CharSize, CharSize);
         }
 
         /* render out a string of chars */
-        function r_Str(x, y, str, effect = 'none') {
+        function r_Str(x, y, str, effect = 'none', bold = false) {
             var cx = 0;
             var cy = 0;
             for(var i = 0; i < str.length; i++) {
@@ -69,7 +72,7 @@
                         break;
 
                     default:
-                        r_Char((cx * CharSize) + x, (cy * CharSize) + y, str.charCodeAt(i) - 32, effect);
+                        r_Char((cx * CharSize) + x, (cy * CharSize) + y, str.charCodeAt(i) - 32, effect, bold);
                         cx++;
                         break;
                 }
@@ -85,14 +88,15 @@
             c.fillStyle = '#000';
             c.fillRect(0, 0, 384, 192);
 
-            r_Str(0, 0, 'Hello world! This is a demo of an experimental\nbitmap font renderer. It currently only handles\nmonospaced characters in a flat, linear');
+            r_Str(0, 0, 'Hello world! This is a demo of my experimental\nbitmap font renderer. It currently only handles\nmonospaced characters in a flat, linear');
             r_Str(0, 24, 'image of however many characters you can fit.\nThe image does not contain control characters,\nalthough some are processed internally.');
-            r_Str(0, 56, 'This system can also be easily modified to use\ndifferently sized chars. In fact, it\'s\ncontrollable with one variable.');
+            r_Str(0, 56, 'This system can also be easily modified to use\ndifferently sized chars. In fact, it\'s\ncontrollable with just one variable.');
             r_Str(0, 88, 'By the way, if you were wondering where this\nfont is from and why it looks so bad, I made it.');
             r_Str(0, 112, 'You\'re free to use it if you for some reason\nwant or need to.');
-            r_Str(0, 136, 'This is the \'circle\' text effect. Waaah!', 'circle');
-            r_Str(0, 152, 'This is the \'shake\' text effect. Boo!', 'shake');
-            r_Str(0, 168, 'This is the \'float\' text effect. Weee!', 'float');
+            r_Str(0, 128, 'This is the \'circle\' text effect. Waaah!', 'circle');
+            r_Str(0, 144, 'This is the \'shake\' text effect. Boo!', 'shake');
+            r_Str(0, 160, 'This is the \'float\' text effect. Weee!', 'float');
+            r_Str(0, 176, 'Bold text is also an option.', 'none', true);
 
             setTimeout(function() { requestAnimationFrame(c_Render) }, 33);
         }
