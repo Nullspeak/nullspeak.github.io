@@ -1,0 +1,91 @@
+/* Concrete CSS Theme - (c) Sarah 7E3 */
+html {
+    background-color: #3A6EA5;
+}
+
+body {
+    font-family: Tahoma, Arial, sans-serif;
+    border: 1px outset white;
+    outline: 1px outset #D4D0C8;
+    padding: 4px 4px 4px 4px;
+    font-size: 8pt;
+    line-height: 18pt;
+    background-color: #D4D0C8;
+    overflow: visible auto;
+    position: absolute;
+
+    /*border-width: 22px 6px 6px 6px;
+    border-image: url('silicon-body.png') 22 6 6 6 fill;*/
+}
+
+hr {
+    border: 1px inset white;
+    line-height: 0px;
+    margin: 4px 0px;
+}
+
+p {
+    line-height: 0px;
+}
+
+h1 {
+    margin: -3px -3px 2px -3px;
+    padding: 0px 2px 1px 2px;
+    line-height: 12pt;
+    color: white;
+    font-weight: bold;
+    font-size: 8pt;
+    background: linear-gradient(90deg, #0A246A, #A6CAF0);
+}
+
+::selection {
+}
+
+a, button, input[type=button], a:disabled:active, button:disabled:active, input[type=button]:disabled:active {
+    background-color: #D4D0C8;
+    border: 1px outset white;
+    padding: 2px 4px;
+    margin: 0px;
+    cursor: default;
+    text-decoration: none;
+    color: black;
+    font-size: 8pt;
+    box-shadow: rgb(64, 64, 64) 1px 1px;
+    border-radius: 0px;
+}
+
+    a:active, button:active, input[type=button]:active {
+        border: 1px inset white;
+        padding: 2px 4px;
+        cursor: default;
+        text-decoration: none;
+        color: transparent;
+        text-shadow: 1px 1px 0px black;
+        box-shadow: rgb(64, 64, 64) -1px -1px;
+        border-radius: 0px;
+    }
+
+    a:disabled, button:disabled, input[type=button]:disabled, a:disabled:active, button:disabled:active, input[type=button]:disabled:active {
+        color: #777;
+        text-shadow: 1px 1px 0px white;
+        border-radius: 0px;
+    }
+
+input[type=text] {
+    background-color: white;
+    outline: 1px inset white;
+    border: 1px inset #D4D0C8;
+    padding: 2px 4px;
+    font-size: 8pt;
+    border-radius: 0px;
+}
+
+input::selection {
+    background-color: #0A246A;
+    color: white;
+}
+
+canvas {
+    outline: 1px inset white;
+    border: 1px inset #D4D0C8;
+}

@@ -17,9 +17,6 @@ body {
     position: absolute;
     border-width: 22px 6px 6px 6px;
     border-image: url('silicon-body.png') 22 6 6 6 fill;
-    image-rendering: optimizeSpeed;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
 }
 
 .title {

@@ -7,102 +7,34 @@
     <title>Sarah's Domain</title>
     <link rel="stylesheet" href="../assets/default.css" />
     <link rel="shortcut icon" href="../assets/favicon.png" />
+    <script src="../assets/textrender.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-        const LfImplicitCr = true; /* unixlike LF handling where LFs also have an implicit CR */
-        const CharSize = 8; /* the size of each char in the font */
-        var c; /* the canvas context */
-        var font = new Image(); /* the font image */
-        font.src = '../assets/ascii8x8.png';
-
-        /* render the char from a portion of the font
-           NOTE: originally i was going to make the image cover
-           multiple lines, but this is far easier to calculate */
-        function r_Char(x, y, ch, effect = 'none', bold = false) {
-            // c.drawImage(font, ch * 8, 0, 8, 8, x, y, 8, 8);
-
-            /* TODO: figure out a way of doing shadows that aren't laggy as balls */
-            if(false) {
-                c.filter = 'invert(100)';
-                c.drawImage(font, ch * CharSize, 0, CharSize, CharSize, x + 1, y + 1, CharSize, CharSize);
-                c.filter = 'none';
-            }
-
-            var effx = 0;
-            var effy = 0;
-            if(effect == 'float') {
-                effy = Math.floor((Math.sin((Date.now() + x) / 96) + 1) * 2);
-            }
-            else if(effect == 'shake') {
-                effx = Math.floor(Math.random() * 2);
-                effy = Math.floor(Math.random() * 2);
-            }
-            else if(effect == 'circle') {
-                effx = Math.floor((Math.cos((Date.now() + x) / 96) + 1) * 2);
-                effy = Math.floor((Math.sin((Date.now() + x) / 96) + 1) * 2);
-            }
-            else if(effect == 'hbounce') {
-                effx = Math.floor((Math.sin((Date.now() + x) / 128) + 1) * 2);
-            }
-            else if(effect == 'vbounce') {
-                effy = Math.floor((Math.sin((Date.now() + y) / 128) + 1) * 2);
-            }
-
-            c.drawImage(font, ch * CharSize, 0, CharSize, CharSize, x + effx, y + effy, CharSize, CharSize);
-
-            if(bold)
-                c.drawImage(font, ch * CharSize, 0, CharSize, CharSize, x + effx + 1, y + effy, CharSize, CharSize);
-        }
-
-        /* render out a string of chars */
-        function r_Str(x, y, str, effect = 'none', bold = false) {
-            var cx = 0;
-            var cy = 0;
-            for(var i = 0; i < str.length; i++) {
-                switch(str.charAt(i)) {
-                    case '\n':
-                        /* unixlike LF handling where LFs also have an implicit CR */
-                        if(LfImplicitCr)
-                            cx = 0;
-                        cy++;
-                        break;
-
-                    case '\r':
-                        cx = 0;
-                        break;
-
-                    default:
-                        r_Char((cx * CharSize) + x, (cy * CharSize) + y, str.charCodeAt(i) - 32, effect, bold);
-                        cx++;
-                        break;
-                }
-            }
-        }
-
-        function c_Init() {
-            c = document.getElementById('canvas').getContext('2d');
-            c_Render();
-        }
+        /* use font.onload instead of window.onload or the timing freaks js out */
+        font.onload = function() { c_Init('canvas', c_Render, 71, 0, 0) };
 
         function c_Render() {
-            c.fillStyle = '#000';
-            c.fillRect(0, 0, 384, 192);
+            c.fillStyle = '#700';
+            c.fillRect(0, 0, c.canvas.width, c.canvas.height);
 
             r_Str(0, 0, 'Hello world! This is a demo of my experimental\nbitmap font renderer. It currently only handles\nmonospaced characters in a flat, linear');
-            r_Str(0, 24, 'image of however many characters you can fit.\nThe image does not contain control characters,\nalthough some are processed internally.');
-            r_Str(0, 56, 'This system can also be easily modified to use\ndifferently sized chars. In fact, it\'s\ncontrollable with just one variable.');
-            r_Str(0, 88, 'By the way, if you were wondering where this\nfont is from and why it looks so bad, I made it.');
-            r_Str(0, 112, 'You\'re free to use it if you for some reason\nwant or need to.');
-            r_Str(0, 128, 'This is the \'circle\' text effect. Waaah!', 'circle');
-            r_Str(0, 144, 'This is the \'shake\' text effect. Boo!', 'shake');
-            r_Str(0, 160, 'This is the \'float\' text effect. Weee!', 'float');
-            r_Str(0, 176, 'Bold text is also an option.', 'none', true);
+            r_Str(0, 3 * 16, 'image of however many characters you can fit.\nThe image does not contain control characters,\nalthough some are processed internally.');
+            r_Str(0, 6 * 16, 'This system can also be easily modified to use\ndifferently sized chars. In fact, it\'s\ncontrollable with just one variable. By the way,');
+            r_Str(0, 9 * 16, 'if you were wondering where this font is from\nand why it looks so bad, I made it. You\'re free');
+            r_Str(0, 11 * 16, 'to use it if you for some reason want or\nneed to. Realtime text tint is not yet possible.');
 
-            setTimeout(function() { requestAnimationFrame(c_Render) }, 33);
+            r_Str(0, 14 * 16, 'This is the \'circle\' text effect.             +', 'circle');
+            r_Str(0, 16 * 16, 'This is the \'shake\' text effect.              +', 'shake');
+            r_Str(0, 18 * 16, 'This is the \'float\' text effect.              +', 'float');
+            r_Str(0, 20 * 16, 'Bold text is also an option.', 'none', true);
+            r_Str(0, 21 * 16, 'Shadows, too.', 'none', true, 1);
+            r_Str(0, 22 * 16, 'Even of various sizes! Color too, at load time.', 'circle', true, 32);
+
+            setTimeout(function() { requestAnimationFrame(c_Render) }, 16);
         }
     </script>
 </head>
-<body onload="c_Init();">
+<body>
     <!--Title text thing-->
     <h1 class="title">Sarah's Domain</h1>
 
@@ -115,7 +47,7 @@
     </div>
     <hr />
 
-    <canvas id="canvas" width="384" height="192">If you're seeing this text, your browser is old or using some weird rendering engine.</canvas>
+    <canvas id="canvas" width="768" height="384">Your browser doesn't support canvases if you're seeing this text.</canvas>
 
 </body>
 </html>
