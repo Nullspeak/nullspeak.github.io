@@ -1,0 +1,62 @@
+/* Material CSS Theme - (c) Sarah 2019.11.19 */
+html {
+	background-color: #222;
+	color: #ddd;
+	font-family: sans-serif;
+}
+
+body {
+	margin: 0mm;
+	padding: 3mm;
+	font-size: 10pt;
+}
+
+.title {
+	font-size: 22pt;
+	font-weight: normal;
+	line-height: 0mm;
+}
+
+.navbar {
+	padding: 0mm;
+	margin: 0mm;
+}
+
+hr {
+	background-color: #444;
+	height: 0.25mm;
+	border: none;
+}
+
+a {
+	background-color: #222;
+	border: 0.25mm solid #444;
+	color: #ddd;
+	padding: 1mm;
+	box-shadow: 0mm 0mm 2mm #111;
+	text-decoration: none;
+	line-height: 24pt;
+}
+
+button, input[type=button] {
+	background-color: #222;
+	border: 0.25mm solid #444;
+	color: #ddd;
+	padding: 2mm;
+	margin: 1mm;
+	box-shadow: 0mm 0mm 2mm #111;
+}
+
+button:hover, input[type=button]:hover, a:hover {
+	border: 0.25mm solid #666;
+}
+
+button:active, input[type=button]:active, a:active {
+	border: 0.25mm solid #111;
+}
+
+canvas {
+	border: 0.25mm solid #444;
+	margin: 2.5mm;
+	box-shadow: 0mm 0mm 5mm #111;
+}
