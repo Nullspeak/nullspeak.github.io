@@ -5,6 +5,10 @@ html {
 	font-family: sans-serif;
 }
 
+* {
+	scrollbar-color: #333 #111;
+}
+
 body {
 	margin: 0mm;
 	padding: 3mm;
@@ -36,6 +40,7 @@ a {
 	box-shadow: 0mm 0mm 2mm #111;
 	text-decoration: none;
 	line-height: 24pt;
+	cursor: default;
 }
 
 button, input[type=button] {
@@ -59,4 +64,18 @@ canvas {
 	border: 0.25mm solid #444;
 	margin: 2.5mm;
 	box-shadow: 0mm 0mm 5mm #111;
+}
+
+textarea, input[type=text] {
+	background-color: #222;
+	border: 0.25mm solid #444;
+	color: #ddd;
+	font-family: monospace;
+	font-size: 11pt;
+	box-shadow: 0mm 0mm 5mm #111;
+}
+
+::selection {
+	color: black;
+	background-color: #FA0;
 }

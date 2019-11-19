@@ -1,0 +1,132 @@
+﻿<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+	<meta charset='utf-8' />
+	<title>Sarah's Domain - Better Text Editor</title>
+	<link rel="stylesheet" href="../assets/default.css" />
+	<link rel='shortcut icon' href='../assets/favicon.png' />
+
+	<style type='text/css'>
+		body {
+			margin: auto;
+			padding: 0mm;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+		}
+
+		button {
+			padding: 1mm 2mm;
+		}
+
+		textarea {
+			resize: none;
+			margin: 1mm;
+			height: 100%;
+			tab-size: 4 !important;
+			white-space: pre;
+			-moz-tab-size: 4;
+			-o-tab-size: 4;
+			-webkit-tab-size: 4;
+			font-family: monospace;
+		}
+
+		statusbar {
+			border: 0.25mm solid #444;
+			margin: 0mm 1mm 0mm 1mm;
+			padding: 0mm 1mm;
+			overflow: hidden;
+			line-height: 18pt;
+		}
+
+		filename {
+			font-size: 18pt;
+			margin: 0mm 5mm;
+			padding: 0mm;
+			float: right;
+		}
+	</style>
+
+	<script>
+		var fileName = 'newfile.txt';
+
+		function newbtnClick() {
+			document.getElementById('editor').value = '';
+			document.getElementById('filename').innerText = fileName;
+			fileName = 'newfile.txt';
+		}
+
+		function load() {
+			var i = document.getElementById('loadfile');
+			var j = document.getElementById('editor');
+			var fn = document.getElementById('filename');
+
+			if (i.files.length == 1) {
+				var fr = new FileReader();
+				var file = i.files[0];
+				fr.readAsText(file);
+
+				fr.onloadend = function () {
+					j.value = fr.result;
+					fileName = file.name;
+					fn.innerText = file.name;
+				};
+			}
+		}
+
+		function save() {
+			var str = document.getElementById('editor').value;
+			var blob = new Blob([str], { type: 'text/plain' });
+			var url = window.URL.createObjectURL(blob);
+
+			var a = document.getElementById('savelink');
+			a.download = fileName;
+
+			a.href = url;
+			a.click();
+
+			window.URL.revokeObjectURL(url);
+		}
+
+		function bodyLoaded() {
+			var editor = document.getElementById('editor');
+
+			editor.addEventListener('keydown', input);
+			editor.addEventListener('keyup', event => { if (event.code === 'Tab') { event.preventDefault(); return;} })
+		}
+
+		function input(e) {
+			var start = editor.selectionStart;
+			var end = editor.selectionEnd;
+
+			if (e.code === 'Tab') {
+				editor.value = editor.value.substring(0, start) + '\t' + editor.value.substring(end);
+				editor.selectionStart = editor.selectionEnd = start + 1;
+
+				event.preventDefault();
+				return;
+			}
+
+			var statusbar = document.getElementById('statusbar');
+			var linenumber = editor.value.substr(0, editor.selectionStart).split("\n").length;
+		}
+
+	</script>
+</head>
+
+<body onload='bodyLoaded();'>
+	<div>
+		<button class='button' id='newbtn' onclick='newbtnClick();'>New</button>
+		<button class='button' id='savebtn' onclick='save();'>Save</button>
+		<button class='button' id='loadbtn' onclick='document.getElementById("loadfile").click();'>Load</button>
+		<a id='savelink' style='display:none;'></a>
+		<input type='file' id='loadfile' style='display:none;' onchange='load();' />
+		<filename id='filename'>newfile.txt</filename>
+	</div>
+
+	<textarea id='editor' spellcheck='false'></textarea>
+
+	<statusbar id='statusbar'>Sarah's Crappy HTML Text Editor</statusbar>
+</body>
+
+</html>
