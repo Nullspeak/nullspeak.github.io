@@ -1,29 +1,64 @@
 /* Material CSS Theme - (c) Sarah 2019.11.19 */
+/* i'd have these @import'ed but they lag the stylesheet and make a gross popping effect
+ * with the transitions */
+/* @import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+ * @import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap'); */
+
 html {
-	background-color: #222;
-	color: #ddd;
+	background-color: #171717;
+	background-image: url('material-background-static.png');
+	background-image: url('material-background-anim.png');
+	color: #aaa;
 	font-family: sans-serif;
+	font-size: 10pt;
 }
 
 * {
-	scrollbar-color: #333 #111;
+	scrollbar-color: #444 #191919;
+	scrollbar-width: 1mm;
+}
+
+/* a custom "disabled" tag we can wrap around elements to pseudo-disable them */
+*:disabled, *:disabled:active, *:disabled:hover,
+input[type]:disabled, input[type]:disabled:active, input[type]:disabled:hover,
+disabled, disabled:active, disabled:hover {
+	cursor: not-allowed;
+	background-color: #111;
+	color: #777;
+	outline: 0.25mm solid #090909;
+	text-shadow: 0mm 0mm 1mm #444;
+	filter: sepia(100%) hue-rotate(-40deg);
+	pointer-events: none;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 
 body {
 	margin: 0mm;
 	padding: 3mm;
-	font-size: 10pt;
+}
+
+h1, h2, h3, h4, h5, h6, p, label {
+	cursor: default;
+	line-height: 5pt;
 }
 
 .title {
 	font-size: 22pt;
 	font-weight: normal;
 	line-height: 0mm;
+	font-weight: bold;
 }
 
 .navbar {
 	padding: 0mm;
 	margin: 0mm;
+}
+
+.navbar a {
+	margin: 1mm 2.5mm 1mm 0mm;
 }
 
 hr {
@@ -32,47 +67,70 @@ hr {
 	border: none;
 }
 
-a {
-	background-color: #222;
-	border: 0.25mm solid #444;
-	color: #ddd;
-	padding: 1mm;
-	box-shadow: 0mm 0mm 2mm #111;
-	text-decoration: none;
-	line-height: 24pt;
-	cursor: default;
-}
-
-button, input[type=button] {
-	background-color: #222;
-	border: 0.25mm solid #444;
-	color: #ddd;
+button, input[type=button], a {
+	display: inline-block;
+	position: relative;
+	background-color: #191919;
+	color: #aaa;
+	outline: 0.25mm solid #555;
+	border: none;
 	padding: 2mm;
-	margin: 1mm;
-	box-shadow: 0mm 0mm 2mm #111;
+	box-shadow: 0mm 0mm 1mm #111;
+	text-decoration: none;
+	line-height: 10pt;
+	cursor: default;
+	transition: 0.25s outline, 0.25s color, 0.5s background-color;
+	margin: 2mm 0mm 2mm 0mm;
+	box-shadow: 0.1mm 0.1mm 2mm black;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 
 button:hover, input[type=button]:hover, a:hover {
-	border: 0.25mm solid #666;
+	outline: 0.25mm solid #da0;
+	background-color: #222;
+	color: #da0;
 }
 
 button:active, input[type=button]:active, a:active {
-	border: 0.25mm solid #111;
+	background-color: #111;
+	color: #777;
+	outline: 0.25mm solid #090909;
 }
 
 canvas {
 	border: 0.25mm solid #444;
 	margin: 2.5mm;
-	box-shadow: 0mm 0mm 5mm #111;
+	box-shadow: 0mm 0mm 5mm black;
 }
 
 textarea, input[type=text] {
-	background-color: #222;
-	border: 0.25mm solid #444;
-	color: #ddd;
+	background-color: #191919;
+	border: none;
+	outline: 0.25mm solid #555;
+	color: #aaa;
 	font-family: monospace;
 	font-size: 11pt;
-	box-shadow: 0mm 0mm 5mm #111;
+	padding: 2mm;
+	margin: 2mm 0mm 2mm 0mm;
+	transition: 0.25s outline, 0.25s color, 0.5s background-color;
+	font-size: 10pt;
+	font-family: monospace;
+	box-shadow: 0.1mm 0.1mm 2mm black;
+}
+
+textarea:focus, input[type=text]:focus {
+	background-color: #191919;
+	color: #da0;
+	outline: 0.25mm solid #da0;
+}
+
+textarea:active, input[type=text]:active {
+	background-color: #111;
+	color: #bbb;
+	outline: 0.25mm solid #090909;
 }
 
 ::selection {

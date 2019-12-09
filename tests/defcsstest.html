@@ -2,12 +2,15 @@
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-	<meta charset="utf-8" />
-	<title>Sarah's Domain - Current Default CSS Test</title>
-	<link rel="stylesheet" href="../assets/default.css" />
-	<link rel="shortcut icon" href="../assets/favicon.png" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah's Domain - Current Default CSS Test</title>
+    <link rel="stylesheet" href="../assets/default.css" />
+    <link rel="shortcut icon" href="../assets/favicon.png" />
 </head>
+
 <body>
     <!--Title text thing-->
     <h1 class="title">Sarah's Domain</h1>
@@ -21,17 +24,44 @@
     </div>
     <hr />
 
-    <a>Link Button</a>
+    <h3>Normal Controls</h3>
+    <p>These are regular common HTML controls.</p>
+
+    <a>Anchor</a>
     <br />
 
     <button>Button</button>
     <br />
 
+    <input type='button' value='Input Button' />
+    <br />
+
+    <input type="text" placeholder="Input Text" />
+    <br />
+
+    <textarea placeholder="Text Area"></textarea>
+    <br />
+
+    <h3>Disabled Controls</h3>
+
+    <p>Anchors do not natively support the <code>disabled</code> attribute, but wrapping it with a custom
+        <code>disabled</code> tag will for all intents and purposes disable it.</p>
+
+    <disabled><a>Disabled Anchor</a></disabled>
+    <br />
+
     <button disabled>Disabled Button</button>
     <br />
 
-    <input type="text" />
-    <label>Text input</label>
+    <input type='button' value='Disabled Input Button' disabled />
+    <br />
+
+    <input type="text" placeholder="Disabled Input Text" disabled />
+    <br />
+
+    <textarea placeholder="Disabled Text Area" disabled></textarea>
+    <br />
 
 </body>
+
 </html>
