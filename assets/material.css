@@ -36,6 +36,7 @@ disabled, disabled:active, disabled:hover {
 }
 
 body {
+	background-color: transparent;
 	margin: 0mm;
 	padding: 3mm;
 }

@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,8 @@
 
     <script type="text/javascript">
         /* use font.onload instead of window.onload or the timing freaks js out */
-        font.onload = function() { c_Init('canvas', c_Render, 71, 0, 0) };
+        font.src = 'https://raw.githubusercontent.com/Nullspeak/sarafonts/master/saramono-zero/ascii16x16.png';
+        font.onload = function () { c_Init('canvas', c_Render, false) };
 
         function c_Render() {
             c.fillStyle = '#700';
@@ -29,12 +31,13 @@
             r_Str(0, 18 * 16, 'This is the \'float\' text effect.              +', 'float');
             r_Str(0, 20 * 16, 'Bold text is also an option.', 'none', true);
             r_Str(0, 21 * 16, 'Shadows, too.', 'none', true, 1);
-            r_Str(0, 22 * 16, 'Even of various sizes! Color too, at load time.', 'circle', true, 32);
+            r_Str(0, 22 * 16, 'Well, it was. They\'re too buggy and unstable.');
 
-            setTimeout(function() { requestAnimationFrame(c_Render) }, 16);
+            setTimeout(function () { requestAnimationFrame(c_Render) }, 16);
         }
     </script>
 </head>
+
 <body>
     <!--Title text thing-->
     <h1 class="title">Sarah's Domain</h1>
@@ -48,7 +51,9 @@
     </div>
     <hr />
 
-    <canvas id="canvas" width="768" height="384">Your browser doesn't support canvases if you're seeing this text.</canvas>
+    <canvas id="canvas" width="768" height="384">Your browser doesn't support canvases if you're seeing this
+        text.</canvas>
 
 </body>
+
 </html>
