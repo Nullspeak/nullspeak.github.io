@@ -9,25 +9,31 @@ var oldTime = (new Date()).getTime(), curTime = (new Date()).getTime(), deltaTim
 
 var gameOver = false;
 function setGameOver() {
-	gameOver = true;
-	playerEngineAudio.pause();
-	let gameovervid = document.getElementById('video-gameover');
-	document.getElementById('gameover-div').style = 'display: inline-block';
-	document.getElementById('gamescore-lose').innerText = 'Score: ' + player.score;
-	c.canvas.style = 'display: none';
-	gameovervid.style = 'display: initial';
-	gameovervid.play();
+	if (!gameOver) {
+		gameOver = true;
+		playerEngineAudio.pause();
+		let gameovervid = document.getElementById('video-gameover');
+		document.getElementById('gameover-div').style = 'display: inline-block';
+		document.getElementById('gamescore-lose').innerText = 'Score: ' + player.score;
+		c.canvas.style = 'display: none';
+		gameovervid.style = 'display: initial';
+		gameovervid.volume = 0.5;
+		gameovervid.play();
+	}
 }
 
 function setGameWin() {
-	gameOver = true;
-	playerEngineAudio.pause();
-	let gamewinvid = document.getElementById('video-gamewin');
-	document.getElementById('gamewin-div').style = 'display: inline-block';
-	document.getElementById('gamescore-win').innerText = 'Score: ' + player.score;
-	c.canvas.style = 'display: none';
-	gamewinvid.style = 'display: initial';
-	gamewinvid.play();
+	if (!gameOver) {
+		gameOver = true;
+		playerEngineAudio.pause();
+		let gamewinvid = document.getElementById('video-gamewin');
+		document.getElementById('gamewin-div').style = 'display: inline-block';
+		document.getElementById('gamescore-win').innerText = 'Score: ' + player.score;
+		c.canvas.style = 'display: none';
+		gamewinvid.style = 'display: initial';
+		gamewinvid.volume = 0.5;
+		gamewinvid.play();
+	}
 }
 
 const playerBulletSpeed = 500;
@@ -36,11 +42,11 @@ var playerBullet = { x: 0, y: 0 };
 const enemyBulletSpeed = 300;
 var enemyBullet = { x: 0, y: 256 };
 var enemyBulletSprite = new Image();
-enemyBulletSprite.src = '../assets/ftldefence/enemybullet.png';
+enemyBulletSprite.src = '../assets/ftldefense/enemybullet.png';
 enemyBulletSprite.onload = function () { enemyBulletSprite.loaded = true; }
 
 var enemyBossSwirlerSprite = new Image();
-enemyBossSwirlerSprite.src = '../assets/ftldefence/enemyboss_swirler.png';
+enemyBossSwirlerSprite.src = '../assets/ftldefense/enemyboss_swirler.png';
 enemyBossSwirlerSprite.onload = function () { enemyBossSwirlerSprite.loaded = true; }
 
 var enemyBossSwirler = {
@@ -73,7 +79,7 @@ var enemyBossSwirler = {
 			enemyBullets.push(bullet1);
 			enemyBullets.push(bullet2);
 
-			new Audio('../assets/ftldefence/playershoot.ogg').play();
+			new Audio('../assets/ftldefense/playershoot.ogg').play();
 			enemyBossSwirler.shootTime = 0;
 		}
 
@@ -86,29 +92,29 @@ var enemyBullets = [];
 
 /* the player object */
 var playerSprite = new Image();
-playerSprite.src = '../assets/ftldefence/player.png';
+playerSprite.src = '../assets/ftldefense/player.png';
 playerSprite.onload = function () { playerSprite.loaded = true; }
 var player = { x: 0, y: -128, vx: 0, vy: 0, rot: 0, score: 0, health: 1000, inUp: false, inDown: false, inLeft: false, inRight: false, inFire: false, bullets: [], lastShotTime: 0, heat: 0, progress: 0 };
-var playerEngineAudio = new Audio('../assets/ftldefence/playerengine.ogg');
-new Audio('../assets/ftldefence/playershoot.ogg').load();
-new Audio('../assets/ftldefence/hitwall.ogg').load();
-new Audio('../assets/ftldefence/playerhithull.ogg').load();
+var playerEngineAudio = new Audio('../assets/ftldefense/playerengine.ogg');
+new Audio('../assets/ftldefense/playershoot.ogg').load();
+new Audio('../assets/ftldefense/hitwall.ogg').load();
+new Audio('../assets/ftldefense/playerhithull.ogg').load();
 playerEngineAudio.preload = true;
 
 var hudSprite = new Image();
-hudSprite.src = '../assets/ftldefence/hud.png';
+hudSprite.src = '../assets/ftldefense/hud.png';
 hudSprite.onload = function () { hudSprite.loaded = true; }
 
 var hudSpriteWeaponWarn = new Image();
-hudSpriteWeaponWarn.src = '../assets/ftldefence/hudwarning_weapons.png';
+hudSpriteWeaponWarn.src = '../assets/ftldefense/hudwarning_weapons.png';
 hudSpriteWeaponWarn.onload = function () { hudSpriteWeaponWarn.loaded = true; }
 
 var hudSpriteProgress = new Image();
-hudSpriteProgress.src = '../assets/ftldefence/hudprogress.png';
+hudSpriteProgress.src = '../assets/ftldefense/hudprogress.png';
 hudSpriteProgress.onload = function () { hudSpriteProgress.loaded = true; }
 
 var playerBulletSprite = new Image();
-playerBulletSprite.src = '../assets/ftldefence/playerbullet.png';
+playerBulletSprite.src = '../assets/ftldefense/playerbullet.png';
 playerBulletSprite.onload = function () { playerBulletSprite.loaded = true; }
 
 function player_Draw() {
@@ -135,20 +141,20 @@ function clamp(num, min, max) {
 	return num <= min ? min : num >= max ? max : num;
 }
 
-const friction = 0.95;
+const friction = 0.9;
 
 function player_Physics() {
 	if (player.inUp)
-		player.vy += 1000 * deltaTime;
+		player.vy += 3500 * deltaTime;
 
 	if (player.inDown)
-		player.vy -= 1000 * deltaTime;
+		player.vy -= 3500 * deltaTime;
 
 	if (player.inRight)
-		player.vx += 1000 * deltaTime;
+		player.vx += 3500 * deltaTime;
 
 	if (player.inLeft)
-		player.vx -= 1000 * deltaTime;
+		player.vx -= 3500 * deltaTime;
 
 	player.lastShotTime += deltaTime;
 	if (player.inFire && player.lastShotTime > 0.125) {
@@ -164,7 +170,7 @@ function player_Physics() {
 			player.bullets.push(bullet1);
 			player.bullets.push(bullet2);
 
-			new Audio('../assets/ftldefence/playershoot.ogg').play();
+			new Audio('../assets/ftldefense/playershoot.ogg').play();
 			player.lastShotTime = 0;
 			player.heat += 35;
 		} else {
@@ -179,7 +185,7 @@ function player_Physics() {
 			player.bullets.push(bullet1);
 			player.bullets.push(bullet2);
 
-			new Audio('../assets/ftldefence/playershoot.ogg').play();
+			new Audio('../assets/ftldefense/playershoot.ogg').play();
 			player.lastShotTime = -0.25;
 			player.heat += 100;
 		}
@@ -188,8 +194,8 @@ function player_Physics() {
 	player.heat -= 200 * deltaTime;
 	player.heat = clamp(player.heat, 0, 1250);
 
-	player.vx = clamp(player.vx, -350, 350);
-	player.vy = clamp(player.vy, -350, 350);
+	player.vx = clamp(player.vx, -400 / friction, 400 / friction);
+	player.vy = clamp(player.vy, -400 / friction, 400 / friction);
 
 	player.vx *= friction;
 	player.vy *= friction;
@@ -197,24 +203,25 @@ function player_Physics() {
 	player.x += player.vx * deltaTime;
 	player.y += player.vy * deltaTime;
 
-	// player.x = clamp(player.x, -152, 152);
+	player.x = clamp(player.x, -160, 160);
 	player.y = clamp(player.y, -256 + 96, 256 - 32);
 
+	/*
 	if (player.x < -152) {
-		new Audio('../assets/ftldefence/hitwall.ogg').play();
+		new Audio('../assets/ftldefense/hitwall.ogg').play();
 		player.x = -152;
 		player.vx *= -1;
-		player.vx += 50;
+		player.vx += 500;
 		player.health -= 50;
 	}
 
 	if (player.x > 152) {
-		new Audio('../assets/ftldefence/hitwall.ogg').play();
+		new Audio('../assets/ftldefense/hitwall.ogg').play();
 		player.x = 152;
 		player.vx *= -1;
-		player.vx += -50;
+		player.vx += -500;
 		player.health -= 50;
-	}
+	}*/
 
 	player.rot = player.vx / 15;
 
@@ -228,7 +235,7 @@ function player_Physics() {
 		if (enemyBossSwirler.alive) {
 			if (b.x > enemyBossSwirler.x - 24 && b.x < enemyBossSwirler.x + 24 && b.y > enemyBossSwirler.y - 24 && b.y < enemyBossSwirler.y + 24) {
 				enemyBossSwirler.health -= 10;
-				new Audio('../assets/ftldefence/playerhithull.ogg').play();
+				new Audio('../assets/ftldefense/playerhithull.ogg').play();
 				delete player.bullets[i];
 			}
 		}
@@ -266,7 +273,7 @@ function gRender() {
 				if (b.y < -256)
 					delete enemyBullets[i];
 				if (b.x > player.x - 24 && b.x < player.x + 24 && b.y > player.y - 24 && b.y < player.y + 24) {
-					new Audio('../assets/ftldefence/playerhithull.ogg').play();
+					new Audio('../assets/ftldefense/playerhithull.ogg').play();
 					player.health -= 25;
 					delete enemyBullets[i];
 				}
@@ -323,7 +330,7 @@ function gRender() {
 
 			/* random junk strewn around */
 			randomJunkTime += deltaTime;
-			if(randomJunkTime > 0.75) {
+			if (randomJunkTime > 0.75) {
 				let junk = Object.create(enemyBullet);
 				junk.x = (Math.random() - 0.5) * 192;
 				enemyBullets.push(junk);
