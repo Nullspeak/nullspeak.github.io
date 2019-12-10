@@ -22,6 +22,9 @@
 		background-color: black;
 		animation: 1s bgscroll linear infinite;
 	}
+	#video-gameover, #video-gamewin, #gameover-div, #gamewin-div {
+		display: none;
+	}
 	</style>
 </head>
 
@@ -40,6 +43,22 @@
 
 	<canvas id='canvas' width='384' height='512'>If your browser can't render canvases, how have you gotten this
 		far?</canvas>
+
+	<video id='video-gameover' src='../assets/ftldefence/gameover.mp4'></video>
+	<div id='gameover-div'>
+		<h3>Game over!</h3>
+		<h4 id='gamescore-lose'>Score: NaN</h4>
+		<p>Press your refresh button or the button below to try again.</p>
+		<button onclick='location.reload()'>Try Again</button>
+	</div>
+
+	<video id='video-gamewin' src='../assets/ftldefence/gamewin.mp4'></video>
+	<div id='gamewin-div'>
+		<h3>You won!</h3>
+		<h4 id='gamescore-win'>Score: NaN</h4>
+		<p>Press your refresh button or the button below to play again.</p>
+		<button onclick='location.reload()'>Try Again</button>
+	</div>
 
 </body>
 

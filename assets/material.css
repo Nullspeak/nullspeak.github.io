@@ -101,7 +101,7 @@ button:active, input[type=button]:active, a:active {
 	outline: 0.25mm solid #090909;
 }
 
-canvas {
+canvas, video, audio {
 	border: 0.25mm solid #444;
 	margin: 2.5mm;
 	box-shadow: 0mm 0mm 5mm black;
