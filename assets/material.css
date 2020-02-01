@@ -1,14 +1,10 @@
 /* Material CSS Theme - (c) Sarah 2019.11.19 */
-/* i'd have these @import'ed but they lag the stylesheet and make a gross popping effect
- * with the transitions */
-/* @import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
- * @import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap'); */
 
 html {
 	background-color: #171717;
 	background-image: url('material-background-static.png');
 	background-image: url('material-background-anim.png');
-	color: #aaa;
+	color: #ddd;
 	font-family: sans-serif;
 	font-size: 10pt;
 }
@@ -24,10 +20,10 @@ input[type]:disabled, input[type]:disabled:active, input[type]:disabled:hover,
 disabled, disabled:active, disabled:hover {
 	cursor: not-allowed;
 	background-color: #111;
-	color: #777;
+	color: #000;
 	outline: 0.25mm solid #090909;
-	text-shadow: 0mm 0mm 1mm #444;
-	filter: sepia(100%) hue-rotate(-40deg);
+	text-shadow: 1px 1px 0px #333;
+	filter: grayscale(100%) brightness(90%);
 	pointer-events: none;
 	user-select: none;
 	-moz-user-select: none;
@@ -72,7 +68,7 @@ button, input[type=button], a {
 	display: inline-block;
 	position: relative;
 	background-color: #191919;
-	color: #aaa;
+	color: #ddd;
 	outline: 0.25mm solid #555;
 	border: none;
 	padding: 2mm;
@@ -87,21 +83,22 @@ button, input[type=button], a {
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
+	font-size: 10pt;
 }
 
 button:hover, input[type=button]:hover, a:hover {
-	outline: 0.25mm solid #da0;
+	outline: 0.25mm solid #fff;
 	background-color: #222;
-	color: #da0;
+	color: #fff;
 }
 
 button:active, input[type=button]:active, a:active {
 	background-color: #111;
-	color: #777;
+	color: #ddd;
 	outline: 0.25mm solid #090909;
 }
 
-canvas, video, audio {
+canvas, video, audio, iframe {
 	border: 0.25mm solid #444;
 	margin: 2.5mm;
 	box-shadow: 0mm 0mm 5mm black;
@@ -111,30 +108,29 @@ textarea, input[type=text] {
 	background-color: #191919;
 	border: none;
 	outline: 0.25mm solid #555;
-	color: #aaa;
+	color: #ddd;
 	font-family: monospace;
 	font-size: 11pt;
 	padding: 2mm;
 	margin: 2mm 0mm 2mm 0mm;
 	transition: 0.25s outline, 0.25s color, 0.5s background-color;
-	font-size: 10pt;
-	font-family: monospace;
+	font-family: 'Ubuntu Mono', monospace;
 	box-shadow: 0.1mm 0.1mm 2mm black;
 }
 
 textarea:focus, input[type=text]:focus {
 	background-color: #191919;
-	color: #da0;
-	outline: 0.25mm solid #da0;
+	color: #fff;
+	outline: 0.25mm solid #fff;
 }
 
 textarea:active, input[type=text]:active {
 	background-color: #111;
-	color: #bbb;
+	color: #fff;
 	outline: 0.25mm solid #090909;
 }
 
 ::selection {
-	color: black;
-	background-color: #FA0;
+	color: #f00;
+	background-color: #000;
 }

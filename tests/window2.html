@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sarah's Domain - Window System V2</title>
+	<link rel="shortcut icon" href="../assets/favicon.png" />
+	<style>
+		body {
+			background-color: black;
+			color: white;
+			font-family: sans-serif;
+			margin: 0;
+			overflow: hidden;
+		}
+
+		#canvas {
+			background-color: #0f3f7f;
+		}
+	</style>
+</head>
+
+<body onload='s_Resize();s_DrawAll();'>
+
+	<canvas id='canvas' width='256' height='256'></canvas>
+
+	<script>
+		/* the html canvas element and its context */
+		var canvas = document.getElementById('canvas');
+		var c;
+
+		/* various flags that windows can have */
+		const WindowFlags = {
+			NONE: 0,
+			NOCAPTION: (1 << 0)
+		};
+
+		class Window {
+			constructor(x, y, w, h, minw, minh, maxw, maxh, caption, flags, drawFunc = undefined, clickFunc = undefined) {
+				this.x = x;
+				this.y = y;
+				this.w = w;
+				this.h = h;
+				this.minw = minw;
+				this.minh = minh;
+				this.maxw = maxw;
+				this.maxh = maxh;
+				this.caption = caption;
+				this.flags = flags;
+				this.drawFunc = drawFunc;
+				this.clickFunc = clickFunc;
+
+				this.beingMoved = false;
+				this.beingScaled = false;
+			}
+
+			proc(context) {
+				if (context == undefined || context == null)
+					return;
+
+				context.save();
+				context.translate(this.x, this.y);
+				// background
+				context.fillStyle = '#ccc';
+				context.fillRect(0, 0, this.w, this.h);
+
+				// caption background
+				if (!(this.flags & WindowFlags.NOCAPTION)) {
+					let grd = c.createLinearGradient(0, 0, this.w, 0);
+					grd.addColorStop(0, "#ccc");
+					grd.addColorStop(1, "#aaa");
+					context.fillStyle = grd;
+					context.fillRect(0, -24, this.w, 24);
+				}
+
+				// border
+				context.save();
+				context.translate(0.5, 0.5);
+				// client border
+				context.strokeStyle = '#eee';
+				context.strokeRect(-2, -2, this.w + 3, this.h + 3);
+				context.strokeStyle = '#777';
+				context.strokeRect(-1, -1, this.w + 1, this.h + 1);
+				// caption border
+				if (!(this.flags & WindowFlags.NOCAPTION)) {
+					context.strokeStyle = '#eee';
+					context.strokeRect(-2, -26, this.w + 3, 24);
+					context.strokeStyle = '#777';
+					context.strokeRect(-1, -25, this.w + 1, 24);
+				}
+				context.restore();
+
+				if (!(this.flags & WindowFlags.NOCAPTION)) {
+					context.fillStyle = 'black';
+					context.font = 'bold 10pt sans-serif';
+					context.fillText(this.caption, 4, -8, this.w - 8);
+				}
+
+				context.beginPath();
+				context.rect(0, 0, this.w, this.h);
+				context.clip();
+
+				// what the client wants to draw
+				if (!(this.drawFunc == undefined))
+					this.drawFunc(context);
+				context.restore();
+			}
+		}
+		var exampleWindow = new Window(64, 64, 320, 240, 320, 240, 640, 480, 'Example Window', WindowFlags.NONE, (ctx) => { ctx.font = '9pt sans-serif'; ctx.fillStyle = 'black'; ctx.fillText('This is the 2nd version of my windowing system.', 4, 16); });
+		var windows = [exampleWindow];
+
+		function clamp(value, min, max) { return value = Math.min(max, Math.max(min, value)); }
+
+		function s_MouseButtonEvent(e) {
+			if (windows[0] == undefined || windows[0] == null)
+				return;
+
+			if (e.altKey) {
+				for (let i = 0; i < windows.length; i++) {
+					let x = windows[i].x, y = windows[i].y, x2 = windows[i].x + windows[i].w, y2 = windows[i].y + windows[i].h;
+					if (e.clientX > x && e.clientX < x2 && e.clientY > y && e.clientY < y2) {
+						if (e.buttons == 1) {
+							windows[i].beingMoved = true;
+						} else if (e.buttons == 2) {
+							windows[i].beingScaled = true;
+						}
+						break;
+					}
+				}
+			} else {
+				for (let i = 0; i < windows.length; i++) {
+					let x = windows[i].x, y = windows[i].y, x2 = windows[i].x + windows[i].w, y2 = windows[i].y + windows[i].h;
+					if (e.clientX > x && e.clientX < x2 && e.clientY > y && e.clientY < y2) {
+						windows[i].clickFunc(e, windows[i]);
+						break;
+					} else if (e.clientX > x && e.clientX < x2 && e.clientY > y - 24 && e.clientY < y) {
+						windows[i].beingMoved = true;
+					}
+				}
+			}
+
+			if (e.buttons == 0) {
+				for (let i = 0; i < windows.length; i++) {
+					windows[i].beingMoved = false;
+					windows[i].beingScaled = false;
+				}
+			}
+
+			/* for some reason MouseEvent doesn't have a preventDefault() method */
+			return false;
+		}
+
+		function s_MouseMoveEvent(e) {
+			if (windows[0] == undefined || windows[0] == null)
+				return;
+			for (let i = 0; i < windows.length; i++) {
+				if (windows[i].beingMoved) {
+					windows[i].x += e.movementX;
+					windows[i].y += e.movementY;
+					windows[i].x = clamp(windows[i].x, 1, canvas.width - windows[i].w - 1);
+					windows[i].y = clamp(windows[i].y, 1, canvas.height - windows[i].h - 1);
+				} else if (windows[i].beingScaled) {
+					windows[i].w += e.movementX;
+					windows[i].h += e.movementY;
+					windows[i].w = clamp(windows[i].w, windows[i].minw, windows[i].maxw);
+					windows[i].h = clamp(windows[i].h, windows[i].minh, windows[i].maxh);
+				}
+			}
+		}
+
+		function s_Resize() {
+			/* fullscreen the canvas */
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+
+			c = canvas.getContext('2d');
+		}
+
+		function s_ResetDrawParms() {
+			c.fillStyle = 'black';
+			c.strokeStyle = 'black';
+			c.shadowColor = 'black';
+			c.shadowBlur = 0;
+			c.shadowOffsetX = 0;
+			c.shadowOffsetY = 0;
+		}
+
+		function d_Window() {
+			if (windows[0] == undefined || windows[0] == null)
+				return;
+			for (let i = 0; i < windows.length; i++) {
+				windows[i].proc(c);
+				s_ResetDrawParms();
+			}
+		}
+
+		function s_DrawAll() {
+			c.clearRect(0, 0, canvas.width, canvas.height);
+			d_Window();
+
+			s_ResetDrawParms();
+			requestAnimationFrame(s_DrawAll);
+		}
+
+		canvas.onmousedown = s_MouseButtonEvent;
+		canvas.onmouseup = s_MouseButtonEvent;
+		canvas.addEventListener('mousemove', s_MouseMoveEvent);
+		/* disable context menu */
+		canvas.addEventListener('contextmenu', (e) => { e.preventDefault() });
+		window.addEventListener('resize', s_Resize);
+	</script>
+
+</body>
+
+</html>
