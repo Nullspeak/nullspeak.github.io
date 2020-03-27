@@ -317,7 +317,7 @@ var mouseCursor = {
 	y: 240,
 	draw: function () {
 		let cur = new Image();
-		cur.src = '../assets/cursor.png';
+		cur.src = '/assets/cursor.png';
 		ctx.drawImage(cur, this.x - 0.5, this.y - 0.5);
 	}
 };
