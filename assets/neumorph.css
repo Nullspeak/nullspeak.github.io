@@ -1,0 +1,131 @@
+/* neumorph test css theme - (c) sarah 2020 */
+
+html {
+	background: rgb(31, 31, 31);
+	color: #fff;
+	font-family: sans-serif;
+	font-size: 12pt;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+	perspective: 500mm;
+}
+
+.title {
+	margin: 0px 0px 4px 0px;
+}
+
+body {
+	margin: 0px;
+	background: rgb(31, 31, 31);
+	padding: 5mm;
+	
+	border: none;
+	border-radius: 4mm;
+	
+	box-shadow:
+	0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25),
+	-0.125mm -0.125mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	inset -0.5mm -0.5mm 4mm 1mm rgba(63, 63, 63, 0.25),
+	inset 0.25mm 0.25mm 4mm 1mm rgba(0, 0, 0, 0.25);
+}
+
+pre, code, textarea, input[type='text'] {
+	padding: 2mm 4mm;
+	margin: 2mm;
+	font-family: monospace;
+	white-space: pre;
+	font-weight: bold;
+	font-size: 11pt;
+	
+	background: rgb(31, 31, 31);
+	color: white;
+	
+	border: none;
+	border-radius: 4mm;
+	
+	box-shadow:
+	0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25),
+	-0.125mm -0.125mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	inset -0.5mm -0.5mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	inset 0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25);
+}
+
+a, button, input[type='button'] {
+	font-family: sans-serif;
+	background-image: none;
+	background: rgb(31, 31, 31);
+	color: white;
+	cursor: default;
+	font-weight: normal;
+	font-size: 11pt;
+	
+	padding: 1mm 4mm;
+	margin: 2mm;
+	text-decoration: none;
+	display: inline-block;
+	
+	/* why hasn't the standard user-select been implemented properly yet? */
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	
+	border: none;
+	border-radius: 4mm;
+	
+	box-shadow:
+	0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25),
+	-0.125mm -0.125mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	inset -0.5mm -0.5mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	inset 0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25);
+	
+	transition: all 0.2s ease-out;
+}
+
+a:active:not(:disabled), button:active:not(:disabled), input[type='button']:active:not(:disabled) {
+	background-color: rgb(255, 127, 0);
+	color: transparent;
+	text-shadow: 1px 1px 0px rgb(0, 0, 0);
+	box-shadow:
+	0.5mm 0.5mm 1mm 1mm rgba(63, 63, 63, 0.25),
+	-0.25mm -0.25mm 1mm 1mm rgba(0, 0, 0, 0.25);
+}
+/*
+a:hover:not(:active), button:hover:not(:active), input[type='button']:hover:not(:active) {
+	background-color: rgb(255, 127, 0);
+	color: black;
+	text-shadow: none;
+}*/
+
+a:disabled, button:disabled, input[type='button']:disabled {
+	color: #0f0f0f;
+	text-shadow: 1px 1px 0px #3f3f3f;
+}
+
+canvas, video {
+	background: rgb(31, 31, 31);
+	color: white;
+	
+	border: 2px solid transparent;
+	outline: none;
+	
+	box-shadow:
+	0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25),
+	-0.125mm -0.125mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	inset -0.5mm -0.5mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	inset 0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25);
+}
+
+hr {
+	height: 2mm;
+	background-color: rgb(23, 23, 23);
+	background: linear-gradient(180deg, rgb(28,28,28), rgb(31,31,31), rgb(34, 34, 34));
+	border: none;
+	outline: none;
+	border-radius: 16mm;
+	padding: 0px;
+	margin: 2mm 0mm;
+}

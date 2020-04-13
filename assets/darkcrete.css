@@ -10,6 +10,7 @@ html {
 	width: 100vw;
 	height: 100vh;
 	perspective: 500mm;
+	overflow: hidden;
 	
 	/*
 	border: none;
@@ -22,36 +23,55 @@ html {
 }
 
 .title {
-	margin: 0px 0px 4px 0px;
+	margin: -6px -6px 4px -6px;
+	background: linear-gradient(90deg, black, rgb(31, 31, 31));
+	font-size: 8pt;
+	padding: 2px 3px;
+	vertical-align: center;
+	
+	/* why hasn't the standard user-select been implemented properly yet? */
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 
 /* TODO: find a cool looking animation that doesn't get annoying */
 @keyframes body-appear {
 	from {
 		opacity: 0;
+		max-height: 0px;
+		overflow: hidden;
 	}
 	to {
 		opacity: 1;
+		max-height: 90vh;
+		overflow: hidden;
 	}
 }
 
 body {
+	max-width: 90vw;
+	max-height: 90vh;
+	
 	margin: 0px;
 	background: rgb(31, 31, 31);
 	padding: 8px;
 	
-	border: 2px solid transparent;
+	border: 2px solid rgb(63, 63, 63);
 	outline: none;
 	border-image-source: url('/assets/darkcrete-body-border.svg');
 	border-image-slice: 2;
 	border-image-width: 2px;
 	border-image-repeat: repeat;
+	overflow: auto;
 	
-	/* animation: 1s cubic-bezier(0.5, 1, 0.5, 1) body-appear; */
+	/* animation: 1s linear body-appear; */
 }
 
 pre, code, textarea, input[type='text'] {
 	padding: 2px 4px;
+	margin: 2px;
 	font-family: monospace;
 	white-space: pre;
 	font-weight: bold;
@@ -60,7 +80,7 @@ pre, code, textarea, input[type='text'] {
 	background: rgb(31, 31, 31);
 	color: white;
 	
-	border: 2px solid transparent;
+	border: 2px solid rgb(63, 63, 63);
 	outline: none;
 	border-image-source: url('/assets/darkcrete-border-sunken.svg');
 	border-image-slice: 2;
@@ -77,7 +97,7 @@ a, button, input[type='button'] {
 	font-size: 9pt;
 	
 	padding: 2px 4px;
-	margin: 1px 0px 1px 0px;
+	margin: 2px;
 	text-decoration: none;
 	display: inline-block;
 	
@@ -87,7 +107,7 @@ a, button, input[type='button'] {
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	
-	border: 2px solid transparent;
+	border: 2px solid rgb(63, 63, 63);
 	border-radius: 0px;
 	outline: none;
 	border-image-source: url('/assets/darkcrete-border-raised.svg');
@@ -113,11 +133,11 @@ a:hover:disabled, button:disabled, input[type='button']:disabled {
 	text-shadow: 1px 1px 0px #3f3f3f;
 }
 
-canvas, video {
+canvas, video, media {
 	background: rgb(31, 31, 31);
 	color: white;
 	
-	border: 2px solid transparent;
+	border: 2px solid rgb(63, 63, 63);
 	outline: none;
 	
 	border-image-source: url('/assets/darkcrete-border-sunken.svg');
@@ -127,7 +147,7 @@ canvas, video {
 }
 
 hr {
-	border: 2px solid transparent;
+	border: 2px solid rgb(63, 63, 63);
 	outline: none;
 	
 	border-image-source: url('/assets/darkcrete-border-sunken.svg');
