@@ -8,25 +8,24 @@
 	<title>Sarah's Domain - Javascript Game</title>
 	<link rel="stylesheet" href="/assets/default.css" />
 	<link rel="shortcut icon" href="/assets/favicon.png" />
-
+	<script src='/assets/navbar.js'></script>
 	<script src="/assets/jsgame.js"></script>
 </head>
 <body onload="initCanvas();">
-	<!--Title text thing-->
-	<h1 class="title">Sarah's Domain</h1>
-
-	<!--nav bar thing-->
-    <div class='navbar'>
-        <a href='/index.html'>Home</a>
-        <a href='/projects.html'>Projects</a>
+	<div class='header'>
+		<!--Title text thing-->
+		<h1 class='title'>Sarah's Domain</h1>
 		
+		<!-- social links -->
 		<div class='social-bar'>
-		<a class='social-button' href='https://twitter.com/oSarahSoup' title='Twitter'><img src='/assets/social-media/twitter.png'></img></a>
-		<a class='social-button' href='https://github.com/Nullspeak' title='GitHub'><img src='/assets/social-media/github.png'></img></a>
-		<a class='social-button' href='https://usarah16.tumblr.com/' title='Tumblr'><img src='/assets/social-media/tumblr.png'></img></a>
+			<a class='social-button' href='https://twitter.com/oSarahSoup' title='Twitter'><img src='/assets/social-media/twitter.png'></img></a>
+			<a class='social-button' href='https://github.com/Nullspeak' title='GitHub'><img src='/assets/social-media/github.png'></img></a>
+			<a class='social-button' href='https://usarah16.tumblr.com/' title='Tumblr'><img src='/assets/social-media/tumblr.png'></img></a>
 		</div>
-    </div>
-	<hr />
+
+		<!--nav bar thing-->
+		<div id='navbar'></div>
+	</div>
 
 	<input type="checkbox" id="checkboxSfx" checked onclick="checkboxSfx_clicked();" />
 	<label>Sound FX</label>

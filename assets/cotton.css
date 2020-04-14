@@ -9,10 +9,6 @@ html {
 	overflow: auto;
 }
 
-.title {
-	margin: 0px 0px 0px 0px;
-}
-
 body {
 	margin: 4mm;
 	background: #111;
@@ -80,7 +76,7 @@ canvas, video {
 	color: white;
 	
 	border: 1px solid #333;
-	border-radius: 4mm;
+	border-radius: 1mm;
 	outline: none;
 }
 
@@ -120,4 +116,21 @@ hr {
 .social-button > * {
 	max-width: 70%;
 	max-height: 70%;
+}
+
+.header {
+	margin: -4mm -4mm 4mm -4mm;
+	padding-bottom: 1mm;
+	background: #0d0d0d;
+	transition: 0.3s ease-out all;
+	overflow: hidden;
+}
+
+.title {
+	margin: 2mm;
+}
+
+#navbar {
+	background: #111;
+	border-radius: 32mm;
 }

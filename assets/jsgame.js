@@ -1,17 +1,17 @@
-/* Javascript Game 1 - (c) Sarah 2019 */
+/* Javascript Game 1 - (c) Sarah 2020 */
 var canvas; // the canvas itself
 var ctx; // canvas context
 
 // enables certain rendering things to make debugging easier
-var debugmode = false;
+const debugmode = false;
 
-var bgimg = new Image();
+const bgimg = new Image();
 
 // is the game in the 'somebody won' state?
 var gameover = false;
 
 // if for some reason you want more than 2 jumps, set it here
-var maxJumps = 2;
+const maxJumps = 2;
 
 var sfxenabled = true;
 function checkboxSfx_clicked() {
@@ -152,7 +152,7 @@ function initCanvas() {
 
 		// force the sound assets to load before we continue
 		new Audio('/assets/jsgame/swoosh.ogg').load();
-		new Audio('/assets/canvastest3/shot.ogg').load();
+		new Audio('/assets/jsgame/shot.ogg').load();
 		new Audio('/assets/jsgame/punch1.ogg').load();
 		new Audio('/assets/jsgame/punch2.ogg').load();
 		new Audio('/assets/jsgame/punch3.ogg').load();
@@ -177,7 +177,7 @@ function lerp(start, end, amt) {
 
 // where everything is drawn
 function drawLoop() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	// ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	bg.draw();
 
@@ -202,8 +202,8 @@ function drawLoop() {
 
 	resetDrawAttr();
 
-	// window.requestAnimationFrame(drawLoop);
-    setTimeout(function() { requestAnimationFrame(drawLoop); }, 10);
+	window.requestAnimationFrame(drawLoop);
+    // setTimeout(function() { requestAnimationFrame(drawLoop); }, 33);
 }
 
 function resetDrawAttr() {
@@ -232,9 +232,8 @@ function playJumpSound() {
 
 // the jumping noise
 function playDeathSound() {
-	// reusing sound file from canvas test 3
 	if (sfxenabled)
-		new Audio('/assets/canvastest3/shot.ogg').play();
+		new Audio('/assets/jsgame/shot.ogg').play();
 }
 
 // the punching noises
