@@ -22,14 +22,14 @@ body {
 	background: rgb(31, 31, 31);
 	padding: 5mm;
 	
-	border: none;
-	border-radius: 4mm;
+	border: 1px solid #333;
+	border-radius: 8mm;
 	
 	box-shadow:
-	0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25),
-	-0.125mm -0.125mm 2mm 1mm rgba(63, 63, 63, 0.25),
-	inset -0.5mm -0.5mm 4mm 1mm rgba(63, 63, 63, 0.25),
-	inset 0.25mm 0.25mm 4mm 1mm rgba(0, 0, 0, 0.25);
+	0.5mm 0.5mm 1mm 1mm rgba(0, 0, 0, 0.25),
+	-0.25mm -0.25mm 1mm 1mm rgba(63, 63, 63, 0.25),
+	inset -0.5mm -0.5mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	inset 0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25);
 }
 
 pre, code, textarea, input[type='text'] {
@@ -43,12 +43,12 @@ pre, code, textarea, input[type='text'] {
 	background: rgb(31, 31, 31);
 	color: white;
 	
-	border: none;
-	border-radius: 4mm;
+	border: 1px solid #333;
+	border-radius: 8mm;
 	
 	box-shadow:
-	0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25),
-	-0.125mm -0.125mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	0.5mm 0.5mm 1mm 1mm rgba(0, 0, 0, 0.25),
+	-0.25mm -0.25mm 1mm 1mm rgba(63, 63, 63, 0.25),
 	inset -0.5mm -0.5mm 2mm 1mm rgba(63, 63, 63, 0.25),
 	inset 0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25);
 }
@@ -73,22 +73,21 @@ a, button, input[type='button'] {
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	
-	border: none;
-	border-radius: 4mm;
+	border: 1px solid #333;
+	border-radius: 8mm;
 	
 	box-shadow:
-	0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25),
-	-0.125mm -0.125mm 2mm 1mm rgba(63, 63, 63, 0.25),
+	0.5mm 0.5mm 1mm 1mm rgba(0, 0, 0, 0.25),
+	-0.25mm -0.25mm 1mm 1mm rgba(63, 63, 63, 0.25),
 	inset -0.5mm -0.5mm 2mm 1mm rgba(63, 63, 63, 0.25),
 	inset 0.25mm 0.25mm 2mm 1mm rgba(0, 0, 0, 0.25);
-	
-	transition: all 0.2s ease-out;
 }
 
 a:active:not(:disabled), button:active:not(:disabled), input[type='button']:active:not(:disabled) {
-	background-color: rgb(255, 127, 0);
+	background-color: rgb(23, 23, 23);
+	border: 1px solid #333;
 	color: transparent;
-	text-shadow: 1px 1px 0px rgb(0, 0, 0);
+	text-shadow: 1px 1px 0px white;
 	box-shadow:
 	0.5mm 0.5mm 1mm 1mm rgba(63, 63, 63, 0.25),
 	-0.25mm -0.25mm 1mm 1mm rgba(0, 0, 0, 0.25);
@@ -123,7 +122,7 @@ hr {
 	height: 2mm;
 	background-color: rgb(23, 23, 23);
 	background: linear-gradient(180deg, rgb(28,28,28), rgb(31,31,31), rgb(34, 34, 34));
-	border: none;
+	border: 1px solid #333;
 	outline: none;
 	border-radius: 16mm;
 	padding: 0px;
