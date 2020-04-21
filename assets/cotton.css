@@ -1,7 +1,7 @@
 /* cotton css theme - (c) sarah 2020 */
 
 html {
-	background: #111;
+	background: #222;
 	color: #fff;
 	font-family: sans-serif;
 	font-size: 11pt;
@@ -11,8 +11,18 @@ html {
 
 body {
 	margin: 4mm;
-	background: #111;
+	background: #222;
 	overflow: visible;
+	text-shadow: 1px 1px 0px black;
+}
+
+a {
+	margin: 0mm;
+	padding: 0mm;
+	border: none;
+	background: transparent;
+	color: rgb(255, 127, 0);
+	text-decoration: underline;
 }
 
 * {
@@ -24,12 +34,11 @@ body {
 	opacity: 0.5;
 }
 
-a, button, input, pre, code, textarea {
+#navbar > a, button, input, pre, code, textarea {
 	font-family: sans-serif;
 	background-image: none;
-	background: rgb(15, 15, 15);
+	background: #111;
 	color: white;
-	cursor: default;
 	font-weight: normal;
 	font-size: 11pt;
 	
@@ -38,23 +47,17 @@ a, button, input, pre, code, textarea {
 	text-decoration: none;
 	display: inline-block;
 	
-	/* why hasn't the standard user-select been implemented properly yet? */
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	
-	border: 1px solid #333;
-	border-radius: 8mm;
+	border: 1px solid #666;
+	border-radius: 1mm;
 }
 
-a:active:not(:disabled), button:active:not(:disabled), input:active:not(:disabled) {
+#navbar > a:active:not(:disabled), button:active:not(:disabled), input:active:not(:disabled) {
 	background-color: black;
-	border: 1px solid rgb(255, 127, 0);
+	border-color: rgb(255, 127, 0);
 	color: rgb(255, 127, 0);
 }
 
-a:hover:not(:active):not(:disabled),
+#navbar > a:hover:not(:active):not(:disabled),
 button:hover:not(:active):not(:disabled),
 input:hover:not(:active):not(:disabled) {
 	border-color: white;
@@ -72,16 +75,16 @@ pre, code, textarea, input[type='text'] {
 }
 
 canvas, video {
-	background: #111;
+	background: #222;
 	color: white;
 	
-	border: 1px solid #333;
+	border: 1px solid #666;
 	border-radius: 1mm;
 	outline: none;
 }
 
 hr {
-	border: 1px solid #333;
+	border: 1px solid #666;
 	margin: 2mm 0mm;
 }
 
@@ -106,7 +109,7 @@ hr {
 	padding: 0px;
 	margin: 1mm;
 	width: 8mm;
-	height: 8mm;
+	height: 6mm;
 	
 	display:flex;
 	justify-content:center;
@@ -121,7 +124,7 @@ hr {
 .header {
 	margin: -4mm -4mm 4mm -4mm;
 	padding-bottom: 1mm;
-	background: #0d0d0d;
+	background: #111;
 	transition: 0.3s ease-out all;
 	overflow: hidden;
 }
@@ -131,6 +134,13 @@ hr {
 }
 
 #navbar {
-	background: #111;
-	border-radius: 32mm;
+	background: #222;
+	border-radius: 1mm;
+	margin-left: 1mm;
+	margin-right: 1mm;
+}
+
+table.article-contents-box {
+	border: 1px solid #666;
+	border-radius: 1mm;
 }

@@ -11,8 +11,9 @@ class CNavButton {
 }
 
 const buttons = [
-	new CNavButton('Home', '/index.htm'),
-	new CNavButton('Projects', '/projects.htm'),
+	new CNavButton('Home', '/'),
+	new CNavButton('Projects', '/projects/'),
+	// new CNavButton('Articles', '/articles/'),
 ];
 
 window.addEventListener('load', () => {

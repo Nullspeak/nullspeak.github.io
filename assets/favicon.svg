@@ -27,21 +27,13 @@
        inkscape:collect="always"
        id="linearGradient2305">
       <stop
-         style="stop-color:#ff7f00;stop-opacity:1"
+         style="stop-color:rgb(63, 15, 15);stop-opacity:1"
          offset="0"
          id="stop2301" />
       <stop
-         style="stop-color:#3f1f0f;stop-opacity:0.99541283"
+         style="stop-color:rgb(255, 63, 63);stop-opacity:0.99541283"
          offset="1"
          id="stop2303" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient2289"
-       osb:paint="solid">
-      <stop
-         style="stop-color:#3f1f1f;stop-opacity:1;"
-         offset="0"
-         id="stop2287" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"

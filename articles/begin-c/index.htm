@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+	<meta charset='utf-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<title>Sarah's Domain</title>
+	<link rel='stylesheet' href='/assets/default.css' />
+	<link rel='shortcut icon' href='/assets/favicon.png' />
+	<script src='/assets/navbar.js'></script>
+</head>
+<body>
+	<div class='header'>
+		<!--Title text thing-->
+		<h1 class='title'>Sarah's Domain</h1>
+		
+		<!-- social links -->
+		<div class='social-bar'>
+			<a class='social-button' href='https://twitter.com/oSarahSoup' title='Twitter'><img src='/assets/social-media/twitter.png'></img></a>
+			<a class='social-button' href='https://github.com/Nullspeak' title='GitHub'><img src='/assets/social-media/github.png'></img></a>
+			<a class='social-button' href='https://usarah16.tumblr.com/' title='Tumblr'><img src='/assets/social-media/tumblr.png'></img></a>
+		</div>
+
+		<!--nav bar thing-->
+		<div id='navbar'></div>
+	</div>
+
+	<!-- the title caption -->
+	<h1>C Programming for Beginners</h1>
+	<h4>This article will assume the reader already has basic programming knowledge.</h4>
+	<table class='article-contents-box'>
+		<caption>Contents</caption>
+		<tbody>
+			<tr><td><a href='#head-preface'>Preface</a></td></tr>
+			<tr><td><a href='#head-toolchain'>Installing a Toolchain</a></td></tr>
+		</tbody>
+	</table>
+	<hr/>
+	
+	<!-- the article body -->
+	<h2 id='head-preface'>Preface</h2>
+	<p>In this article I will show you the basics of how to use the programming language C.</p>
+	<p>If you have not done any programming before, I would recommend you learn
+	a programming language like Python or Java instead, as they are much friendlier
+	to beginner programmers.</p>
+	
+	<h2 id='head-toolchain'>Installing a Toolchain</h2>
+	<p>Before we can begin, we need to install what's called a toolchain.
+	The toolchain is what turns our program's source code into something
+	our computer can execute.</p>
+	<p>Below are 3 different guides for installing a toolchain on different computer operating systems.</p>
+	
+	<h3>Windows</h3>
+	<p>On Windows there are a few existing toolchains such as MinGW and MSVC,
+	although for this guide I will show you how to install Fabrice Bellard's Tiny C Compiler.</p>
+	<p>To install it, 
+	<a href='http://download.savannah.gnu.org/releases/tinycc/tcc-0.9.27-win32-bin.zip' class='inline-link'>
+	download this zip file from Fabrice Bellard's website
+	</a> 
+	and extract its contents to a folder somewhere.</p>
+	
+	<h3>MacOS</h3>
+	<p>MacOS fortunately has a built-in development suite called XCode
+	which includes the required tools for C, C++ and Objective-C programming.</p>
+	<p>To install it, you can either download XCode from the App Store or open Terminal and type <code>cc</code>.
+	This will show a pop-up window asking if you would like to install XCode.
+	Click yes and MacOS will automatically download and install the tools we need.</p>
+	
+	<h3>Linux</h3>
+	<p>Most Linux distributions have a built-in package manager that can install the packages we need.</p>
+	<p>Below are the commands required to install GCC with various different Linux distributions' package managers.</p>
+	<h4>Debian / Ubuntu</h4>
+	<pre>$ sudo apt install build-essential</pre>
+	<h4>Arch / Manjaro</h4>
+	<pre>$ sudo pacman -S base-devel</pre>
+	<h4>Alpine</h4>
+	<pre># apk add build-base</pre>
+
+</body>
+</html>
