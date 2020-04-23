@@ -49,6 +49,8 @@ a {
 	
 	border: 1px solid #666;
 	border-radius: 1mm;
+	
+	tab-size: 4;
 }
 
 #navbar > a:active:not(:disabled), button:active:not(:disabled), input:active:not(:disabled) {
