@@ -107,6 +107,7 @@ hr {
 }
 
 .social-button {
+	border: 1px solid #666;
 	border-radius: 1mm;
 	padding: 0px;
 	margin: 1mm;
