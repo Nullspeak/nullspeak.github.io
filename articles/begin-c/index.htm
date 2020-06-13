@@ -40,49 +40,56 @@
 	
 	<!-- the article body -->
 	<h2 id='head-preface'>Preface</h2>
-	<p>In this article I will show you the basics of how to use the programming language C.</p>
-	<p>If you have not done any programming before, I would recommend you learn
+	In this article I will show you the basics of how to use the programming language C.
+	If you have not done any programming before, I would recommend you learn
 	a programming language like Python or Java instead, as they are much friendlier
-	to beginner programmers.</p>
+	to beginner programmers.
 	
 	<h2 id='head-toolchain'>Installing a Toolchain</h2>
-	<p>Before we can begin, we need to install what's called a toolchain.
+	Before we can begin, we need to install what's called a toolchain.
 	The toolchain is what turns our program's source code into something
-	our computer can execute.</p>
-	<p>Below are 3 different guides for installing a toolchain on different computer operating systems.</p>
+	the computer can execute.
+	Below are 3 different guides for installing a toolchain on different operating systems.
 	
 	<h3>Windows</h3>
-	<p>On Windows there are a few existing toolchains such as MinGW and MSVC,
-	although for this guide I will show you how to install Fabrice Bellard's Tiny C Compiler.</p>
-	<p>To install it, 
-	<a href='http://download.savannah.gnu.org/releases/tinycc/tcc-0.9.27-win32-bin.zip' class='inline-link'>
-	download this zip file from Fabrice Bellard's website
+	On Windows there are a few existing toolchains such as MinGW and MSVC,
+	although for this guide I will show you how to install Fabrice Bellard's Tiny C Compiler.
+	To install it, go to
+	<a href='https://bellard.org/tcc/' class='inline-link'>
+	Fabrice Bellard's website
 	</a> 
-	and extract its contents to a folder somewhere.</p>
+	, download the <code>tcc-0.9.27-win64-bin.zip</code> file and extract its contents to a folder somewhere.
 	
 	<h3>MacOS</h3>
-	<p>MacOS fortunately has a built-in development suite called XCode
-	which includes the required tools for C, C++ and Objective-C programming.</p>
-	<p>To install it, you can either download XCode from the App Store or open Terminal and type <code>cc</code>.
+	MacOS luckily has a built-in development suite called XCode,
+	which includes the required tools for C, C++ and Objective-C programming.
+	To install it, you can either download XCode from the App Store or open Terminal and type <code>cc</code>.
 	This will show a pop-up window asking if you would like to install XCode.
-	Click yes and MacOS will automatically download and install the tools we need.</p>
+	Click yes and MacOS will automatically download and install the tools we need.
 	
 	<h3>Linux</h3>
-	<p>Most Linux distributions have a built-in package manager that can install the packages we need.</p>
-	<p>Below are the commands required to install GCC with various different Linux distributions' package managers.</p>
+	Most Linux distributions have a built-in package manager that can install the packages we need.
+	Below are the commands required to install GCC with various different Linux distributions' package managers.
 	<h4>Debian / Ubuntu</h4>
-	<pre>$ sudo apt install build-essential</pre>
+	<pre># apt install build-essential</pre>
 	<h4>Arch / Manjaro</h4>
-	<pre>$ sudo pacman -S base-devel</pre>
+	<pre># pacman -S base-devel</pre>
 	<h4>Alpine</h4>
 	<pre># apk add build-base</pre>
 	
 	<h2 id='head-firstprogram'>First Program</h2>
-	<p>The following code block is the smallest possible C program that will compile and run.</p>
-<pre>
+	The following code block is the smallest possible C program that will compile and run.
+<br/><pre>
 int main() {
     return 0;
-}</pre>
+}</pre></br>
+	Now, this program doesn't actually do anything. Let's write a program that writes out text.
+<br/><pre>
+#include &lt;stdio.h&gt;
 
+int main() {
+    puts("Hello World!");
+    return 0;
+}</pre></br>
 </body>
 </html>

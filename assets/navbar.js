@@ -4,16 +4,17 @@
  *	just replace the html stuff
  */
 class CNavButton {
-	constructor(name, href) {
+	constructor(name, tip, href) {
 		this.name = name;
+		this.tip = tip;
 		this.href = href;
 	}
 }
 
 const buttons = [
-	new CNavButton('Home', '/'),
-	new CNavButton('Projects', '/projects/'),
-	// new CNavButton('Articles', '/articles/'),
+	new CNavButton('Home', 'Returns to the home page.', '/'),
+	new CNavButton('Projects', 'See some of my projects.', '/projects/'),
+	new CNavButton('Articles', 'Some articles I\'ve written.', '/articles/'),
 ];
 
 window.addEventListener('load', () => {
@@ -22,7 +23,7 @@ window.addEventListener('load', () => {
 	buttons.forEach(e => {
 		let newbtn = document.createElement('a');
 		newbtn.append(e.name);
-		newbtn.title = e.name;
+		newbtn.title = e.tip;
 		newbtn.href = e.href;
 		navbar.append(newbtn);
 	});
