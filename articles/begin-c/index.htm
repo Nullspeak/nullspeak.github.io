@@ -25,7 +25,7 @@
 	</div>
 
 	<!-- the title caption -->
-	<h1>C Programming for Beginners</h1>
+	<h1>Programming in C</h1>
 	<h4>This article will assume the reader already has basic programming knowledge.</h4>
 	<h4 style='color: #f77'>This article is unfinished.</h4>
 	<table class='article-contents-box'>
@@ -34,38 +34,39 @@
 			<tr><td><a href='#head-preface'>Preface</a></td></tr>
 			<tr><td><a href='#head-toolchain'>Installing a Toolchain</a></td></tr>
 			<tr><td><a href='#head-firstprogram'>First Program</a></td></tr>
+			<tr><td><a href='#head-types'>Types</a></td></tr>
+			<tr><td><a href='#head-conditions'>Conditions</a></td></tr>
 		</tbody>
 	</table>
 	<hr/>
 	
 	<!-- the article body -->
 	<h2 id='head-preface'>Preface</h2>
-	In this article I will show you the basics of how to use the programming language C.
-	If you have not done any programming before, I would recommend you learn
-	a programming language like Python or Java instead, as they are much friendlier
-	to beginner programmers.
+	In this article I be showing you how to begin programming in the C language.
+	I will be assuming you already know basic programming theory.
+	If you have not programmed before, I would recommend you learn a simpler language
+	like Java, Python, or JS.
 	
 	<h2 id='head-toolchain'>Installing a Toolchain</h2>
-	Before we can begin, we need to install what's called a toolchain.
-	The toolchain is what turns our program's source code into something
-	the computer can execute.
-	Below are 3 different guides for installing a toolchain on different operating systems.
+	Before we can begin, we need to install a toolchain.
+	The toolchain converts our source code into a native system program that will run on its own.
+	Below are guides for installing one on different operating systems.
 	
 	<h3>Windows</h3>
-	On Windows there are a few existing toolchains such as MinGW and MSVC,
-	although for this guide I will show you how to install Fabrice Bellard's Tiny C Compiler.
-	To install it, go to
-	<a href='https://bellard.org/tcc/' class='inline-link'>
-	Fabrice Bellard's website
-	</a> 
-	, download the <code>tcc-0.9.27-win64-bin.zip</code> file and extract its contents to a folder somewhere.
+	Although there are larger and more feature-complete C compilers available for Windows,
+	I recommend you use Fabrice Bellard's Tiny C Compiler which has everything you need to start off
+	in just a few files. To install it, head to 
+	<a href='https://bellard.org/tcc/' class='inline-link'>Fabrice Bellard's website</a>,
+	then download the <code>tcc-0.9.27-win64-bin.zip</code> file and extract its contents to a folder somewhere.
+	Adding the folder TCC is inside of to your PATH system variable is recommended and makes compiling easier
+	later on, but it is not necessary.
 	
 	<h3>MacOS</h3>
-	MacOS luckily has a built-in development suite called XCode,
-	which includes the required tools for C, C++ and Objective-C programming.
+	MacOS luckily has a built-in development suite called XCode
+	which includes the required tools for C, C++, and Objective-C programming.
 	To install it, you can either download XCode from the App Store or open Terminal and type <code>cc</code>.
-	This will show a pop-up window asking if you would like to install XCode.
-	Click yes and MacOS will automatically download and install the tools we need.
+	A popup window will ask if you would like to install XCode.
+	Click yes and MacOS will automatically download and install the tools you need.
 	
 	<h3>Linux</h3>
 	Most Linux distributions have a built-in package manager that can install the packages we need.
@@ -78,18 +79,71 @@
 	<pre># apk add build-base</pre>
 	
 	<h2 id='head-firstprogram'>First Program</h2>
-	The following code block is the smallest possible C program that will compile and run.
-<br/><pre>
-int main() {
-    return 0;
-}</pre></br>
-	Now, this program doesn't actually do anything. Let's write a program that writes out text.
-<br/><pre>
+	The following code block is the smallest C program that has any output.
+	It simply prints out <code>Hello World!</code> to your terminal and then exits.
+<div><pre>
 #include &lt;stdio.h&gt;
 
 int main() {
     puts("Hello World!");
     return 0;
-}</pre></br>
+}</pre></div>
+	To run it on Linux or MacOS, use <code>cc file.c</code>.<br/>
+	To run it on Windows using TCC, use <code>tcc -run file.c</code>.
+	
+	<h2 id='head-types'>Types</h2>
+	C is a static, weakly typed language.
+	This means that variables can only ever contain a single type,
+	although that type can be reinterpreted to other ones in certain situations.
+	There are ways of getting around this, but that is not covered in this article.
+	What follows is a list of the different types in C.<br/>
+	<h5>Numbers</h5>
+	<code>char</code> Usually an 8-bit number, but can be larger or smaller on some systems.
+	Mainly used for string characters or low-level memory management.<br/>
+	<code>short</code> Usually a 16-bit number. Not used much except for certain embedded systems.<br/>
+	<code>int</code> Usually a 32-bit number, but can be 16 bit on some systems. The most used type in C.<br/>
+	<code>float</code> A 32-bit floating-point number.
+	Allows decimal math but is unavailable on some embedded systems. It can sometimes give slightly inaccurate results.<br/>
+	<code>double</code> A 64-bit floating-point number.
+	The same as a <code>float</code>, but more precise.<br/>
+	
+	<h5>Modifiers</h5>
+	<code>unsigned</code> Modifies any number type to sacrifice negative numbers for more positive numbers.
+	On its own, it defaults to an unsigned int. It can go on either side of a variable's type specifier.
+	It cannot be used to modify reference variables or floats.<br/>
+	<code>signed</code> Modifies any number type to sacrifice some positive numbers for negative numbers.
+	Most number types are signed by default. It, like <code>unsigned</code>, can be used either side of a
+	type specifier, and cannot be used on reference variables or floats.<br/>
+	
+	<h5>References</h5>
+	<code>*</code> In this context, signifies that the variable is a reference to another variable.
+	This can go anywhere between the type specifier and variable name.<br/>
+	<code>&amp;</code> In this context, gets a reference value from a pre-existing variable.
+	It goes on the left of a variable.<br/>
+	
+	<h5>Strings</h5>
+	<code>char *</code> A character string of any encoding, typically generic ASCII or UTF-8.
+	Must be set with either a string literal or by allocating memory space to it.<br/>
+	<code>uchar16_t *</code> A character string using UTF-16. There is no reason to use this, so don't unless you absolutely need to.<br/>
+	<code>uchar32_t *</code> A character string using UTF-32. There is no reason to use this, so don't unless you absolutely need to.<br/>
+	
+	<h5>Mutability</h5>
+	<code>const</code> Specifies that a variable cannot be changed after it has been first set.
+	If used between the type specifier and <code>*</code>, it specifies that the variable being referenced may change,
+	but the reference to it cannot be changed to reference something else.<br/>
+	<code>const int</code> An int that cannot be changed.<br/>
+	<code>const float</code> A float that cannot be changed.<br/>
+	<code>const char *</code> A character string that cannot be changed.<br/>
+	<code>const int *</code> A reference to an int that cannot be changed and cannot be set to reference to something else.<br/>
+	<code>int const *</code> A reference to an int which cannot be set to reference to something else.<br/>
+	
+	<h2 id='head-conditions'>Conditions</h2>
+	Conditions are <code>if</code> and <code>else</code> statements.
+	Some loop statements have built in conditions.
+	In C, anything with a value of zero will evaluate to false,
+	while anything other than zero will evaluate to true.
+	C has no built in boolean type. There is usually a file called <code>stdbool.h</code>
+	which will give you a pretend boolean type which will work as it does in other languages.
+	You are free, however, to either ignore bools completely or to create your own bool type.
 </body>
 </html>
