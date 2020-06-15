@@ -6,7 +6,7 @@ const fps = 60;
 /* tileset image */
 const tiles = new Image();
 tiles.onLoad = () => {tiles.loaded = true;};
-tiles.src = '/assets/run/tiles.png';
+tiles.src = './assets/tiles.png';
 
 /* frametime calculator */
 const time = {

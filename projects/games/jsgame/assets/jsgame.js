@@ -145,18 +145,18 @@ function initCanvas() {
 		window.addEventListener('keyup', procInputUp, true);
 		canvas.addEventListener('click', procInputClick, true);
 
-		bgimg.src = '/assets/jsgame/bgimg.png';
+		bgimg.src = './assets/bgimg.png';
 
 		// make sure we get the value
 		checkboxSfx_clicked();
 
 		// force the sound assets to load before we continue
-		new Audio('/assets/jsgame/swoosh.ogg').load();
-		new Audio('/assets/jsgame/shot.ogg').load();
-		new Audio('/assets/jsgame/punch1.ogg').load();
-		new Audio('/assets/jsgame/punch2.ogg').load();
-		new Audio('/assets/jsgame/punch3.ogg').load();
-		new Audio('/assets/jsgame/punch4.ogg').load();
+		new Audio('./assets/swoosh.ogg').load();
+		new Audio('./assets/shot.ogg').load();
+		new Audio('./assets/punch1.ogg').load();
+		new Audio('./assets/punch2.ogg').load();
+		new Audio('./assets/punch3.ogg').load();
+		new Audio('./assets/punch4.ogg').load();
 
 		players[0].x = -256;
 		players[1].x = 256;
@@ -227,13 +227,13 @@ function randomRange(low, high) {
 // the jumping noise
 function playJumpSound() {
 	if (sfxenabled)
-		new Audio('/assets/jsgame/swoosh.ogg').play();
+		new Audio('./assets/swoosh.ogg').play();
 }
 
 // the jumping noise
 function playDeathSound() {
 	if (sfxenabled)
-		new Audio('/assets/jsgame/shot.ogg').play();
+		new Audio('./assets/shot.ogg').play();
 }
 
 // the punching noises
@@ -242,22 +242,22 @@ function playPunchSound() {
 		var num = Math.round(Math.random() * 3);
 		switch (num) {
 			case 0:
-				var a = new Audio('/assets/jsgame/punch1.ogg');
+				var a = new Audio('./assets/punch1.ogg');
 				a.volume = 0.25;
 				a.play();
 				break;
 			case 1:
-				var a = new Audio('/assets/jsgame/punch2.ogg');
+				var a = new Audio('./assets/punch2.ogg');
 				a.volume = 0.25;
 				a.play();
 				break;
 			case 2:
-				var a = new Audio('/assets/jsgame/punch3.ogg');
+				var a = new Audio('./assets/punch3.ogg');
 				a.volume = 0.25;
 				a.play();
 				break;
 			default:
-				var a = new Audio('/assets/jsgame/punch4.ogg');
+				var a = new Audio('./assets/punch4.ogg');
 				a.volume = 0.25;
 				a.play();
 				break;

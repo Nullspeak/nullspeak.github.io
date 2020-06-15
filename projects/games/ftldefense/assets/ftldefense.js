@@ -42,11 +42,11 @@ var playerBullet = { x: 0, y: 0 };
 const enemyBulletSpeed = 300;
 var enemyBullet = { x: 0, y: 256 };
 var enemyBulletSprite = new Image();
-enemyBulletSprite.src = '/assets/ftldefense/enemybullet.png';
+enemyBulletSprite.src = './assets/enemybullet.png';
 enemyBulletSprite.onload = function () { enemyBulletSprite.loaded = true; }
 
 var enemyBossSwirlerSprite = new Image();
-enemyBossSwirlerSprite.src = '/assets/ftldefense/enemyboss_swirler.png';
+enemyBossSwirlerSprite.src = './assets/enemyboss_swirler.png';
 enemyBossSwirlerSprite.onload = function () { enemyBossSwirlerSprite.loaded = true; }
 
 var enemyBossSwirler = {
@@ -79,7 +79,7 @@ var enemyBossSwirler = {
 			enemyBullets.push(bullet1);
 			enemyBullets.push(bullet2);
 
-			new Audio('/assets/ftldefense/playershoot.ogg').play();
+			new Audio('./assets/playershoot.ogg').play();
 			enemyBossSwirler.shootTime = 0;
 		}
 
@@ -92,29 +92,29 @@ var enemyBullets = [];
 
 /* the player object */
 var playerSprite = new Image();
-playerSprite.src = '/assets/ftldefense/player.png';
+playerSprite.src = './assets/player.png';
 playerSprite.onload = function () { playerSprite.loaded = true; }
 var player = { x: 0, y: -128, vx: 0, vy: 0, rot: 0, score: 0, health: 1000, inUp: false, inDown: false, inLeft: false, inRight: false, inFire: false, bullets: [], lastShotTime: 0, heat: 0, progress: 0 };
-var playerEngineAudio = new Audio('/assets/ftldefense/playerengine.ogg');
-new Audio('/assets/ftldefense/playershoot.ogg').load();
-new Audio('/assets/ftldefense/hitwall.ogg').load();
-new Audio('/assets/ftldefense/playerhithull.ogg').load();
+var playerEngineAudio = new Audio('./assets/playerengine.ogg');
+new Audio('./assets/playershoot.ogg').load();
+new Audio('./assets/hitwall.ogg').load();
+new Audio('./assets/playerhithull.ogg').load();
 playerEngineAudio.preload = true;
 
 var hudSprite = new Image();
-hudSprite.src = '/assets/ftldefense/hud.png';
+hudSprite.src = './assets/hud.png';
 hudSprite.onload = function () { hudSprite.loaded = true; }
 
 var hudSpriteWeaponWarn = new Image();
-hudSpriteWeaponWarn.src = '/assets/ftldefense/hudwarning_weapons.png';
+hudSpriteWeaponWarn.src = './assets/hudwarning_weapons.png';
 hudSpriteWeaponWarn.onload = function () { hudSpriteWeaponWarn.loaded = true; }
 
 var hudSpriteProgress = new Image();
-hudSpriteProgress.src = '/assets/ftldefense/hudprogress.png';
+hudSpriteProgress.src = './assets/hudprogress.png';
 hudSpriteProgress.onload = function () { hudSpriteProgress.loaded = true; }
 
 var playerBulletSprite = new Image();
-playerBulletSprite.src = '/assets/ftldefense/playerbullet.png';
+playerBulletSprite.src = './assets/playerbullet.png';
 playerBulletSprite.onload = function () { playerBulletSprite.loaded = true; }
 
 function player_Draw() {
@@ -170,7 +170,7 @@ function player_Physics() {
 			player.bullets.push(bullet1);
 			player.bullets.push(bullet2);
 
-			new Audio('/assets/ftldefense/playershoot.ogg').play();
+			new Audio('./assets/playershoot.ogg').play();
 			player.lastShotTime = 0;
 			player.heat += 35;
 		} else {
@@ -185,7 +185,7 @@ function player_Physics() {
 			player.bullets.push(bullet1);
 			player.bullets.push(bullet2);
 
-			new Audio('/assets/ftldefense/playershoot.ogg').play();
+			new Audio('./assets/playershoot.ogg').play();
 			player.lastShotTime = -0.25;
 			player.heat += 100;
 		}
@@ -208,7 +208,7 @@ function player_Physics() {
 
 	/*
 	if (player.x < -152) {
-		new Audio('/assets/ftldefense/hitwall.ogg').play();
+		new Audio('./assets/hitwall.ogg').play();
 		player.x = -152;
 		player.vx *= -1;
 		player.vx += 500;
@@ -216,7 +216,7 @@ function player_Physics() {
 	}
 
 	if (player.x > 152) {
-		new Audio('/assets/ftldefense/hitwall.ogg').play();
+		new Audio('./assets/hitwall.ogg').play();
 		player.x = 152;
 		player.vx *= -1;
 		player.vx += -500;
@@ -235,7 +235,7 @@ function player_Physics() {
 		if (enemyBossSwirler.alive) {
 			if (b.x > enemyBossSwirler.x - 24 && b.x < enemyBossSwirler.x + 24 && b.y > enemyBossSwirler.y - 24 && b.y < enemyBossSwirler.y + 24) {
 				enemyBossSwirler.health -= 10;
-				new Audio('/assets/ftldefense/playerhithull.ogg').play();
+				new Audio('./assets/playerhithull.ogg').play();
 				delete player.bullets[i];
 			}
 		}
@@ -273,7 +273,7 @@ function gRender() {
 				if (b.y < -256)
 					delete enemyBullets[i];
 				if (b.x > player.x - 24 && b.x < player.x + 24 && b.y > player.y - 24 && b.y < player.y + 24) {
-					new Audio('/assets/ftldefense/playerhithull.ogg').play();
+					new Audio('./assets/playerhithull.ogg').play();
 					player.health -= 25;
 					delete enemyBullets[i];
 				}

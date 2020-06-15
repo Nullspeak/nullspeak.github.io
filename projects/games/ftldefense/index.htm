@@ -10,7 +10,7 @@
 	<link rel='stylesheet' href='/assets/default.css' />
 	<link rel='shortcut icon' href='/assets/favicon.png' />
 	<script src='/assets/navbar.js'></script>
-	<script src='/assets/ftldefense/ftldefense.js' type='text/javascript'></script>
+	<script src='./assets/ftldefense.js' type='text/javascript'></script>
 
 	<style type='text/css'>
 	@keyframes bgscroll {
@@ -18,8 +18,8 @@
 		100% {background-position: 0px 512px;}
 	}
 	#canvas {
-		/* background-image: linear-gradient(90deg, #add8e64f, #012a 10%,transparent,#012a 90%, #add8e64f), url('/assets/ftldefence/starfield.png'); */
-		background-image: url('/assets/ftldefense/background.png');
+		/* background-image: linear-gradient(90deg, #add8e64f, #012a 10%,transparent,#012a 90%, #add8e64f), url('./assets/starfield.png'); */
+		background-image: url('./assets/background.png');
 		background-color: black;
 		animation: 1s bgscroll linear infinite;
 	}
@@ -48,7 +48,7 @@
 	<canvas id='canvas' width='384' height='512'>If your browser can't render canvases, how have you gotten this
 		far?</canvas>
 
-	<video id='video-gameover' src='/assets/ftldefense/gameover.mp4'></video>
+	<video id='video-gameover' src='./assets/gameover.mp4'></video>
 	<div id='gameover-div'>
 		<h3>Game over!</h3>
 		<h4 id='gamescore-lose'>Score: NaN</h4>
@@ -56,7 +56,7 @@
 		<button onclick='location.reload()'>Try Again</button>
 	</div>
 
-	<video id='video-gamewin' src='/assets/ftldefense/gamewin.mp4'></video>
+	<video id='video-gamewin' src='./assets/gamewin.mp4'></video>
 	<div id='gamewin-div'>
 		<h3>You won!</h3>
 		<h4 id='gamescore-win'>Score: NaN</h4>
