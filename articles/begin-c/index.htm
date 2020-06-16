@@ -97,6 +97,7 @@ int main() {
 	although that type can be reinterpreted to other ones in certain situations.
 	There are ways of getting around this, but that is not covered in this article.
 	What follows is a list of the different types in C.<br/>
+
 	<h5>Numbers</h5>
 	<code>char</code> Usually an 8-bit number, but can be larger or smaller on some systems.
 	Mainly used for string characters or low-level memory management.<br/>
@@ -124,8 +125,8 @@ int main() {
 	<h5>Strings</h5>
 	<code>char *</code> A character string of any encoding, typically generic ASCII or UTF-8.
 	Must be set with either a string literal or by allocating memory space to it.<br/>
-	<code>uchar16_t *</code> A character string using UTF-16. There is no reason to use this, so don't unless you absolutely need to.<br/>
-	<code>uchar32_t *</code> A character string using UTF-32. There is no reason to use this, so don't unless you absolutely need to.<br/>
+	<code>uchar16_t *</code> A character string using UTF-16. There is no reason to use this unless you absolutely need to.<br/>
+	<code>uchar32_t *</code> A character string using UTF-32. There is no reason to use this unless you absolutely need to.<br/>
 	
 	<h5>Mutability</h5>
 	<code>const</code> Specifies that a variable cannot be changed after it has been first set.
@@ -145,5 +146,20 @@ int main() {
 	C has no built in boolean type. There is usually a file called <code>stdbool.h</code>
 	which will give you a pretend boolean type which will work as it does in other languages.
 	You are free, however, to either ignore bools completely or to create your own bool type.
+	Below is a list of the different condition statements in C.
+	
+	<h5>Basic Comparison</h5>
+	<code>&lt;</code> Less than<br/>
+	<code>&gt;</code> Greater than<br/>
+	<code>&lt;=</code> Less than or equal to<br/>
+	<code>&gt;=</code> Greater than or equal to<br/>
+	<code>==</code> Is equal to<br/>
+	<code>!=</code> Is not equal to<br/>
+	
+	<h5>Boolean Logic</h5>
+	<code>!</code> Not<br/>
+	<code>&amp;&amp;</code> And<br/>
+	<code>||</code> Or<br/>
+	<code>0</code> False, anything else is True<br/>
 </body>
 </html>
