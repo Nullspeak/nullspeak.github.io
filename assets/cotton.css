@@ -3,7 +3,7 @@
 html {
 	background: #000;
 	color: #fff;
-	font-family: sans-serif;
+	font-family: 'Tahoma', sans-serif;
 	font-size: 10pt;
 	perspective: 250mm;
 	overflow: auto;
@@ -31,7 +31,7 @@ a {
 }
 
 #navbar > a, button, input, pre, code, textarea {
-	font-family: sans-serif;
+	font-family: 'Tahoma', sans-serif;
 	background: #000;
 	color: white;
 	font-weight: bold;
